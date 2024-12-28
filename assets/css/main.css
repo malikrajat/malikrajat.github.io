@@ -1316,3 +1316,7 @@ section,
 .download-btn:hover::before {
   left: 100%;
 }
+/*************footer icons*************/
+.copyright a {
+  margin: 10px;
+}
