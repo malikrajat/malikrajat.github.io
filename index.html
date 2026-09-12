@@ -6,7 +6,7 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Resume - Rajat Malik</title>
   <meta name="description" content="Rajat Malik – Lead Software Engineer specializing in Angular, React, and Micro-Frontends. Experienced in AI-assisted development, generative AI, and product innovation. Creator of 10+ open-source libraries, technical writer of 50+ articles, and recognized at Product Jam 2025 for AI-powered prototyping.">
-  <meta name="keywords" content="Rajat Malik, Frontend Developer, Frontend Architect, Lead Software Engineer, Angular, React, Redux, TypeScript, JavaScript, Node.js, Nx, Micro Frontend, Microservices, AWS, Docker, UI/UX, Web Performance Optimization, Responsive Design, AI-assisted Development, Generative AI, ChatGPT, GitHub Copilot, Prompt Engineering, Product Innovation with AI, Cloud-native Applications, Agile Development, REST APIs, Unit Testing, Jest, Jasmine, Karma, Playwright, Tailwind CSS, Bootstrap, IndexedDB, Web Security, Accessibility, Performance Optimization, Scalable Web Applications, IoT Applications, eCommerce Development, Enterprise Applications, Energy Automation, Finance Applications, Open Source Contributor, Technical Blogger, Angular Libraries, Tech Talks, Software Engineering Leader, Delhi India Developer, Software Engineer with 13+ years experience">
+  <meta name="keywords" content="Rajat Malik, Frontend Developer, Frontend Architect, Lead Software Engineer, Angular, React, Redux, TypeScript, JavaScript, Node.js, Nx, Micro Frontend, Microservices, AWS, Docker, UI/UX, Web Performance Optimization, Responsive Design, AI-assisted Development, Generative AI, ChatGPT, GitHub Copilot, Prompt Engineering, Product Innovation with AI, Cloud-native Applications, Agile Development, REST APIs, Unit Testing, Jest, Jasmine, Karma, Playwright, Tailwind CSS, Bootstrap, IndexedDB, Web Security, Accessibility, Performance Optimization, Scalable Web Applications, IoT Applications, eCommerce Development, Enterprise Applications, Energy Automation, Finance Applications, Open Source Contributor, Technical Blogger, Angular Libraries, Tech Talks, Software Engineering Leader, Delhi India Developer, Software Engineer with 15+ years experience">
 
 
   <!-- Favicons -->
@@ -21,6 +21,8 @@
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Syne:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -29,11 +31,15 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+  <link href="assets/css/modern.css?v=20260911-7" rel="stylesheet">
 
 
 </head>
 
 <body class="index-page">
+
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <canvas class="fluid-canvas" id="fluid" aria-hidden="true"></canvas>
 
   <header class="header dark-background d-flex flex-column" id="header">
     <i class="header-toggle d-xl-none bi bi-list"></i>
@@ -70,7 +76,7 @@
 
     <nav class="navmenu" id="navmenu">
       <ul>
-        <li><a class="active" href="#hero"><i class="bi bi-house navicon"></i>Home</a></li>
+        <li><a class="active" href="#hero"><i class="bi bi-house navicon"></i>Overview</a></li>
         <li><a href="#about"><i class="bi bi-person navicon"></i> About</a></li>
         <li><a href="#stats"><i class="bi bi-graph-up navicon"></i> Stats</a></li>
         <li><a href="#skills"><i class="bi bi-tools navicon"></i> Skills</a></li>
@@ -80,23 +86,41 @@
         <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
         <li><a href="#services"><i class="bi bi-newspaper navicon"></i> Article </a></li>
         <li><a href="#testimonials"><i class="bi bi-chat-quote navicon"></i> Testimonials</a></li>
-        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact</a></li>
+        <li><a href="#contact"><i class="bi bi-envelope navicon"></i> Contact Us</a></li>
       </ul>
     </nav>
 
+    <a class="header-resume" href="./assets/Rajat-JS-React-Angular.pdf" download>
+      Resume <i class="bi bi-arrow-down-right"></i>
+    </a>
+
   </header>
 
-  <main class="main">
+  <main class="main" id="main-content">
 
     <!-- Hero Section -->
     <section class="hero section dark-background" id="hero">
       <img alt="" class="" data-aos="fade-in" src="assets/img/hero-bg.png">
       <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <h2>Rajat Malik</h2>
-        <p>I'm <span class="typed"
-            data-typed-items="Developer, Mentor, UI/UX Specialist, Full-stack Developer, Tech Blogger, Designer, Technical Consultant, Freelancer, Open Source contributor, Problem Solver, Architect, Innovator">Developer</span><span
-            aria-hidden="true" class="typed-cursor typed-cursor--blink"></span><span aria-hidden="true"
-            class="typed-cursor typed-cursor--blink"></span></p>
+        <div class="hero-copy">
+          <p class="hero-kicker"><span></span> Available for select opportunities</p>
+          <p class="hero-overline">Frontend architect &amp; product-minded engineer</p>
+          <h2>Rajat Malik</h2>
+          <p class="hero-role">I build <span class="typed"
+              data-typed-items="Developer, Mentor, UI/UX Specialist, Full-stack Developer, Tech Blogger, Designer, Technical Consultant, Freelancer, Open Source contributor, Problem Solver, Architect, Innovator">Developer</span><span
+              aria-hidden="true" class="typed-cursor typed-cursor--blink"></span><span aria-hidden="true"
+              class="typed-cursor typed-cursor--blink"></span></p>
+          <p class="hero-intro">I turn complex enterprise problems into fast, accessible products people enjoy using.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#contact">Contact me <i class="bi bi-arrow-up-right"></i></a>
+            <a class="button button-secondary" href="./assets/Rajat-JS-React-Angular.pdf" download>Download resume <i class="bi bi-download"></i></a>
+          </div>
+          <div class="hero-proof" aria-label="Career highlights">
+            <div><strong>15+</strong><span>years shipping<br>digital products</span></div>
+            <div><strong>47%</strong><span>performance<br>improvement</span></div>
+            <div><strong>30+</strong><span>open-source<br>libraries</span></div>
+          </div>
+        </div>
       </div>
     </section><!-- /Hero Section -->
     <!-- About Section -->
@@ -108,7 +132,7 @@
           Passionate Developer | Visionary Architect | AI-assisted Development & Product Innovation | Creator of 10+ Libraries
         </strong>
         <p>
-          With over a decade of hands-on experience in front-end development, I am dedicated to transforming ideas
+          With 15+ years of hands-on experience in front-end development, I am dedicated to transforming ideas
           into visually stunning and highly functional web applications.
           As an advocate for modern design principles, I specialize in pixel-perfect designs, responsive layouts,
           and accessibility-first development, ensuring exceptional user experiences across all devices. My
@@ -231,6 +255,23 @@
       </div>
     </section>
     <!-- /Stats Section -->
+
+    <section class="recruiter-brief section" id="recruiter-brief">
+      <div class="container">
+        <div class="brief-intro" data-aos="fade-up">
+          <p class="section-eyebrow">Recruiter brief</p>
+          <h2>Senior frontend leadership, with product outcomes to prove it.</h2>
+          <p>I partner with teams that need a stronger, faster, more maintainable web product - from technical direction through production delivery.</p>
+        </div>
+        <div class="row g-4">
+          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100"><article class="brief-card"><i class="bi bi-person-workspace"></i><h3>Role fit</h3><p>Lead Frontend Engineer, Frontend Architect, or Staff-level product engineering.</p></article></div>
+          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150"><article class="brief-card"><i class="bi bi-code-slash"></i><h3>Core stack</h3><p>Angular, React, TypeScript, JavaScript, design systems, and micro-frontends.</p></article></div>
+          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200"><article class="brief-card"><i class="bi bi-geo-alt"></i><h3>Based in</h3><p>Gurgaon, India. Open to high-impact remote and hybrid opportunities.</p></article></div>
+          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="250"><article class="brief-card"><i class="bi bi-lightning-charge"></i><h3>Available for</h3><p>Leadership roles, modernization projects, architecture audits, and consulting.</p></article></div>
+        </div>
+        <div class="brief-actions" data-aos="fade-up"><a class="button button-primary" href="./assets/Rajat-JS-React-Angular.pdf" download>View full resume <i class="bi bi-download"></i></a><a class="button button-dark" href="#contact">Discuss an opportunity <i class="bi bi-arrow-up-right"></i></a></div>
+      </div>
+    </section>
 
     <!-- Skills Section -->
     <section class="skills section light-background" id="skills">
@@ -454,13 +495,29 @@
 
     </section><!-- /Skills Section -->
 
+    <section class="technical-proof section" id="technical-proof">
+      <div class="container section-title" data-aos="fade-up">
+        <p class="section-eyebrow">Technical credibility</p>
+        <h2>Engineering systems, not just screens.</h2>
+        <p>Senior-level frontend decisions that improve product quality, team velocity, and long-term maintainability.</p>
+      </div>
+      <div class="container"><div class="row g-3">
+        <div class="col-md-6 col-lg-4" data-aos="fade-up"><div class="proof-item"><i class="bi bi-diagram-3"></i><h3>Scalable architecture</h3><p>Micro-frontends, modular boundaries, and backend-driven patterns built for independent delivery.</p></div></div>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="80"><div class="proof-item"><i class="bi bi-speedometer2"></i><h3>Web performance</h3><p>Core Web Vitals, profiling, lazy loading, and rendering strategy that make products feel fast.</p></div></div>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="160"><div class="proof-item"><i class="bi bi-universal-access"></i><h3>Accessible by design</h3><p>Inclusive, responsive interfaces with accessibility considered from component design through release.</p></div></div>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up"><div class="proof-item"><i class="bi bi-check2-circle"></i><h3>Quality engineering</h3><p>Pragmatic unit, integration, and end-to-end testing strategies that reduce release risk.</p></div></div>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="80"><div class="proof-item"><i class="bi bi-palette2"></i><h3>Design systems</h3><p>Reusable UI foundations that bring visual consistency, accessibility, and speed to product teams.</p></div></div>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="160"><div class="proof-item"><i class="bi bi-stars"></i><h3>AI-enabled delivery</h3><p>Thoughtful use of AI tools to prototype, automate repetitive work, and accelerate well-engineered outcomes.</p></div></div>
+      </div></div>
+    </section>
+
     <!-- Resume Section -->
     <section class="resume section" id="resume">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Resume</h2>
-        <p>Welcome to my professional journey! With over a decade of experience in software development, I’ve honed my
+        <p>Welcome to my professional journey! With 15+ years of experience in software development, I’ve honed my
           skills across front-end technologies, team leadership, and delivering impactful digital solutions. This
           section highlights my expertise, achievements, and the path I’ve taken to grow in the ever-evolving tech
           industry. Feel free to explore my resume to learn more about my technical capabilities, career milestones, and
@@ -478,7 +535,7 @@
             <div class="resume-item pb-0">
               <h4>Rajat Malik</h4>
               <p><em>Passionate Developer | Visionary Architect | Creator of 10+ Libraries
-                  With over a decade of hands-on experience in front-end development, I am dedicated to transforming
+                  With 15+ years of hands-on experience in front-end development, I am dedicated to transforming
                   ideas into visually stunning and highly functional web applications. As an advocate for modern design
                   principles, I specialize in pixel-perfect designs, responsive layouts, and accessibility-first
                   development, ensuring exceptional user experiences across all devices. My expertise extends to
@@ -1393,7 +1450,7 @@
     <!-- /Services Section -->
 
     <!-- Testimonials Section -->
-    <section class="testimonials section light-background" id="testimonials">
+    <section class="testimonials section" id="testimonials">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
@@ -1533,6 +1590,26 @@
 
     </section><!-- /Testimonials Section -->
 
+    <section class="case-studies section" id="case-studies">
+      <div class="container section-title" data-aos="fade-up"><p class="section-eyebrow">Selected impact</p><h2>Work that moves the numbers.</h2><p>A sample of the product and engineering outcomes behind the portfolio.</p></div>
+      <div class="container"><div class="row g-4">
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100"><article class="case-card"><img src="assets/img/energy.jpg" alt="Energy automation platform"><div><span>Energy automation</span><h3>Rebuilt a critical product experience for speed and adoption.</h3><p>Led a performance-focused redesign that improved the product experience for enterprise users.</p><ul><li><strong>47%</strong> performance improvement</li><li><strong>32%</strong> increase in customer acquisition</li></ul></div></article></div>
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="180"><article class="case-card"><img src="assets/img/telicom.jpeg" alt="Telecom application"><div><span>Telecom platforms</span><h3>Scaled frontend delivery across complex, business-critical systems.</h3><p>Applied modular architecture, performance profiling, and reliable testing practices.</p><ul><li><strong>48%</strong> fewer runtime bottlenecks</li><li><strong>63%</strong> fewer release-time bugs</li></ul></div></article></div>
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="260"><article class="case-card"><img src="assets/img/post.png" alt="Postal and transmission system"><div><span>Product modernization</span><h3>Modernized legacy interfaces without sacrificing delivery speed.</h3><p>Guided Angular and React migrations that made products easier to maintain and evolve.</p><ul><li><strong>40%</strong> improvement in delivery performance</li><li><strong>90%</strong> unit-test coverage achieved</li></ul></div></article></div>
+      </div></div>
+    </section>
+
+    <section class="engagements section" id="work-with-me">
+      <div class="container"><div class="engagement-panel" data-aos="fade-up">
+        <div><p class="section-eyebrow">For teams and clients</p><h2>Bring in senior frontend expertise when the work cannot be average.</h2><p>Available for carefully selected freelance and consulting engagements alongside the right long-term role.</p></div>
+        <div class="engagement-list"><a href="#contact"><i class="bi bi-diagram-3"></i><span><strong>Architecture audit</strong>Find the bottlenecks in your frontend foundation.</span><i class="bi bi-arrow-up-right"></i></a><a href="#contact"><i class="bi bi-speedometer2"></i><span><strong>Performance sprint</strong>Improve Core Web Vitals and product responsiveness.</span><i class="bi bi-arrow-up-right"></i></a><a href="#contact"><i class="bi bi-grid-1x2"></i><span><strong>Design system delivery</strong>Build a scalable, accessible interface foundation.</span><i class="bi bi-arrow-up-right"></i></a><a href="#contact"><i class="bi bi-rocket-takeoff"></i><span><strong>Modernization roadmap</strong>Move legacy Angular or React applications forward safely.</span><i class="bi bi-arrow-up-right"></i></a></div>
+      </div></div>
+    </section>
+
+    <section class="availability section" id="availability">
+      <div class="container" data-aos="fade-up"><div class="availability-card"><div><p class="section-eyebrow">Let’s work together</p><h2>Have a role, project, or product challenge?</h2><p>Send a brief overview and I will respond with the best next step - a conversation, technical review, or project proposal.</p></div><div class="availability-actions"><a class="button button-primary" href="mailto:mr.rajatmalik@gmail.com?subject=30-minute%20introduction%20call">Request a 30-minute call <i class="bi bi-calendar-event"></i></a><a class="button button-secondary" href="#contact">Send project details <i class="bi bi-arrow-down-right"></i></a></div></div></div>
+    </section>
+
     <!-- Contact Section -->
     <section class="contact section" id="contact">
 
@@ -1598,6 +1675,18 @@
                 <div class="col-md-12">
                   <label class="pb-2" for="subject-field">Subject</label>
                   <input class="form-control" id="subject-field" name="subject" required type="text">
+                </div>
+
+                <div class="col-md-12">
+                  <label class="pb-2" for="enquiry-type">I am contacting you about</label>
+                  <select class="form-control" id="enquiry-type" name="enquiry_type" required>
+                    <option value="" selected disabled>Select an option</option>
+                    <option value="full-time">A full-time opportunity</option>
+                    <option value="contract">A contract or freelance project</option>
+                    <option value="consulting">Frontend architecture or performance consulting</option>
+                    <option value="speaking">A speaking or workshop engagement</option>
+                    <option value="other">Something else</option>
+                  </select>
                 </div>
 
                 <div class="col-md-12">
@@ -1694,7 +1783,8 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+  <script src="assets/js/fluid-background.js?v=20260911-3"></script>
+  <script src="assets/js/main.js?v=20260911-2"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
