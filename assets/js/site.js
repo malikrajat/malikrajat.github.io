@@ -175,6 +175,39 @@
   /* Last API failure, surfaced in the panel so problems are visible */
   var lastApiError = null;
 
+  /* RATE LIMITING — the reason this is a queue and not Promise.all().
+   *
+   * GoatCounter allows 4 requests/second and answers anything above that with
+   * HTTP 429, *including the CORS preflight OPTIONS*. Chrome reports a 429
+   * preflight as:
+   *
+   *   "Response to preflight request doesn't pass access control check:
+   *    It does not have HTTP ok status."
+   *
+   * which reads like a CORS misconfiguration but is really the rate limit.
+   *
+   * Every authenticated call sends `Authorization`, so the browser puts a
+   * preflight OPTIONS *plus* the GET on the wire — two requests per endpoint.
+   * Firing the panel's five calls with Promise.all() sent ten at once and
+   * tripped the limit on essentially every page load. Calls now go out one at
+   * a time, spaced apart, and a 429 is retried instead of being discarded. */
+  /* GoatCounter's limit is 4 requests/second *per visitor IP* — handlers/api.go
+   * uses `mware.RatelimitIP` with `api: 4/1`. Every authenticated endpoint
+   * costs a CORS preflight OPTIONS plus the GET (the preflight cache is keyed
+   * on the full URL, so distinct endpoints never share one), i.e. two requests
+   * each. A 1000ms gap keeps a batch at ~2 requests/second, which is what
+   * actually survives: measured against the live API, 300-600ms spacing still
+   * drew 429s on the OPTIONS while 1000ms was reliably clean. */
+  var API_MIN_GAP_MS = 1000;
+  var API_MAX_RETRIES = 3;
+
+  var apiQueue = Promise.resolve();
+  var lastApiCallAt = 0;
+
+  function sleep(ms) {
+    return new Promise(function (resolve) { window.setTimeout(resolve, ms); });
+  }
+
   function hasToken() {
     var token = (SITE_CONFIG.apiToken || '').trim();
     return !!token && !/^YOUR/i.test(token);
@@ -188,6 +221,69 @@
     return 'Bearer ' + token;
   }
 
+  /* How long the server asked us to wait: the Retry-After header when present,
+   * otherwise the delay GoatCounter writes into the JSON body, e.g.
+   * {"error": "rate limited exceeded; try again in 200.88ms"} */
+  function retryDelayMs(res) {
+    var header = Number(res.headers.get('Retry-After'));
+    if (isFinite(header) && header > 0) {
+      return Promise.resolve(Math.min(header * 1000, 5000));
+    }
+
+    return res.clone().text().then(function (body) {
+      var match = /try again in\s+([0-9.]+)\s*ms/i.exec(body || '');
+      var ms = match ? parseFloat(match[1]) : 300;
+      /* Small cushion so the retry does not land just under the reset */
+      return Math.min(Math.max(ms + 100, 200), 5000);
+    }).catch(function () { return 400; });
+  }
+
+  function apiGetOnce(url, auth, path, attempt, delay) {
+    var wait = delay != null
+      ? delay
+      : Math.max(0, API_MIN_GAP_MS - (Date.now() - lastApiCallAt));
+
+    return sleep(wait).then(function () {
+      lastApiCallAt = Date.now();
+      return fetch(url, {
+        /* No Content-Type: a GET carries no body. Authorization alone still
+         * forces a preflight, but a smaller preflight cache key means the
+         * later calls in a batch reuse the cached OPTIONS result. */
+        headers: { Authorization: auth },
+        cache: 'no-store'
+      });
+    }).then(function (res) {
+      if (res.status === 429 && attempt < API_MAX_RETRIES) {
+        console.warn('[site.js] GoatCounter rate limit on ' + path +
+          ' — retry ' + (attempt + 1) + '/' + API_MAX_RETRIES);
+        return retryDelayMs(res).then(function (ms) {
+          /* Never retry faster than the normal spacing. GoatCounter answers
+           * "try again in ~200ms", but retrying that fast just re-saturates the
+           * window and the whole batch cascades into permanent 429s. */
+          return apiGetOnce(url, auth, path, attempt + 1, Math.max(ms, API_MIN_GAP_MS));
+        });
+      }
+
+      if (!res.ok) {
+        /* Surface the reason instead of swallowing it — a 400 here is usually
+         * a query-parameter problem, a 401 a bad/absent token, a 403 a token
+         * without permission. Network/CORS failures land in .catch() instead.
+         * The error is deliberately NOT cleared on a later success in the same
+         * batch, so the panel reports the real cause rather than a blank. */
+        lastApiError = 'HTTP ' + res.status + ' on ' + path;
+        console.warn('[site.js] GoatCounter API', res.status, url);
+        throw new Error('api-' + res.status);
+      }
+
+      return res.json();
+    }).catch(function (err) {
+      if (!lastApiError) lastApiError = 'network/CORS failure on ' + path;
+      throw err;
+    });
+  }
+
+  /* Public entry point — each call queues behind the previous one so a batch
+   * of Promise.all()'d calls still travels one request at a time. */
   function apiGet(path, params) {
     var auth = apiAuthHeader();
     if (!auth) return Promise.reject(new Error('no-token'));
@@ -197,24 +293,12 @@
       if (params[key] != null) url.searchParams.set(key, params[key]);
     });
 
-    return fetch(url.toString(), {
-      headers: { 'Content-Type': 'application/json', Authorization: auth },
-      cache: 'no-store'
-    }).then(function (res) {
-      if (!res.ok) {
-        /* Surface the reason instead of swallowing it — a 400 here is usually
-         * a query-parameter problem, a 401 a bad/absent token, a 403 a token
-         * without permission. Network/CORS failures land in .catch() instead. */
-        lastApiError = 'HTTP ' + res.status + ' on ' + path;
-        console.warn('[site.js] GoatCounter API', res.status, url.toString());
-        throw new Error('api-' + res.status);
-      }
-      lastApiError = null;
-      return res.json();
-    }).catch(function (err) {
-      if (!lastApiError) lastApiError = 'network/CORS failure on ' + path;
-      throw err;
+    var call = apiQueue.then(function () {
+      return apiGetOnce(url.toString(), auth, path, 0, null);
     });
+    /* The queue must absorb rejections, or one failure skips every later call */
+    apiQueue = call.catch(function () {});
+    return call;
   }
 
   function isoDay(date) {
@@ -226,38 +310,62 @@
     return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1));
   }
 
-  function fetchFullStats() {
-    var today = isoDay(new Date());
-    var monthStart = isoDay(startOfMonth());
-    var allTime = '2000-01-01';
+  /* --------------------------------------------------------------------------
+   * TWO batches, deliberately.
+   *
+   * This used to fetch five endpoints at once on every page load, i.e. ten
+   * requests against a 4/second budget — which is what produced the console
+   * error this file was fixed for.
+   *
+   * What is always visible (the footer counter and the panel's four totals) is
+   * a single endpoint. The four breakdowns are only requested when the panel is
+   * actually opened, and they go out one at a time.
+   * ------------------------------------------------------------------------ */
 
+  /* GoatCounter's query parser accepts `2026-09-15` and `2026-09-15T23:59:59Z`,
+   * but NOT `2026-09-15 23:59:59` (space separator) — it answers those with
+   * HTTP 400 "no suitable time formats". Use a plain date / RFC3339 here or
+   * every call fails silently. */
+  function endOfToday() {
+    return isoDay(new Date()) + 'T23:59:59Z';
+  }
+
+  function fetchTotals() {
     /* Reset so a previous run's failure is never reported against this one */
     lastApiError = null;
 
-    /* GoatCounter's query parser accepts `2026-09-15` and
-     * `2026-09-15T23:59:59Z`, but NOT `2026-09-15 23:59:59` (space separator)
-     * — it answers those with HTTP 400 "no suitable time formats".
-     * Use a plain date / RFC3339 here or every call fails silently. */
-    var endOfToday = today + 'T23:59:59Z';
-
     return Promise.all([
-      /* Public all-time counter (needs "allow visitor counts" in GoatCounter) */
+      /* Public all-time counter (needs "allow visitor counts" in GoatCounter).
+       * A plain GET with no custom headers, so it needs no preflight and does
+       * not touch the API rate-limit bucket. */
       fetchPublicTotal(),
       /* All-time totals from the API, so the panel still works without it */
-      apiGet('stats/total', { start: allTime, end: endOfToday }).catch(function () { return null; }),
-      apiGet('stats/toprefs', { start: monthStart, end: endOfToday, limit: 8 }).catch(function () { return null; }),
-      apiGet('stats/locations', { start: monthStart, end: endOfToday, limit: 8 }).catch(function () { return null; }),
-      apiGet('stats/browsers', { start: monthStart, end: endOfToday, limit: 8 }).catch(function () { return null; }),
-      apiGet('stats/hits', { start: monthStart, end: endOfToday, limit: 5 }).catch(function () { return null; })
+      apiGet('stats/total', { start: '2000-01-01', end: endOfToday() })
+        .catch(function () { return null; })
+    ]).then(function (results) {
+      return { publicTotal: results[0], allTime: results[1] };
+    });
+  }
+
+  function fetchBreakdowns() {
+    var monthStart = isoDay(startOfMonth());
+    var end = endOfToday();
+
+    /* apiGet() queues these, so they reach GoatCounter one at a time and stay
+     * under the rate limit. Do not "optimise" this back into concurrent
+     * fetches — see the note above API_MIN_GAP_MS. */
+    return Promise.all([
+      apiGet('stats/toprefs', { start: monthStart, end: end, limit: 8 }).catch(function () { return null; }),
+      apiGet('stats/locations', { start: monthStart, end: end, limit: 8 }).catch(function () { return null; }),
+      apiGet('stats/browsers', { start: monthStart, end: end, limit: 8 }).catch(function () { return null; }),
+      apiGet('stats/hits', { start: monthStart, end: end, limit: 5 }).catch(function () { return null; })
     ]).then(function (results) {
       return {
-        publicTotal: results[0],
-        allTime: results[1],
-        referrers: results[2],
-        locations: results[3],
-        browsers: results[4],
-        pages: results[5],
-        apiWorked: !!(results[1] || results[2] || results[3] || results[4] || results[5])
+        referrers: results[0],
+        locations: results[1],
+        browsers: results[2],
+        pages: results[3],
+        apiWorked: !!(results[0] || results[1] || results[2] || results[3])
       };
     });
   }
@@ -412,7 +520,8 @@
     }
   }
 
-  function renderFullStats(data) {
+  /* The always-visible numbers: footer count and the panel's four totals */
+  function renderTotals(data) {
     var allTime = data.allTime;
     /* Prefer the public counter; fall back to summed API data */
     var total = data.publicTotal != null ? data.publicTotal : sumDaily(allTime);
@@ -426,20 +535,22 @@
     setText('#stats-month', '—');
     setText('#stats-month-meta', 'see dashboard');
 
+    var ok = total != null || today != null;
+
     var note = $('#stats-source-note');
-    if (note) {
-      if (data.apiWorked) {
-        note.textContent = 'Live from GoatCounter — traffic sources, locations and browsers for the current month.';
-      } else if (hasToken()) {
-        /* A token IS set, so "add a token" would be misleading */
-        note.textContent = 'Visit totals are live, but the breakdown requests failed' +
-          (lastApiError ? ' (' + lastApiError + ')' : '') +
-          '. Open the browser console for details.';
-      } else {
-        note.textContent = 'Visit totals are live. Source, location and browser breakdowns stay in the GoatCounter dashboard.';
-      }
+    if (note && !ok && hasToken()) {
+      /* Report the real cause rather than a blank card */
+      note.textContent = 'Visit totals could not be loaded' +
+        (lastApiError ? ' (' + lastApiError + ')' : '') +
+        ' — open the browser console for details.';
     }
 
+    return ok;
+  }
+
+  /* The four breakdown lists. Only fetched once the panel is actually opened,
+   * because they are the four endpoints that make this expensive. */
+  function renderBreakdowns(data) {
     if (data.apiWorked) {
       /* GoatCounter returns referrers under `refs` (documented) but direct /
        * unattributed traffic under `stats`, with an empty name. Read whichever
@@ -475,6 +586,20 @@
       renderList('#stats-pages', [], why);
     }
 
+    var note = $('#stats-source-note');
+    if (note) {
+      if (data.apiWorked) {
+        note.textContent = 'Live from GoatCounter — traffic sources, locations and browsers for the current month.';
+      } else if (hasToken()) {
+        /* A token IS set, so "add a token" would be misleading */
+        note.textContent = 'Visit totals are live, but the breakdown requests failed' +
+          (lastApiError ? ' (' + lastApiError + ')' : '') +
+          '. Open the browser console for details.';
+      } else {
+        note.textContent = 'Visit totals are live. Source, location and browser breakdowns stay in the GoatCounter dashboard.';
+      }
+    }
+
     var footnote = $('#stats-footnote');
     if (footnote) {
       footnote.textContent = data.apiWorked
@@ -496,6 +621,10 @@
     if (toggleButton) toggleButton.setAttribute('aria-expanded', 'true');
     var close = $('.stats-panel-close', panel);
     if (close) close.focus();
+    /* The expensive half of the panel is only fetched once it is opened.
+     * loadBreakdowns() is cache- and in-flight-guarded, so opening the panel
+     * repeatedly does not re-run the requests. */
+    loadBreakdowns();
   }
 
   function closePanel() {
@@ -529,27 +658,70 @@
     if (SITE_CONFIG.openOnHash && location.hash === SITE_CONFIG.openOnHash) openPanel();
   }
 
-  function loadStats() {
+  /* Re-rendering is cheap; re-fetching is not. The toggle button has two click
+   * listeners (one in wirePanel, one in boot), so a single click used to start
+   * two full API batches — and every later click another two. Results are now
+   * reused for a minute, and concurrent runs collapse into one. */
+  var STATS_TTL_MS = 60000;
+
+  var totalsCache = null;       /* { at: <ms>, data: <fetchTotals result> } */
+  var totalsInFlight = null;
+  var breakdownCache = null;    /* { at: <ms>, data: <fetchBreakdowns result> } */
+  var breakdownInFlight = null;
+
+  /* Totals: fetched on every page load, for the footer counter. One endpoint. */
+  function loadTotals() {
     var localState = readLocalVisits();
 
-    fetchFullStats().then(function (data) {
-      var apiTotal = sumDaily(data.allTime);
-      var hasRemoteTotal = data.publicTotal != null || (apiTotal != null && apiTotal > 0) || data.apiWorked;
+    if (totalsCache && Date.now() - totalsCache.at < STATS_TTL_MS) {
+      applyTotals(totalsCache.data, localState);
+      return;
+    }
+    if (totalsInFlight) return;
 
-      if (hasRemoteTotal) {
-        renderFullStats(data);
-        var footerCount = data.publicTotal != null ? data.publicTotal : apiTotal;
-        if (SITE_CONFIG.showFooterCount && footerCount != null && footerCount > 0) {
-          var footer = $('#footer-visitors');
-          var countNode = $('#footer-visitors-count');
-          if (countNode) countNode.textContent = formatNumber(footerCount);
-          if (footer) footer.hidden = false;
-        }
-      } else {
-        showLocalFallback(localState);
-      }
-    }).catch(function () {
+    totalsInFlight = fetchTotals().then(function (data) {
+      totalsCache = { at: Date.now(), data: data };
+      totalsInFlight = null;
+      applyTotals(data, localState);
+    }, function () {
+      /* Do not cache the failure — the next open should be able to retry */
+      totalsInFlight = null;
       showLocalFallback(localState);
+    });
+  }
+
+  function applyTotals(data, localState) {
+    if (!renderTotals(data)) {
+      /* Neither the public counter nor the API produced anything */
+      showLocalFallback(localState);
+      return;
+    }
+
+    var apiTotal = sumDaily(data.allTime);
+    var footerCount = data.publicTotal != null ? data.publicTotal : apiTotal;
+    if (SITE_CONFIG.showFooterCount && footerCount != null && footerCount > 0) {
+      var footer = $('#footer-visitors');
+      var countNode = $('#footer-visitors-count');
+      if (countNode) countNode.textContent = formatNumber(footerCount);
+      if (footer) footer.hidden = false;
+    }
+  }
+
+  /* Breakdowns: four endpoints, so only when the panel is actually opened. */
+  function loadBreakdowns() {
+    if (breakdownCache && Date.now() - breakdownCache.at < STATS_TTL_MS) {
+      renderBreakdowns(breakdownCache.data);
+      return;
+    }
+    if (breakdownInFlight) return;
+
+    breakdownInFlight = fetchBreakdowns().then(function (data) {
+      breakdownCache = { at: Date.now(), data: data };
+      breakdownInFlight = null;
+      renderBreakdowns(data);
+    }, function () {
+      breakdownInFlight = null;
+      renderBreakdowns({ apiWorked: false });
     });
   }
 
@@ -568,14 +740,16 @@
 
     /* Load totals after the page has settled so they stay off the critical path */
     if (typeof window.requestIdleCallback === 'function') {
-      window.requestIdleCallback(loadStats, { timeout: 2500 });
+      window.requestIdleCallback(loadTotals, { timeout: 2500 });
     } else {
-      window.setTimeout(loadStats, 1200);
+      window.setTimeout(loadTotals, 1200);
     }
 
     if (toggleButton) {
+      /* openPanel() already loads the breakdowns; this only refreshes the
+       * totals, and both are cached, so the duplicate listener is harmless. */
       toggleButton.addEventListener('click', function () {
-        if (panel && !panel.hidden) loadStats();
+        if (panel && !panel.hidden) loadTotals();
       });
     }
   }
