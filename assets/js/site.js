@@ -172,10 +172,20 @@
    *  GoatCounter API (optional token) — full breakdowns
    * ========================================================================== */
 
+  /* Last API failure, surfaced in the panel so problems are visible */
+  var lastApiError = null;
+
+  function hasToken() {
+    var token = (SITE_CONFIG.apiToken || '').trim();
+    return !!token && !/^YOUR/i.test(token);
+  }
+
   function apiAuthHeader() {
     var token = (SITE_CONFIG.apiToken || '').trim();
     if (!token || /^YOUR/i.test(token)) return null;
-    return 'Basic ' + btoa(':' + token);
+    /* Bearer is GoatCounter's documented scheme. Basic also works, but Bearer
+     * is the one the API docs use and is unambiguous. */
+    return 'Bearer ' + token;
   }
 
   function apiGet(path, params) {
@@ -191,8 +201,19 @@
       headers: { 'Content-Type': 'application/json', Authorization: auth },
       cache: 'no-store'
     }).then(function (res) {
-      if (!res.ok) throw new Error('api-' + res.status);
+      if (!res.ok) {
+        /* Surface the reason instead of swallowing it — a 400 here is usually
+         * a query-parameter problem, a 401 a bad/absent token, a 403 a token
+         * without permission. Network/CORS failures land in .catch() instead. */
+        lastApiError = 'HTTP ' + res.status + ' on ' + path;
+        console.warn('[site.js] GoatCounter API', res.status, url.toString());
+        throw new Error('api-' + res.status);
+      }
+      lastApiError = null;
       return res.json();
+    }).catch(function (err) {
+      if (!lastApiError) lastApiError = 'network/CORS failure on ' + path;
+      throw err;
     });
   }
 
@@ -209,7 +230,15 @@
     var today = isoDay(new Date());
     var monthStart = isoDay(startOfMonth());
     var allTime = '2000-01-01';
-    var endOfToday = today + ' 23:59:59';
+
+    /* Reset so a previous run's failure is never reported against this one */
+    lastApiError = null;
+
+    /* GoatCounter's query parser accepts `2026-09-15` and
+     * `2026-09-15T23:59:59Z`, but NOT `2026-09-15 23:59:59` (space separator)
+     * — it answers those with HTTP 400 "no suitable time formats".
+     * Use a plain date / RFC3339 here or every call fails silently. */
+    var endOfToday = today + 'T23:59:59Z';
 
     return Promise.all([
       /* Public all-time counter (needs "allow visitor counts" in GoatCounter) */
@@ -308,7 +337,12 @@
     if (!list) return;
     list.innerHTML = '';
 
-    var items = (rows || []).filter(function (row) { return row && (row.label || row.name); });
+    /* Keep a row when it has a NAME even if the label is blank: GoatCounter
+     * returns `"name": ""` for direct/unattributed traffic, which is a real
+     * data point and must not be dropped. */
+    var items = (rows || []).filter(function (row) {
+      return row && (row.label || row.name || row.label === '' || row.name === '');
+    });
     if (!items.length) {
       list.appendChild(el('li', 'stats-empty', emptyMessage || 'No data yet.'));
       return;
@@ -321,11 +355,13 @@
     items.forEach(function (row) {
       var li = el('li', 'stats-row');
       var icon = row.icon || 'bi-dot';
+      /* Fall back rather than render an empty label */
+      var label = row.label || row.name || 'Direct / typed';
 
       li.innerHTML =
         '<i class="bi ' + escapeAttr(icon) + '"></i>' +
         '<span class="stats-row-body">' +
-        '<span class="stats-row-label">' + escapeAttr(row.label || row.name) + '</span>' +
+        '<span class="stats-row-label">' + escapeAttr(label) + '</span>' +
         (row.sub ? '<span class="stats-row-sub">' + escapeAttr(row.sub) + '</span>' : '') +
         '</span>' +
         '<span class="stats-row-count">' + formatNumber(row.count) + '</span>' +
@@ -392,16 +428,29 @@
 
     var note = $('#stats-source-note');
     if (note) {
-      note.textContent = data.apiWorked
-        ? 'Live from GoatCounter — traffic sources, locations and browsers for the current month.'
-        : 'Visit totals are live. Source, location and browser breakdowns stay in the GoatCounter dashboard.';
+      if (data.apiWorked) {
+        note.textContent = 'Live from GoatCounter — traffic sources, locations and browsers for the current month.';
+      } else if (hasToken()) {
+        /* A token IS set, so "add a token" would be misleading */
+        note.textContent = 'Visit totals are live, but the breakdown requests failed' +
+          (lastApiError ? ' (' + lastApiError + ')' : '') +
+          '. Open the browser console for details.';
+      } else {
+        note.textContent = 'Visit totals are live. Source, location and browser breakdowns stay in the GoatCounter dashboard.';
+      }
     }
 
     if (data.apiWorked) {
-      var referrers = ((data.referrers || {}).refs || []).map(function (row) {
-        var described = describeReferrer(row.name, row.ref_scheme);
-        return { label: described.label, sub: described.sub, icon: described.icon, count: row.count };
-      });
+      /* GoatCounter returns referrers under `refs` (documented) but direct /
+       * unattributed traffic under `stats`, with an empty name. Read whichever
+       * key is present so the Direct row is not silently lost. */
+      var refRows = (data.referrers || {}).refs || (data.referrers || {}).stats || [];
+      var referrers = refRows
+        .filter(function (row) { return Number(row.count) > 0; })
+        .map(function (row) {
+          var described = describeReferrer(row.name, row.ref_scheme);
+          return { label: described.label, sub: described.sub, icon: described.icon, count: row.count };
+        });
       renderList('#stats-referrers', referrers, 'No referrers recorded this month.');
 
       renderList('#stats-countries', ((data.locations || {}).stats || []).map(function (row) {
@@ -416,10 +465,14 @@
         return { label: row.path || row.title || '/', icon: 'bi-signpost-split', count: row.count };
       }), 'No page data this month.');
     } else {
-      renderList('#stats-referrers', [], 'Add a read-only API token to see sources here.');
-      renderList('#stats-countries', [], 'Add a read-only API token to see locations here.');
-      renderList('#stats-browsers', [], 'Add a read-only API token to see browsers here.');
-      renderList('#stats-pages', [], 'Add a read-only API token to see pages here.');
+      /* Say which of the two problems it actually is */
+      var why = hasToken()
+        ? 'Request failed' + (lastApiError ? ' (' + lastApiError + ')' : '') + ' — see the browser console.'
+        : 'Set a read-only API token in assets/js/site.js to show this here.';
+      renderList('#stats-referrers', [], why);
+      renderList('#stats-countries', [], why);
+      renderList('#stats-browsers', [], why);
+      renderList('#stats-pages', [], why);
     }
 
     var footnote = $('#stats-footnote');
