@@ -497,15 +497,15 @@ body.hero-fluid-off .hero:before {
 }
 
 .footer-visitors {
-  color: var(--muted);
+  color: #c3cee1;
   font-family: var(--mono);
   font-size: .68rem;
   letter-spacing: .06em;
   text-transform: uppercase;
 }
 
-.footer-visitors strong { color: var(--ink); }
-.footer-visitors i { color: var(--accent); }
+.footer-visitors strong { color: var(--lime); }
+.footer-visitors i { color: var(--cyan); }
 
 .stats-toggle {
   align-items: center;
@@ -737,3 +737,22 @@ body.stats-open { overflow: hidden; }
   .hero-contact-label { display: none; }
   .hero-contact a { grid-template-columns: 16px minmax(0, 1fr); }
 }
+
+/* ========================================================================== *
+ *  Newsletter subscribe button
+ * ========================================================================== */
+
+.button-newsletter {
+  background: linear-gradient(120deg, var(--accent), var(--violet), var(--cyan));
+  box-shadow: 0 10px 28px rgba(138, 0, 229, .3);
+  color: #fff;
+  transition: box-shadow .22s, filter .22s, transform .22s;
+}
+
+.button-newsletter:hover {
+  color: #fff;
+  filter: brightness(1.1) saturate(1.12);
+  transform: translateY(-2px);
+}
+
+.about-newsletter { margin-top: 1.4rem; }
