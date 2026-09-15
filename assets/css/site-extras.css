@@ -1,0 +1,739 @@
+/*!
+ * site-extras.css — additions for the hero contact strip, companies/clients
+ * logo wall, full contact channel list and the private visitor stats panel.
+ * Loaded after modern.css so it can lean on the existing design tokens.
+ */
+
+/* ========================================================================== *
+ *  Header (horizontal 76px top bar, per modern.css)
+ *
+ *  The bar lays out as: logo | nav | resume. Anything wider than the free
+ *  space pushes the nav off-centre, so the employer line lives under the
+ *  Resume button and the wider contact details live in the hero + contact
+ *  sections instead.
+ * ========================================================================== */
+
+.header-cta {
+  align-items: flex-end;
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: .22rem;
+}
+
+.header-tagline {
+  color: #9fb0c9;
+  font-family: var(--mono);
+  font-size: .56rem;
+  letter-spacing: .05em;
+  margin: 0;
+  text-align: right;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.header-tagline strong { color: var(--lime); }
+
+/* Medium desktops: tighten the nav so all items fit on one line */
+@media (min-width: 1200px) and (max-width: 1499px) {
+  .header { gap: 1rem; padding: 0 clamp(.75rem, 2vw, 2rem); }
+  .header .logo h1 { font-size: 1.2rem; }
+  .header .navmenu { margin-left: auto; }
+  .header .navmenu ul { gap: 0; }
+  .header .navmenu a { font-size: .72rem; padding: .45rem .5rem; }
+  .header-resume { font-size: .7rem; padding: .5rem .7rem; }
+  .header-tagline { display: none; }
+}
+
+/* modern.css switches to the hamburger menu below 1200px (where it also hides
+   the nav), so the employer/Resume block is only useful above that */
+@media (max-width: 1199px) {
+  .header-cta { display: none; }
+}
+
+/* ========================================================================== *
+ *  Hero: let the fluid canvas show through the backdrop
+ *
+ *  The canvas (#fluid) is fixed across the whole viewport at z-index 1, but
+ *  .hero sits above it at z-index 2 with three opaque layers on top: a dark
+ *  gradient (.hero:before) and the boxed hero image. That is why the fluid is
+ *  invisible here but shows through the translucent sections below.
+ *
+ *  A blend mode on its own cannot fix this: the canvas and the hero are both
+ *  positioned siblings, the hero wins on z-index, and everything inside the
+ *  hero paints above the canvas. So this lifts the canvas above the hero for
+ *  the hero's band only, using a fixed mask, and screen-blends it so the ink
+ *  of the backdrop survives.
+ *
+ *  TUNE THESE (or add class "hero-fluid-off" to <body> to switch it off):
+ * ========================================================================== */
+
+.hero {
+  --hero-fluid-fade: 32%;      /* height of the soft fade-out at the bottom */
+  --fluid-saturate: 1.5;       /* lift the pale dye so it reads on white too */
+  --fluid-contrast: 1.08;
+  --hero-img-opacity: .34;     /* lower = more fluid through the hero image */
+  --hero-veil-left: .9;        /* dark column behind the headline text */
+  --hero-veil-right: .42;      /* right side, where the fluid gets to breathe */
+}
+
+/* Glow over the hero band, then fade out so lower sections keep the plain
+   canvas.
+ *
+ * BLENDING — `screen` only ever brightens, so it looks great over the dark
+ * hero but disappears over the light sections (brightening white gives white).
+ * The default is therefore NORMAL compositing, which keeps the fluid's own
+ * colour visible on both light and dark backgrounds. A filter re-saturates it
+ * to compensate for the dye being fairly pale.
+ *
+ * To compare other modes, set data-fluid-blend on <body>:
+ *   <body class="index-page" data-fluid-blend="screen">     bright on dark
+ *   <body class="index-page" data-fluid-blend="multiply">   dark on light
+ *   <body class="index-page" data-fluid-blend="difference"> inverts both ways
+ */
+body > .fluid-canvas {
+  -webkit-mask-image: linear-gradient(to bottom,
+      #000 0,
+      #000 calc(100% - var(--hero-fluid-fade, 32%)),
+      transparent 100%);
+  mask-image: linear-gradient(to bottom,
+      #000 0,
+      #000 calc(100% - var(--hero-fluid-fade, 32%)),
+      transparent 100%);
+  filter: saturate(var(--fluid-saturate, 1.5)) contrast(var(--fluid-contrast, 1.08));
+  mix-blend-mode: normal;
+  z-index: 3;
+}
+
+/* Optional blend modes, opt-in via <body data-fluid-blend="…"> */
+body[data-fluid-blend="screen"] > .fluid-canvas { mix-blend-mode: screen; }
+body[data-fluid-blend="multiply"] > .fluid-canvas { mix-blend-mode: multiply; }
+body[data-fluid-blend="difference"] > .fluid-canvas { mix-blend-mode: difference; }
+body[data-fluid-blend="overlay"] > .fluid-canvas { mix-blend-mode: overlay; }
+
+/* The hero backdrop drops back so the fluid reads through it */
+.hero > img {
+  filter: brightness(.5) contrast(1.05) saturate(1.1);
+  opacity: var(--hero-img-opacity);
+}
+
+/* Readable on the left, open on the right */
+.hero:before {
+  background: linear-gradient(
+    90deg,
+    rgba(8, 11, 24, var(--hero-veil-left)) 0%,
+    rgba(8, 11, 24, calc(var(--hero-veil-left) - .08)) 42%,
+    rgba(8, 11, 24, var(--hero-veil-right)) 100%
+  );
+}
+
+/* The copy panel keeps enough ink of its own to hold the text legible */
+.hero-copy {
+  background: linear-gradient(120deg, rgba(8, 11, 24, .95), rgba(8, 11, 24, .74));
+}
+
+/* Escape hatch: add class "hero-fluid-off" to <body> to compare, or delete
+   this whole block to remove the effect entirely. */
+body.hero-fluid-off > .fluid-canvas {
+  -webkit-mask-image: none;
+  mask-image: none;
+  filter: none;
+  mix-blend-mode: normal;
+  z-index: 1;
+}
+body.hero-fluid-off .hero > img { filter: brightness(.32) contrast(1.15) saturate(.75); opacity: .68; }
+body.hero-fluid-off .hero:before {
+  background: linear-gradient(90deg, rgba(8,11,24,.92) 0%, rgba(8,11,24,.88) 55%, rgba(8,11,24,.68) 100%);
+}
+
+/* ========================================================================== *
+ *  Hero: current employer badge, contact strip, core stack
+ * ========================================================================== */
+
+.hero-current {
+  align-items: center;
+  background: rgba(199, 154, 255, .12);
+  border: 1px solid rgba(199, 154, 255, .38);
+  color: #eef2fb;
+  display: inline-flex;
+  flex-wrap: wrap;
+  font-family: var(--body);
+  font-size: .82rem;
+  gap: .45rem;
+  margin: .2rem 0 1.05rem;
+  padding: .5rem .8rem;
+}
+
+.hero-current i { color: var(--lime); }
+.hero-current strong { color: #fff; }
+
+.hero-current-years {
+  background: var(--lime);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  padding: .15rem .4rem;
+  text-transform: uppercase;
+}
+
+/* Two tidy columns rather than a stretched auto-fit row */
+.hero-contact {
+  display: grid;
+  gap: .5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style: none;
+  margin: 1.75rem 0 0;
+  max-width: 600px;
+  padding: 0;
+}
+
+.hero-contact a {
+  align-items: center;
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .16);
+  color: #e8eefb;
+  display: grid;
+  gap: 0 .6rem;
+  grid-template-columns: 18px minmax(0, auto) minmax(0, 1fr);
+  height: 100%;
+  padding: .6rem .75rem;
+  transition: background .22s, border-color .22s, transform .22s;
+}
+
+.hero-contact a:hover {
+  background: rgba(199, 154, 255, .16);
+  border-color: var(--lime);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.hero-contact i { color: var(--lime); flex-shrink: 0; font-size: 1rem; line-height: 1; }
+
+.hero-contact-label {
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hero-contact-value {
+  font-size: .74rem;
+  font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hero-stack {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem 1rem;
+  margin: 0 0 2.25rem;
+  max-width: 600px;
+}
+
+.hero-stack-title {
+  color: #a8b6cd;
+  font-family: var(--mono);
+  font-size: .6rem;
+  letter-spacing: .12em;
+  padding-top: .35rem;
+  text-transform: uppercase;
+}
+
+.hero-stack ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-stack li {
+  border: 1px solid rgba(255, 255, 255, .2);
+  color: #dbe4f4;
+  font-family: var(--body);
+  font-size: .7rem;
+  font-weight: 600;
+  padding: .25rem .55rem;
+}
+
+.hero-stack li:hover {
+  border-color: var(--lime);
+  color: var(--lime);
+}
+
+/* Hero proof row now carries four figures */
+.hero-proof { flex-wrap: wrap; }
+
+/* ========================================================================== *
+ *  Companies & clients — logo wall
+ * ========================================================================== */
+
+.companies { background: var(--paper); padding: 4.5rem 0; }
+
+/* Tiles keep a consistent width; the row that has fewer items is centred, so
+   no tile gets left alone and stretched */
+.company-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.company-item {
+  flex: 1 1 168px;
+  max-width: 210px;
+  min-width: 152px;
+}
+
+/* On wide screens reserve five columns so the nine marks sit as 5 + 4, centred */
+@media (min-width: 1240px) {
+  .company-item { flex: 0 1 calc((100% - 4rem) / 5); }
+}
+
+/* Each cell is a white tile holding just the brand mark */
+.company-logo-card {
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+  height: 100%;
+  justify-content: center;
+  min-height: 140px;
+  padding: 1.35rem 1rem;
+  position: relative;
+  transition: border-color .25s, box-shadow .25s, transform .25s;
+}
+
+.company-logo-card:hover {
+  border-color: var(--accent);
+  box-shadow: 6px 6px 0 rgba(138, 0, 229, .16);
+  transform: translate(-3px, -3px);
+}
+
+.company-item.is-current .company-logo-card { border-color: rgba(138, 0, 229, .5); }
+
+/* The actual logo. Fixed box keeps every mark optically the same size. */
+.company-mark {
+  display: block;
+  height: 46px;
+  max-width: 100%;
+  object-fit: contain;
+  width: auto;
+}
+
+.company-name {
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-align: center;
+}
+
+.company-fallback {
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.company-current {
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--mono);
+  font-size: .54rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  padding: .2rem .45rem;
+  text-transform: uppercase;
+}
+
+.company-note {
+  color: var(--muted);
+  font-size: .72rem;
+  margin: 1.4rem 0 0;
+}
+
+/* ========================================================================== *
+ *  Contact section
+ *
+ *  main.css leaves the info rows on the template's Roboto default while body
+ *  copy elsewhere uses Plus Jakarta Sans, which reads as a mismatch. Pin one
+ *  family and weight scale across the whole section.
+ * ========================================================================== */
+
+.contact {
+  font-family: var(--body);
+}
+
+.contact .section-title p,
+.contact .info-item p,
+.contact .info-item p a,
+.contact .info-note p {
+  font-family: var(--body);
+  font-size: .88rem;
+  font-weight: 400;
+  line-height: 1.65;
+}
+
+.contact .info-item h3 {
+  font-family: var(--display);
+  font-size: .92rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.contact .info-item p a { font-weight: 600; }
+
+.contact label {
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: .74rem;
+  font-weight: 700;
+}
+
+.contact .form-control,
+.contact .editor-content,
+.contact select.form-control {
+  font-family: var(--body);
+  font-size: .85rem;
+  font-weight: 400;
+}
+
+.contact-channels {
+  display: grid;
+  gap: .8rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  list-style: none;
+  margin: 0 0 3rem;
+  padding: 0;
+}
+
+.channel-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  color: inherit;
+  display: grid;
+  gap: .25rem;
+  height: 100%;
+  padding: 1.1rem;
+  transition: border-color .22s, box-shadow .22s, transform .22s;
+}
+
+.channel-card:hover {
+  border-color: var(--accent);
+  box-shadow: 6px 6px 0 rgba(138, 0, 229, .14);
+  transform: translate(-3px, -3px);
+}
+
+.channel-card > i { color: var(--accent); font-size: 1.35rem; margin-bottom: .35rem; }
+
+.channel-label {
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* Readable, not shouty: body family at a normal weight */
+.channel-value {
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: .85rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.channel-meta {
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: .72rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.info-sep { color: var(--muted); margin: 0 .35rem; }
+
+/* ========================================================================== *
+ *  Footer: legal line + stats controls
+ * ========================================================================== */
+
+.footer-legal {
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: .72rem;
+  margin: 1rem 0 0;
+  text-align: center;
+}
+
+.footer-legal a { color: var(--accent); }
+
+.footer-stats {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.footer-visitors {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.footer-visitors strong { color: var(--ink); }
+.footer-visitors i { color: var(--accent); }
+
+.stats-toggle {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  cursor: pointer;
+  display: inline-flex;
+  font-family: var(--body);
+  font-size: .7rem;
+  font-weight: 700;
+  gap: .4rem;
+  padding: .4rem .9rem;
+  transition: border-color .22s, color .22s;
+}
+
+.stats-toggle:hover { border-color: var(--accent); color: var(--accent); }
+.stats-toggle i { color: var(--accent); }
+
+body.stats-open { overflow: hidden; }
+
+/* ========================================================================== *
+ *  Private visitor + traffic-source panel
+ * ========================================================================== */
+
+.stats-panel {
+  inset: 0;
+  position: fixed;
+  z-index: 1100;
+}
+
+.stats-panel-backdrop {
+  background: rgba(8, 11, 24, .72);
+  inset: 0;
+  position: absolute;
+}
+
+.stats-panel-dialog {
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  inset: 0;
+  margin: auto;
+  max-height: min(92vh, 940px);
+  max-width: 1080px;
+  overflow-y: auto;
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+  position: relative;
+  z-index: 1;
+}
+
+.stats-panel-head {
+  align-items: flex-start;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+}
+
+.stats-panel-head h2 {
+  font-family: var(--display);
+  font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+  font-weight: 800;
+  letter-spacing: -.04em;
+  margin: .3rem 0 .35rem;
+}
+
+.stats-panel-sub { color: var(--muted); font-size: .82rem; margin: 0; }
+
+.stats-panel-close {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  cursor: pointer;
+  flex-shrink: 0;
+  height: 38px;
+  transition: background .22s, color .22s;
+  width: 38px;
+}
+
+.stats-panel-close:hover { background: var(--ink); color: #fff; }
+
+.stats-cards {
+  display: grid;
+  gap: .8rem;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+}
+
+.stats-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  display: grid;
+  gap: .2rem;
+  padding: 1rem 1.1rem;
+}
+
+.stats-card-label {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: .58rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.stats-card strong {
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -.05em;
+  line-height: 1.05;
+}
+
+.stats-card-meta { color: var(--muted); font-size: .7rem; }
+
+.stats-columns {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.stats-block {
+  background: #fff;
+  border: 1px solid var(--line);
+  padding: 1.1rem;
+}
+
+.stats-block h3 {
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  font-family: var(--display);
+  font-size: .95rem;
+  font-weight: 800;
+  gap: .5rem;
+  letter-spacing: -.02em;
+  margin: 0 0 .8rem;
+  padding-bottom: .6rem;
+}
+
+.stats-block h3 i { color: var(--accent); }
+
+.stats-list { display: grid; gap: .45rem; list-style: none; margin: 0; padding: 0; }
+
+.stats-row {
+  align-items: center;
+  display: grid;
+  gap: .55rem;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  padding-bottom: .35rem;
+  position: relative;
+}
+
+.stats-row > i { color: var(--accent); font-size: .9rem; }
+
+.stats-row-body { display: grid; min-width: 0; }
+
+.stats-row-label {
+  color: var(--ink);
+  font-size: .8rem;
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stats-row-sub {
+  color: var(--muted);
+  font-size: .66rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stats-row-count {
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: .78rem;
+  font-weight: 700;
+}
+
+.stats-row-bar {
+  background: linear-gradient(90deg, var(--violet), var(--cyan));
+  bottom: 0;
+  height: 2px;
+  left: 0;
+  position: absolute;
+  width: var(--stats-fill, 0%);
+}
+
+.stats-empty {
+  color: var(--muted);
+  font-size: .78rem;
+  font-style: italic;
+}
+
+.stats-block-note { color: var(--muted); font-size: .68rem; margin: .8rem 0 0; }
+
+.stats-panel-foot {
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .72rem;
+  padding-top: 1rem;
+}
+
+.stats-panel-foot p { margin: 0 0 .4rem; }
+.stats-panel-foot code { color: var(--accent); }
+.stats-panel-foot a { color: var(--accent); font-weight: 700; }
+
+@media (max-width: 767px) {
+  .stats-panel-dialog { max-height: 100vh; }
+  .hero-current { font-size: .74rem; }
+  .hero-contact { max-width: none; }
+  .hero-contact a { grid-template-columns: 16px minmax(0, auto) minmax(0, 1fr); padding: .55rem .6rem; }
+  .hero-contact-value { font-size: .68rem; }
+  .hero-stack { max-width: none; }
+  .company-item { flex-basis: 150px; min-width: 140px; }
+  .company-logo-card { min-height: 118px; padding: 1rem .75rem; }
+  .company-mark { height: 34px; }
+  .company-name { font-size: .66rem; }
+}
+
+@media (max-width: 479px) {
+  .hero-contact { gap: .4rem; }
+  .hero-contact-label { display: none; }
+  .hero-contact a { grid-template-columns: 16px minmax(0, 1fr); }
+}
