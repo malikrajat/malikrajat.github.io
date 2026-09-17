@@ -1,0 +1,525 @@
+/*!
+ * webgl-lab.css — presentation for the "Interactive 3D Scene" section.
+ *
+ * Loaded after modern.css and site-extras.css, so it inherits the page's design
+ * tokens (--ink, --lime, --accent, --cyan, --violet, --display, --body, --mono)
+ * and reads as part of the same system.
+ *
+ * Layout is a two-column grid: the canvas takes the hero position and the
+ * control/telemetry column sits beside it. On a laptop that means a recruiter
+ * sees the render and the numbers together, with nothing to click first.
+ *
+ * The stage is deliberately dark and slightly inset so it reads as a viewport
+ * into another space rather than a flat panel on the page.
+ */
+
+#webgl-lab { position: relative; }
+
+/* Stacking, and why this rule exists.
+ *
+ * The page runs a fixed, full-viewport fluid canvas (#fluid) that reacts to the
+ * cursor. Site-wide it sits at z-index 3, while the generic .section > .container
+ * rule only reaches z-index 2 — so the fluid paints *over* every section's
+ * content. On a page of text that reads as a nice interactive wash. Over the 3D
+ * stage it does not: the trails land on top of the render as coloured smudges
+ * and haze, which is exactly the "why is it blurry" effect this section is
+ * meant to avoid.
+ *
+ * Lifting this section's own containers above the fluid keeps the canvas clean
+ * and leaves the rest of the page untouched. 5 is above the fluid (3) and still
+ * below the site header. */
+#webgl-lab > .container { z-index: 5; }
+
+/* ========================================================================== *
+ *  Section intro
+ * ========================================================================== */
+
+.lab-head {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+  justify-content: space-between;
+  margin: 0 auto 2.25rem;
+  max-width: 1180px;
+  padding: 0 1rem;
+}
+
+.lab-head-copy { max-width: 780px; }
+
+.lab-eyebrow {
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: .66rem;
+  letter-spacing: .16em;
+  margin: 0 0 .7rem;
+  text-transform: uppercase;
+}
+
+.lab-head h2 {
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(2rem, 4.4vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -.07em;
+  line-height: 1.02;
+  margin: 0 0 1rem;
+}
+
+.lab-head h2 em { color: var(--accent); font-style: normal; }
+
+.lab-lede {
+  color: var(--muted);
+  font-size: 1rem;
+  margin: 0 0 .85rem;
+  max-width: 70ch;
+}
+
+.lab-lede strong { color: var(--ink); font-weight: 700; }
+.lab-lede:last-child { margin-bottom: 0; }
+
+/* Live engine status. The dot's colour is driven by data-state, which the
+ * controller updates as the renderer starts, pauses or fails. */
+.lab-status {
+  align-items: center;
+  align-self: flex-start;
+  background: #fff;
+  border: 1px solid var(--line);
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: .5rem .7rem;
+  padding: .55rem .8rem;
+}
+
+.lab-status-dot {
+  background: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+}
+
+.lab-status[data-state="ready"] .lab-status-dot { animation: lab-pulse 2.6s ease-out infinite; background: #16b06a; }
+.lab-status[data-state="paused"] .lab-status-dot { background: #d7a12a; }
+.lab-status[data-state="lost"] .lab-status-dot,
+.lab-status[data-state="unavailable"] .lab-status-dot { animation: none; background: #d64545; }
+
+@keyframes lab-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(22, 176, 106, .55); }
+  70%  { box-shadow: 0 0 0 10px rgba(22, 176, 106, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(22, 176, 106, 0); }
+}
+
+.lab-status-text {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: .64rem;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.lab-status-text strong { color: var(--ink); font-style: normal; font-weight: 700; }
+
+/* ========================================================================== *
+ *  Shell
+ * ========================================================================== */
+
+.lab-shell {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: minmax(0, 1.85fr) minmax(290px, 1fr);
+  margin: 0 auto;
+  max-width: 1180px;
+  padding: 0 1rem;
+}
+
+/* ========================================================================== *
+ *  The stage — canvas plus overlay chrome
+ * ========================================================================== */
+
+.lab-stage {
+  background:
+    radial-gradient(120% 100% at 25% 8%, #1b1247 0%, #0a0f24 46%, #04060e 100%);
+  border: 1px solid rgba(255, 255, 255, .1);
+  /* The pointer is the input device for the cube, so the cursor says so. A drag
+     still orbits, and the cursor swaps to grabbing for the duration. */
+  cursor: crosshair;
+  height: clamp(360px, 50vw, 620px);
+  isolation: isolate;
+  overflow: hidden;
+  position: relative;
+  /* Touch belongs to the orbit control. Without this the browser claims the
+     gesture for scrolling and the camera never receives a move event. */
+  touch-action: none;
+  user-select: none;
+  /* The page runs a fixed full-viewport fluid canvas at z-index 3. The stage
+     must sit above it or the render gets washed out by the fluid's screen
+     blend. 4 is above the fluid (3) and below the header (100). */
+  z-index: 4;
+}
+
+.lab-stage.is-dragging { cursor: grabbing; }
+
+.lab-stage:focus-visible {
+  border-color: var(--lime);
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
+
+.lab-canvas {
+  display: block;
+  height: 100%;
+  inset: 0;
+  position: absolute;
+  width: 100%;
+}
+
+/* No WebGL2: keep a styled backdrop and a readable note, never a black hole. */
+.lab-stage.is-fallback .lab-canvas { display: none; }
+
+.lab-stage.is-fallback::after {
+  background:
+    repeating-linear-gradient(115deg, rgba(199, 154, 255, .10) 0 2px, transparent 2px 9px),
+    radial-gradient(60% 50% at 50% 55%, rgba(138, 0, 229, .18), transparent 70%);
+  content: "";
+  inset: 0;
+  position: absolute;
+}
+
+/* --- overlay ------------------------------------------------------------- */
+
+.lab-overlay {
+  inset: 0;
+  pointer-events: none;   /* the canvas keeps the pointer; controls opt back in */
+  position: absolute;
+  z-index: 2;
+}
+
+.lab-overlay > * { pointer-events: auto; }
+
+.lab-hud {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+  left: 1rem;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.lab-chip {
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background: rgba(8, 11, 24, .6);
+  border: 1px solid rgba(255, 255, 255, .14);
+  color: #e6ecfa;
+  display: inline-flex;
+  font-family: var(--mono);
+  font-size: .62rem;
+  gap: .4rem;
+  letter-spacing: .06em;
+  padding: .32rem .6rem;
+  text-transform: uppercase;
+}
+
+.lab-chip i { color: var(--lime); font-size: .8rem; }
+.lab-chip strong { color: #fff; font-weight: 700; }
+.lab-chip strong.is-low { color: #ff9d8a; }
+.lab-chip.is-live strong { color: var(--lime); }
+
+.lab-hint {
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background: rgba(8, 11, 24, .6);
+  border: 1px solid rgba(255, 255, 255, .14);
+  color: #cbd6ea;
+  display: none;
+  font-family: var(--mono);
+  font-size: .6rem;
+  gap: .45rem;
+  letter-spacing: .05em;
+  margin-left: auto;
+  padding: .32rem .6rem;
+  text-transform: uppercase;
+}
+
+.lab-hint kbd {
+  background: rgba(255, 255, 255, .13);
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: 3px;
+  color: #fff;
+  font-family: var(--mono);
+  font-size: .58rem;
+  padding: .05rem .3rem;
+}
+
+/* Hover readout, bottom-left. */
+.lab-cursor {
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background: rgba(8, 11, 24, .55);
+  border: 1px solid rgba(255, 255, 255, .12);
+  bottom: 1rem;
+  color: #aebbd0;
+  display: inline-flex;
+  font-family: var(--mono);
+  font-size: .62rem;
+  gap: .45rem;
+  left: 1rem;
+  letter-spacing: .06em;
+  padding: .3rem .55rem;
+  position: absolute;
+  text-transform: uppercase;
+}
+
+.lab-cursor i { color: var(--cyan); }
+.lab-cursor strong { color: #fff; font-weight: 700; }
+.lab-cursor strong.is-idle { color: #7f8ba1; font-weight: 400; }
+.lab-cursor-sep { opacity: .45; }
+
+/* The live position of the cube, read from the renderer's own transform. */
+.lab-cursor [data-readout-pos] { color: var(--cyan); }
+.lab-cursor [data-readout-pos].is-idle { color: #7f8ba1; font-weight: 400; }
+
+/* ========================================================================== *
+ *  Control column
+ * ========================================================================== */
+
+.lab-panel {
+  background: #fff;
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  gap: 1.05rem;
+  padding: 1.1rem;
+}
+
+.lab-block + .lab-block {
+  border-top: 1px solid var(--line);
+  padding-top: 1.05rem;
+}
+
+.lab-block-label {
+  align-items: center;
+  color: var(--muted);
+  display: flex;
+  font-family: var(--mono);
+  font-size: .6rem;
+  gap: .4rem;
+  letter-spacing: .13em;
+  margin: 0 0 .6rem;
+  text-transform: uppercase;
+}
+
+.lab-block-label i { color: var(--accent); font-size: .8rem; }
+
+/* --- live telemetry ------------------------------------------------------ */
+
+.lab-stats {
+  display: grid;
+  gap: .4rem .8rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0;
+}
+
+.lab-stat {
+  background: var(--paper);
+  border-left: 2px solid var(--accent);
+  padding: .45rem .55rem;
+}
+
+.lab-stat dt {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: .55rem;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.lab-stat dd {
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: .82rem;
+  font-weight: 700;
+  margin: .12rem 0 0;
+}
+
+.lab-stat dd.is-low { color: #c0392b; }
+
+/* --- toggles ------------------------------------------------------------- */
+
+.lab-toggles {
+  display: grid;
+  gap: .35rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.lab-toggle {
+  align-items: center;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  font-family: var(--body);
+  font-size: .68rem;
+  font-weight: 700;
+  gap: .35rem;
+  justify-content: center;
+  padding: .45rem .4rem;
+  transition: background .18s, border-color .18s, color .18s;
+}
+
+.lab-toggle i { font-size: .85rem; }
+.lab-toggle:hover { border-color: var(--accent); }
+
+/* Unselected state is explicit: muted, hollow, clearly off. */
+.lab-toggle[aria-pressed="true"] {
+  background: rgba(138, 0, 229, .1);
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.lab-toggle[aria-pressed="true"] i { color: var(--accent); }
+
+/* --- quality select ------------------------------------------------------ */
+
+.lab-select-row {
+  align-items: center;
+  display: flex;
+  gap: .6rem;
+  justify-content: space-between;
+}
+
+.lab-select-row label {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: .6rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.lab-select {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  cursor: pointer;
+  font-family: var(--body);
+  font-size: .72rem;
+  font-weight: 700;
+  padding: .35rem .5rem;
+}
+
+.lab-select:hover { border-color: var(--accent); }
+
+/* --- technical chips + actions ------------------------------------------- */
+
+.lab-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .28rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lab-tech li {
+  border: 1px solid var(--line);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: .56rem;
+  letter-spacing: .04em;
+  padding: .18rem .4rem;
+  text-transform: uppercase;
+}
+
+.lab-tech li:hover { border-color: var(--accent); color: var(--accent); }
+
+.lab-actions {
+  display: grid;
+  gap: .4rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: .7rem;
+}
+
+.lab-action {
+  align-items: center;
+  background: var(--ink);
+  border: 1px solid var(--ink);
+  color: #fff;
+  display: inline-flex;
+  font-family: var(--body);
+  font-size: .7rem;
+  font-weight: 700;
+  gap: .35rem;
+  justify-content: center;
+  padding: .5rem .45rem;
+  text-align: center;
+  transition: background .18s, border-color .18s, transform .18s;
+}
+
+.lab-action i { color: var(--lime); }
+.lab-action:hover { background: var(--accent); border-color: var(--accent); color: #fff; transform: translateY(-2px); }
+.lab-action:hover i { color: #fff; }
+
+.lab-action.is-ghost { background: transparent; color: var(--ink); }
+.lab-action.is-ghost i { color: var(--accent); }
+.lab-action.is-ghost:hover { background: var(--accent); color: #fff; }
+.lab-action.is-ghost:hover i { color: #fff; }
+.lab-action.is-ghost.is-active { background: rgba(138, 0, 229, .12); border-color: var(--accent); }
+
+.lab-note {
+  background: var(--paper);
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.6;
+  margin: .7rem 0 0;
+  padding: .55rem .65rem;
+}
+
+.lab-note[hidden] { display: none; }
+
+/* ========================================================================== *
+ *  Responsive
+ * ========================================================================== */
+
+@media (max-width: 991px) {
+  .lab-shell { grid-template-columns: minmax(0, 1fr); }
+  .lab-stage { height: clamp(320px, 66vw, 470px); }
+}
+
+@media (max-width: 575px) {
+  .lab-head { align-items: flex-start; flex-direction: column; }
+  .lab-hud { gap: .3rem; left: .6rem; right: .6rem; top: .6rem; }
+  .lab-chip { font-size: .54rem; padding: .26rem .42rem; }
+  /* The chip row becomes noise on a phone; keep the four that matter. */
+  .lab-hud .lab-chip:nth-child(n + 5) { display: none; }
+  .lab-cursor {
+    bottom: .6rem;
+    flex-wrap: wrap;
+    font-size: .55rem;
+    left: .6rem;
+    max-width: calc(100% - 1.2rem);
+  }
+  /* The position matters most; the yaw readout is the first to go. */
+  .lab-cursor [data-readout-rot],
+  .lab-cursor .lab-cursor-sep { display: none; }
+  .lab-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lab-toggles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Keyboard hint is only useful where a keyboard is likely. */
+@media (hover: hover) and (min-width: 1100px) {
+  .lab-hint { display: inline-flex; }
+}
+
+/* ========================================================================== *
+ *  Reduced motion
+ * ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .lab-status[data-state="ready"] .lab-status-dot { animation: none; }
+  .lab-action:hover { transform: none; }
+}

@@ -48,6 +48,8 @@
   <link href="assets/css/main.css" rel="stylesheet">
   <link href="assets/css/modern.css?v=20260911-7" rel="stylesheet">
   <link href="assets/css/site-extras.css?v=3" rel="stylesheet">
+  <link href="assets/css/webgl-lab.css?v=1789658400" rel="stylesheet">
+
 
 
 </head>
@@ -100,6 +102,7 @@
         <li><a href="#stats"><i class="bi bi-graph-up navicon"></i> Stats</a></li>
         <li><a href="#library"><i class="bi bi-book navicon"></i> Libraries &amp; Tools </a></li>
         <li><a href="#talks"><i class="bi bi-mic-fill navicon"></i> Talks</a></li>
+        <li><a href="#webgl-lab"><i class="bi bi-badge-3d navicon"></i> 3D Scene</a></li>
         <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
         <li><a href="#services"><i class="bi bi-newspaper navicon"></i> Writing </a></li>
         <li><a href="#testimonials"><i class="bi bi-chat-quote navicon"></i> Testimonials</a></li>
@@ -958,6 +961,157 @@
 
     </section>
     <!-- /Resume Section -->
+
+    <!-- ==================================================================
+         Interactive 3D Scene — hand-written WebGL renderer, no 3D library.
+         Renderer: assets/js/webgl-scene.js · Controller: assets/js/webgl-lab.js
+         Styles:   assets/css/webgl-lab.css
+         ================================================================== -->
+    <section class="webgl-lab section" id="webgl-lab">
+
+      <div class="container lab-head" data-aos="fade-up">
+        <div class="lab-head-copy">
+          <p class="lab-eyebrow">3D &amp; WebGL &middot; Technical demonstration</p>
+          <h2>Interactive 3D Scene, <em>rendered live in your browser.</em></h2>
+          <p class="lab-lede">
+            A real-time <strong>WebGL</strong> experience demonstrating 3D rendering, lighting, animation, camera
+            controls, interaction and performance optimisation &mdash; written by hand against the raw API, with no
+            three.js, no build step and nothing fetched from a CDN.
+          </p>
+          <p class="lab-lede">
+            One cube, twelve triangles, four draw calls a frame: two directional lights, a fresnel rim, a contact
+            shadow and a procedural grid, plus a point light that tracks your cursor. Move the pointer and the cube
+            travels after it, turning into the direction it is going. Drag to orbit, scroll to zoom, click to spin.
+          </p>
+        </div>
+
+        <p class="lab-status" data-state="idle" role="status">
+          <span class="lab-status-dot" aria-hidden="true"></span>
+          <span class="lab-status-text"><strong data-stat-state>Starting renderer</strong></span>
+        </p>
+      </div>
+
+      <div class="container lab-shell">
+
+        <!-- ---------------------------------------------------- the canvas -->
+        <div class="lab-stage" tabindex="0" role="application"
+          aria-label="Interactive 3D scene. One lit cube floating over a grid floor. Move the pointer to steer the cube through the space, drag to orbit the camera, scroll to zoom, click to spin the cube, or use the arrow keys to nudge it. A control panel beside the canvas reports the live frame rate and draw calls.">
+          <canvas class="lab-canvas" aria-hidden="true"></canvas>
+
+          <div class="lab-overlay">
+
+            <div class="lab-hud">
+              <span class="lab-chip"><i class="bi bi-speedometer2" aria-hidden="true"></i>
+                <strong data-stat-fps>&mdash;</strong></span>
+              <span class="lab-chip"><i class="bi bi-layers" aria-hidden="true"></i>
+                <strong data-stat-drawcalls>0</strong> calls</span>
+              <span class="lab-chip"><i class="bi bi-diagram-3" aria-hidden="true"></i>
+                <strong data-stat-triangles>0</strong> tris</span>
+              <span class="lab-chip"><i class="bi bi-grid-1x2" aria-hidden="true"></i>
+                <strong data-stat-res>&mdash;</strong></span>
+              <span class="lab-chip"><i class="bi bi-cpu" aria-hidden="true"></i>
+                <strong data-stat-backend>WebGL</strong></span>
+              <span class="lab-hint">
+                <kbd>move</kbd> steer <kbd>drag</kbd> orbit <kbd>scroll</kbd> zoom <kbd>click</kbd> spin
+              </span>
+            </div>
+
+            <p class="lab-cursor">
+              <i class="bi bi-crosshair" aria-hidden="true"></i>
+              <span>Cube at</span>
+              <strong data-readout-pos class="is-idle">x 0.00 &middot; y 0.98 &middot; z 0.00</strong>
+              <span class="lab-cursor-sep" aria-hidden="true">&middot;</span>
+              <strong data-readout-rot>yaw 0.00&deg;</strong>
+            </p>
+
+          </div>
+        </div>
+
+        <!-- ------------------------------------------------- the controls -->
+        <aside class="lab-panel" aria-label="Scene controls and live rendering statistics">
+
+          <div class="lab-block">
+            <p class="lab-block-label"><i class="bi bi-activity" aria-hidden="true"></i> This frame, measured</p>
+            <dl class="lab-stats">
+              <div class="lab-stat"><dt>Frame rate</dt><dd data-stat-fps>&mdash;</dd></div>
+              <div class="lab-stat"><dt>Frame time</dt><dd data-stat-frametime>&mdash;</dd></div>
+              <div class="lab-stat"><dt>Draw calls</dt><dd data-stat-drawcalls>0</dd></div>
+              <div class="lab-stat"><dt>Scene triangles</dt><dd data-stat-triangles>0</dd></div>
+              <div class="lab-stat"><dt>Objects</dt><dd>1</dd></div>
+              <div class="lab-stat"><dt>Render scale</dt><dd data-stat-scale>100%</dd></div>
+              <div class="lab-stat"><dt>Buffer</dt><dd data-stat-res>&mdash;</dd></div>
+              <div class="lab-stat"><dt>Renderer</dt><dd data-stat-backend>WebGL</dd></div>
+            </dl>
+            <p class="lab-note" data-lab-note hidden></p>
+          </div>
+
+          <div class="lab-block">
+            <p class="lab-block-label"><i class="bi bi-box" aria-hidden="true"></i> The mesh</p>
+            <dl class="lab-stats">
+              <div class="lab-stat"><dt>Cube triangles</dt><dd data-stat-cubetris>12</dd></div>
+              <div class="lab-stat"><dt>Cube vertices</dt><dd data-stat-cubeverts>24</dd></div>
+              <div class="lab-stat"><dt>Material</dt><dd data-stat-material>Blinn-Phong</dd></div>
+              <div class="lab-stat"><dt>Metallic</dt><dd data-stat-metal>0.28</dd></div>
+              <div class="lab-stat"><dt>Roughness</dt><dd data-stat-rough>0.26</dd></div>
+              <div class="lab-stat"><dt>Draw calls</dt><dd>4</dd></div>
+            </dl>
+          </div>
+
+          <div class="lab-block">
+            <p class="lab-block-label"><i class="bi bi-sliders" aria-hidden="true"></i> Renderer features</p>
+            <div class="lab-toggles">
+              <button class="lab-toggle" type="button" data-toggle="spin" aria-pressed="true">
+                <i class="bi bi-arrow-clockwise" aria-hidden="true"></i> Auto-spin</button>
+              <button class="lab-toggle" type="button" data-toggle="cursorLight" aria-pressed="true">
+                <i class="bi bi-brightness-high" aria-hidden="true"></i> Cursor light</button>
+              <button class="lab-toggle" type="button" data-toggle="grid" aria-pressed="true">
+                <i class="bi bi-grid-3x3" aria-hidden="true"></i> Floor grid</button>
+              <button class="lab-toggle" type="button" data-toggle="shadow" aria-pressed="true">
+                <i class="bi bi-circle-half" aria-hidden="true"></i> Contact shadow</button>
+              <button class="lab-toggle" type="button" data-pause aria-pressed="false">
+                <i class="bi bi-pause" aria-hidden="true"></i> Pause</button>
+            </div>
+
+            <div class="lab-select-row" style="margin-top:.7rem">
+              <label for="lab-quality">Resolution</label>
+              <select class="lab-select" id="lab-quality" data-quality>
+                <option value="sharp">Sharp</option>
+                <option value="balanced" selected>Balanced</option>
+                <option value="light">Light</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="lab-block">
+            <p class="lab-block-label"><i class="bi bi-cpu" aria-hidden="true"></i> Under the hood</p>
+            <ul class="lab-tech">
+              <li>WebGL</li>
+              <li>GLSL</li>
+              <li>Single mesh</li>
+              <li>Blinn-Phong</li>
+              <li>Fresnel rim</li>
+              <li>Cursor point light</li>
+              <li>Procedural grid</li>
+              <li>Contact shadow</li>
+              <li>MSAA</li>
+              <li>Adaptive resolution</li>
+              <li>4 draw calls</li>
+              <li>Zero dependencies</li>
+            </ul>
+
+            <div class="lab-actions">
+              <button class="lab-action is-ghost" type="button" data-reset>
+                <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i> Reset view</button>
+              <a class="lab-action" href="https://github.com/malikrajat/malikrajat.github.io" target="_blank"
+                rel="noopener"><i class="bi bi-filetype-js" aria-hidden="true"></i> Source on GitHub</a>
+            </div>
+          </div>
+
+        </aside>
+
+      </div>
+
+    </section><!-- /Interactive 3D Scene -->
 
     <!-- Talks Section -->
     <section class="talks section light-background" id="talks">
@@ -2597,6 +2751,8 @@
   <!-- Main JS File -->
   <script src="assets/js/fluid-background.js?v=20260911-3"></script>
   <script src="assets/js/companies.js?v=1"></script>
+  <script src="assets/js/webgl-scene.js?v=1789658400"></script>
+  <script src="assets/js/webgl-lab.js?v=1789658400"></script>
   <script src="assets/js/site.js?v=1"></script>
   <script src="assets/js/main.js?v=20260911-2"></script>
 
