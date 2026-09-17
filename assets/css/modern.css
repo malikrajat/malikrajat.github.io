@@ -65,7 +65,7 @@ a { color:inherit; } a:hover { color:inherit; }
 .talks .card,.services .service-item { background:#fff; border:1px solid var(--line); border-radius:0; box-shadow:none; height:100%; padding:.7rem; transition:transform .25s,box-shadow .25s; }.talks .card:hover,.services .service-item:hover { box-shadow:8px 8px 0 var(--violet); transform:translate(-4px,-4px); }.talks .card-body { padding:1.4rem; }
 .talks .card-title,.services .title { color:var(--ink); font-family:var(--display); font-size:1.05rem; font-weight:700; }.talk-meta { color:var(--muted); font-family:var(--mono); font-size:.7rem; }.talk-meta i { color:var(--violet); }
 .portfolio .isotope-filters { display:flex; flex-wrap:wrap; gap:.55rem; justify-content:center; list-style:none; margin:0 0 2rem; padding:0; }.portfolio .isotope-filters li { border:1px solid var(--line); cursor:pointer; font-size:.7rem; font-weight:800; letter-spacing:.05em; padding:.55rem .85rem; text-transform:uppercase; }
-.portfolio .isotope-filters li.filter-active,.portfolio .isotope-filters li:hover { background:var(--ink); border-color:var(--ink); color:#fff; }.portfolio .portfolio-content { background:var(--ink); overflow:hidden; position:relative; }.portfolio .portfolio-content img { aspect-ratio:16/10; object-fit:cover; transition:transform .45s; width:100%; }.portfolio .portfolio-content:hover img { opacity:.35; transform:scale(1.07); }
+.portfolio .isotope-filters li.filter-active,.portfolio .isotope-filters li:hover { background:var(--ink); border-color:var(--ink); color:#fff; }.portfolio .portfolio-content { background:var(--ink); overflow:hidden; position:relative; }.portfolio .portfolio-content img { aspect-ratio:2/1; background:var(--ink); display:block; object-fit:contain; transition:transform .45s; width:100%; }.portfolio .portfolio-content:hover img { opacity:.35; transform:scale(1.07); }
 .portfolio .portfolio-info { background:linear-gradient(0deg,rgba(10,16,32,.98),rgba(10,16,32,.15)); bottom:0; color:#fff; left:0; opacity:0; padding:3.5rem 1.5rem 1.4rem; position:absolute; right:0; transform:translateY(15px); transition:.3s; }.portfolio .portfolio-content:hover .portfolio-info { opacity:1; transform:translateY(0); }
 .portfolio .portfolio-info h4 { color:#fff; font-family:var(--display); font-weight:700; }.portfolio .portfolio-info p { color:#d5ddec; font-size:.78rem; line-height:1.45; }.portfolio .portfolio-info a { color:var(--lime); font-size:1.2rem; margin-right:.8rem; }
 .services { background:rgba(255,255,255,.16); }.services .icon { align-items:center; background:var(--lime); display:flex; height:46px; justify-content:center; margin-right:1rem; padding:.5rem; width:46px; }.services .description { color:var(--muted); font-size:.85rem; }
@@ -115,3 +115,14 @@ a { color:inherit; } a:hover { color:inherit; }
 .contact .info-wrap > iframe { display:block; flex:0 0 auto; height:270px !important; }
 .contact .info-note p { font-size:.85rem; line-height:1.5; color:color-mix(in srgb,var(--ink) 70%,transparent); }
 .contact .info-item:last-of-type { border-bottom:0; margin-bottom:0; padding-bottom:0; }
+
+/* Libraries & Tools / Portfolio cards: below lg the copy can no longer be reached by hover, so the
+   name, description and links render as a readable panel underneath the screenshot instead. */
+@media (max-width:991px) {
+  .portfolio .portfolio-content .portfolio-info { background:var(--ink); bottom:auto; left:auto; opacity:1; padding:1.1rem 1.15rem 1.25rem; position:static; right:auto; top:auto; transform:none; }
+  .portfolio .portfolio-content .portfolio-info h4 { margin-bottom:.4rem; }
+  .portfolio .portfolio-content .portfolio-info p { bottom:auto; color:#d5ddec; left:auto; margin:.5rem 0; position:static; right:auto; text-align:left; }
+  .portfolio .portfolio-content .portfolio-info .preview-link,
+  .portfolio .portfolio-content .portfolio-info .details-link { color:var(--lime); display:inline-block; font-size:1.05rem; left:auto; margin:0 .9rem 0 0; position:static; top:auto; }
+  .portfolio .portfolio-content:hover img { opacity:1; transform:none; }
+}
