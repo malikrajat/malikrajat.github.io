@@ -1,0 +1,71 @@
+# Rajat Malik
+
+> Rajat Malik is a senior lead software engineer and frontend architect based in
+> Gurgaon, India. He leads frontend delivery at Siemens and has spent more than
+> 15 years building enterprise web products across energy, mobility, parcel and
+> telecom domains. He is an Angular and React specialist, the creator of 30+
+> open-source libraries, extensions and developer tools, and a technical writer
+> of 150+ articles.
+
+Canonical page: https://rajatmalik.dev/
+Contact: contact@rajatmalik.dev
+
+## Key facts
+
+- **Current role:** Senior Lead Software Engineer at Siemens.
+- **Experience:** 15+ years in software delivery, including 6+ years in energy
+  automation.
+- **Specialisms:** Angular, React, TypeScript, micro-frontends, design systems,
+  web performance, accessibility.
+- **Open source:** 30+ published libraries and tools, including Angular
+  components, PDF tooling, a JavaScript sandbox, a VS Code extension and Chrome
+  extensions.
+- **Writing:** 150+ technical articles on Medium, DEV Community, Hashnode and
+  Substack.
+- **Talks and recognition:** technical talks, and recognition at Product Jam 2025
+  for AI-powered prototyping.
+- **Availability:** open to senior or lead frontend roles.
+- **Location:** Gurgaon, India.
+
+## What the page contains
+
+- Overview and role fit
+- Skills, grouped by fundamentals, frameworks and UI, architecture and quality,
+  and delivery and tooling
+- Professional experience and education
+- Companies and clients
+- Open-source libraries and developer tools, with links to npm and GitHub
+- Technical talks
+- Portfolio and case studies
+- Writing and articles
+- Testimonials
+- Contact details and a downloadable resume
+
+## Selected projects
+
+- **DeepWork** - a free, local-first focus timer and task manager for desktop and
+  browser: https://deepwork.rajatmalik.dev/
+- **TracePulse** - framework-agnostic request monitoring and performance
+  observability.
+- **rm-ng-editor**, **rm-ng-typeahead**, **rm-ng-dynamic-layout**,
+  **rm-ng-pdf-viewer**, **rm-ng-export-to-csv** and other Angular libraries,
+  published on npm under the `@codewithrajat` and `rm-` scopes.
+- **readLoude** - a Chrome extension that reads a page aloud with word-by-word
+  highlighting.
+- **dead-css-cleaner** - a VS Code extension that finds and removes unused CSS.
+
+## Links
+
+- LinkedIn: https://www.linkedin.com/in/errajatmalik/
+- GitHub: https://github.com/malikrajat
+- npm: https://www.npmjs.com/~rajatmalik
+- Medium: https://medium.com/@codewithrajat
+- DEV: https://dev.to/codewithrajat
+- Substack: https://codewithrajat.substack.com/
+- X: https://twitter.com/er_rajatmalik
+- Resume: https://rajatmalik.dev/assets/Rajat-JS-React-Angular.pdf
+
+## Related sites
+
+- DeepWork product page: https://deepwork.rajatmalik.dev/
+- DeepWork web app: https://app.deepwork.rajatmalik.dev/

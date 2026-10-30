@@ -1,0 +1,154 @@
+<!--
+  ============================================================================
+  Formspree contact form — portable drop-in
+  ============================================================================
+  HOW IT WORKS (same as rajatmalik.dev):
+    The <form action> points at a Formspree endpoint. Formspree stores the
+    submission server-side and emails it to the inbox that owns that form ID.
+    There is NO backend, NO PHP, NO SMTP credentials in the page.
+
+  TO USE ON ANOTHER SITE:
+    1. Create a form at https://formspree.io  ->  you get an endpoint like
+       https://formspree.io/f/abcdwxyz
+    2. Replace REPLACE_WITH_NEW_FORM_ID below (or the whole action URL).
+    3. Verify the destination inbox in Formspree (first submission sends a
+       confirmation email; click it once).
+    4. Optional: also put your email in `email` -> Formspree uses it as
+       Reply-To, so you can hit "Reply" and answer the sender directly.
+
+  SPECIAL FIELD NAMES Formspree understands (all optional):
+    email      -> becomes Reply-To
+    _subject   -> email subject line
+    _next      -> URL to redirect to after a plain (non-AJAX) submit
+    _gotcha    -> hidden honeypot; bots fill it, humans never see it
+  Everything else is just rendered into the email body.
+
+  TWO SUBMIT MODES — pick one:
+    A) Plain POST (what rajatmalik.dev does today): remove the <script> at the
+       bottom and the `data-ajax` attribute. The browser navigates to
+       formspree.io and shows their thank-you page.
+    B) AJAX POST (the <script> below): stays on the page, shows an inline
+       success/error banner. Requires Formspree's JSON API — a header, not a
+       config change.
+-->
+
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 mx-auto">
+
+        <form id="contact-form"
+              action="https://formspree.io/f/REPLACE_WITH_NEW_FORM_ID"
+              method="post"
+              data-ajax="true"
+              class="contact-form">
+
+          <div class="row gy-4">
+
+            <div class="col-md-6">
+              <label class="pb-2" for="cf-name">Your Name</label>
+              <input class="form-control" id="cf-name" name="name" type="text" required>
+            </div>
+
+            <div class="col-md-6">
+              <label class="pb-2" for="cf-email">Your Email</label>
+              <input class="form-control" id="cf-email" name="email" type="email" required>
+            </div>
+
+            <div class="col-md-12">
+              <label class="pb-2" for="cf-subject">Subject</label>
+              <input class="form-control" id="cf-subject" name="_subject" type="text" required>
+            </div>
+
+            <!-- Honeypot: hidden from humans, tempting to bots. Leave empty. -->
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"
+                   style="position:absolute;left:-9999px;opacity:0;height:0;width:0;"
+                   aria-hidden="true">
+
+            <div class="col-md-12">
+              <label class="pb-2" for="cf-message">Message</label>
+              <textarea class="form-control" id="cf-message" name="message"
+                        rows="6" required></textarea>
+            </div>
+
+            <div class="col-12 text-center">
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </div>
+
+          </div>
+
+          <!-- Inline status feedback (AJAX mode only) -->
+          <p class="form-status mt-3 text-center" role="status" aria-live="polite" hidden></p>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  'use strict';
+
+  var form = document.getElementById('contact-form');
+  if (!form || form.dataset.ajax !== 'true') return;
+
+  var status = form.querySelector('.form-status');
+  var button = form.querySelector('button[type="submit"]');
+  var buttonLabel = button ? button.textContent : '';
+
+  function setStatus(message, isError) {
+    if (!status) return;
+    status.hidden = !message;
+    status.textContent = message || '';
+    status.style.color = isError ? '#d93025' : '#1a7f37';
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    setStatus('');
+
+    // Native validation (required / type=email) still applies.
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    if (button) {
+      button.disabled = true;
+      button.textContent = 'Sending…';
+    }
+
+    var data = new FormData(form);
+
+    fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { Accept: 'application/json' }   // <- the magic header for AJAX mode
+    })
+      .then(function (response) {
+        if (response.ok) {
+          form.reset();
+          setStatus('Thanks — your message is on its way. I usually reply within one business day.', false);
+          return;
+        }
+        // Formspree returns { errors: [{ field, message }] }
+        return response.json().then(function (payload) {
+          var detail = (payload && payload.errors)
+            ? payload.errors.map(function (e) { return e.message; }).join(', ')
+            : 'Something went wrong.';
+          setStatus(detail, true);
+        });
+      })
+      .catch(function () {
+        setStatus('Network error — please email me directly instead.', true);
+      })
+      .then(function () {
+        if (button) {
+          button.disabled = false;
+          button.textContent = buttonLabel;
+        }
+      });
+  });
+})();
+</script>
