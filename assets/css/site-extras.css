@@ -756,3 +756,177 @@ body.stats-open { overflow: hidden; }
 }
 
 .about-newsletter { margin-top: 1.4rem; }
+
+/* ========================================================================== *
+ *  Products — the sites and apps Rajat owns and runs
+ *
+ *  Two cards per row on desktop, one below lg. The card reuses the site-wide
+ *  card pattern (white panel, 1px --line border, offset shadow on hover) so the
+ *  section reads as part of the same system as Libraries & Tools and Portfolio,
+ *  while the 16:9 screenshot gives each product a real face.
+ * ========================================================================== */
+
+.products {
+  background: rgba(255, 255, 255, .32) !important;
+}
+
+.products .product-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  transition: box-shadow .25s, transform .25s;
+}
+
+.products .product-card:hover {
+  box-shadow: 8px 8px 0 var(--accent);
+  transform: translate(-4px, -4px);
+}
+
+.products .product-shot {
+  background: var(--ink);
+  display: block;
+  margin: 0;
+  overflow: hidden;
+}
+
+.products .product-shot img {
+  aspect-ratio: 16 / 9;
+  display: block;
+  height: auto;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* DailyMilk has no screenshot of its own yet, so it gets a branded tile rather
+   than another product's image */
+.products .product-shot-placeholder {
+  align-items: center;
+  aspect-ratio: 16 / 9;
+  background: radial-gradient(120% 120% at 15% 10%, #2b1a4d 0%, #080b18 58%), var(--ink);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+}
+
+.products .product-shot-placeholder > i {
+  color: var(--cyan);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.products .product-monogram {
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 3.4vw, 2.15rem);
+  font-weight: 800;
+  letter-spacing: -.05em;
+}
+
+.products .product-monogram-sub {
+  color: #b9c4d7;
+  font-family: var(--mono);
+  font-size: .64rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.products .product-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: .55rem;
+  padding: 1.5rem clamp(1.2rem, 3vw, 1.7rem) 1.6rem;
+}
+
+.products .product-kicker {
+  align-items: baseline;
+  color: var(--accent);
+  display: flex;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: .66rem;
+  font-weight: 700;
+  gap: .5rem;
+  letter-spacing: .1em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.products .product-host {
+  color: var(--muted);
+  font-size: .64rem;
+  font-weight: 400;
+  letter-spacing: .02em;
+  overflow-wrap: anywhere;
+  text-transform: none;
+}
+
+.products .product-body h3 {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -.045em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.products .product-summary {
+  color: var(--muted);
+  font-size: .87rem;
+  line-height: 1.65;
+  margin: 0;
+}
+
+.products .product-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  list-style: none;
+  margin: .2rem 0 .1rem;
+  padding: 0;
+}
+
+.products .product-tags li {
+  border: 1px solid var(--line);
+  color: #4a5872;
+  font-family: var(--mono);
+  font-size: .6rem;
+  letter-spacing: .05em;
+  padding: .18rem .45rem;
+  text-transform: uppercase;
+}
+
+.products .product-actions {
+  align-items: center;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem 1.1rem;
+  margin-top: auto;
+  padding-top: .95rem;
+}
+
+.products .product-actions a {
+  align-items: center;
+  color: var(--accent);
+  display: inline-flex;
+  font-size: .78rem;
+  font-weight: 800;
+  gap: .35rem;
+  text-decoration: none;
+}
+
+.products .product-actions a:hover,
+.products .product-actions a:focus-visible { color: var(--ink); }
+
+.products .product-actions a i { font-size: .92rem; }
+
+@media (max-width: 991px) {
+  .products .product-body { padding: 1.3rem 1.2rem 1.4rem; }
+}

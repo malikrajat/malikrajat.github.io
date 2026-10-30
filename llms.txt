@@ -35,6 +35,7 @@ Contact: contact@rajatmalik.dev
 - Professional experience and education
 - Companies and clients
 - Open-source libraries and developer tools, with links to npm and GitHub
+- Products he owns and runs, with links to each live site
 - Technical talks
 - Portfolio and case studies
 - Writing and articles
@@ -45,6 +46,9 @@ Contact: contact@rajatmalik.dev
 
 - **DeepWork** - a free, local-first focus timer and task manager for desktop and
   browser: https://deepwork.rajatmalik.dev/
+- **DailyMilk** - a dairy operations dashboard for milk delivery logistics and
+  stock management, built with Angular signals:
+  https://dailymilk.rajatmalik.dev/
 - **TracePulse** - framework-agnostic request monitoring and performance
   observability.
 - **rm-ng-editor**, **rm-ng-typeahead**, **rm-ng-dynamic-layout**,
@@ -67,5 +71,7 @@ Contact: contact@rajatmalik.dev
 
 ## Related sites
 
+- Portfolio site: https://rajatmalik.dev/
 - DeepWork product page: https://deepwork.rajatmalik.dev/
 - DeepWork web app: https://app.deepwork.rajatmalik.dev/
+- DailyMilk: https://dailymilk.rajatmalik.dev/
