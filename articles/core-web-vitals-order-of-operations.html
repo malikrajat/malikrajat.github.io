@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Core Web Vitals in 2026: the order of operations that moves the needle | Rajat Malik</title>
+  <meta name="description"
+    content="LCP, INP and CLS reward different fixes. A practical order of operations for Core Web Vitals in 2026, with field-data checks, framework specifics and regression guards.">
+  <link href="https://rajatmalik.dev/articles/core-web-vitals-order-of-operations.html" rel="canonical">
+  <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots">
+  <meta content="Rajat Malik" name="author">
+  <meta content="#080b18" name="theme-color">
+  <meta content="ca-pub-4991682021863699" name="google-adsense-account">
+
+  <meta content="Core Web Vitals in 2026: the order of operations that moves the needle" property="og:title">
+  <meta
+    content="LCP, INP and CLS reward different fixes. A practical sequence for deciding what to work on first."
+    property="og:description">
+  <meta content="https://rajatmalik.dev/articles/core-web-vitals-order-of-operations.html" property="og:url">
+  <meta content="article" property="og:type">
+  <meta content="Rajat Malik" property="og:site_name">
+  <meta content="en" property="og:locale">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" property="og:image">
+  <meta content="840" property="og:image:width">
+  <meta content="400" property="og:image:height">
+  <meta content="Core Web Vitals" property="og:image:alt">
+  <meta content="2026-11-17" property="article:published_time">
+  <meta content="Rajat Malik" property="article:author">
+  <meta content="Performance" property="article:section">
+  <meta content="summary_large_image" name="twitter:card">
+  <meta content="@er_rajatmalik" name="twitter:site">
+  <meta content="@er_rajatmalik" name="twitter:creator">
+  <meta content="Core Web Vitals in 2026: the order of operations" name="twitter:title">
+  <meta content="LCP, INP and CLS reward different fixes. A practical sequence for deciding what to work on first."
+    name="twitter:description">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" name="twitter:image">
+
+  <meta content="lTgQD1uJlZUR7Iqd2vCEJ54on_Gtxdhb-zX2o-NGDJQ" name="google-site-verification">
+
+  <script src="/assets/js/consent-defaults.js"></script>
+  <script async crossorigin="anonymous"
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4991682021863699"></script>
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K533LRTH"></script>
+  <script>
+    gtag('js', new Date());
+  </script>
+
+  <link href="/assets/img/favicon.ico" rel="icon" sizes="any">
+  <link href="/assets/img/icon-192.png" rel="icon" sizes="192x192" type="image/png">
+  <link href="/assets/img/icon-512.png" rel="icon" sizes="512x512" type="image/png">
+  <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+  <link href="/manifest.webmanifest" rel="manifest">
+  <link href="/feed.xml" rel="alternate" title="Rajat Malik — articles and notes" type="application/rss+xml">
+
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,400&amp;family=Poppins:wght@0,300;0,400;0,500;0,600;0,700&amp;family=Raleway:wght@300;400;500;600;700&amp;family=DM+Mono&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Syne:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet">
+
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/css/main.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/modern.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/site-extras.css?v=5" rel="stylesheet">
+  <link href="/assets/css/pages.css?v=4" rel="stylesheet">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "@id": "https://rajatmalik.dev/articles/core-web-vitals-order-of-operations.html#article",
+          "mainEntityOfPage": "https://rajatmalik.dev/articles/core-web-vitals-order-of-operations.html",
+          "headline": "Core Web Vitals in 2026: the order of operations that moves the needle",
+          "description": "LCP, INP and CLS reward different fixes. A practical order of operations for Core Web Vitals in 2026, with field-data checks, framework specifics and regression guards.",
+          "datePublished": "2026-11-17",
+          "dateModified": "2026-11-17",
+          "inLanguage": "en",
+          "articleSection": "Performance",
+          "keywords": "Core Web Vitals, LCP, INP, CLS, field data, web performance",
+          "image": "https://rajatmalik.dev/assets/img/post.png",
+          "author": { "@id": "https://rajatmalik.dev/#person" },
+          "publisher": { "@id": "https://rajatmalik.dev/#person" },
+          "isPartOf": { "@id": "https://rajatmalik.dev/articles/#page" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://rajatmalik.dev/#person",
+          "name": "Rajat Malik",
+          "url": "https://rajatmalik.dev/",
+          "jobTitle": "Senior Lead Software Engineer",
+          "worksFor": { "@type": "Organization", "name": "Siemens" },
+          "sameAs": [
+            "https://www.linkedin.com/in/errajatmalik/",
+            "https://github.com/malikrajat"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://rajatmalik.dev/articles/core-web-vitals-order-of-operations.html#breadcrumb",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://rajatmalik.dev/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://rajatmalik.dev/articles/" },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Core Web Vitals: order of operations",
+              "item": "https://rajatmalik.dev/articles/core-web-vitals-order-of-operations.html"
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+</head>
+
+<body class="page-body">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="header dark-background" id="header">
+    <i aria-controls="navmenu" aria-expanded="false" aria-label="Open menu"
+      class="header-toggle d-xl-none bi bi-list" role="button" tabindex="0"></i>
+    <a class="logo d-flex align-items-center justify-content-center" href="/">
+      <span class="sitename">Rajat Malik</span>
+    </a>
+    <nav aria-label="Primary" class="navmenu" id="navmenu">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a aria-current="page" href="/articles/">Articles</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a class="header-resume" download href="/assets/Rajat-JS-React-Angular.pdf">Resume <i
+          class="bi bi-arrow-down-right"></i></a>
+      <p class="header-tagline">Senior Lead Software Engineer at <strong>Siemens</strong></p>
+    </div>
+  </header>
+
+  <main class="page-main" id="main-content">
+    <section class="page-hero">
+      <div class="page-wrap">
+        <nav aria-label="Breadcrumb" class="breadcrumbs">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/articles/">Articles</a></li>
+            <li><span aria-current="page">Core Web Vitals</span></li>
+          </ol>
+        </nav>
+        <p class="page-eyebrow">Web performance &middot; Core Web Vitals</p>
+        <h1>Core Web Vitals in 2026: the order of operations that moves the needle</h1>
+        <p class="page-lede">LCP, INP and CLS measure different parts of the experience, so they respond to
+          different fixes. Working on them in the wrong order is how teams spend a quarter and move one number.</p>
+        <div class="article-meta">
+          <span><i class="bi bi-person"></i> Rajat Malik</span>
+          <span><i class="bi bi-calendar3"></i> 17 November 2026</span>
+          <span><i class="bi bi-clock"></i> 10 min read</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="page-wrap page-narrow">
+        <nav aria-label="On this page" class="toc" data-toc>
+          <p class="toc-title">On this page</p>
+        </nav>
+
+        <article class="prose">
+          <p>Core Web Vitals are field metrics: they describe what real visitors experienced, not what a lab
+            tool scored on a fast laptop. The three current metrics have been stable since Interaction to Next Paint
+            replaced First Input Delay in March 2024, and the thresholds are well known:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Good</th>
+                <th>What it measures</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>LCP &mdash; Largest Contentful Paint</td>
+                <td>&le; 2.5 s</td>
+                <td>When the largest visible element in the viewport finished rendering.</td>
+              </tr>
+              <tr>
+                <td>INP &mdash; Interaction to Next Paint</td>
+                <td>&le; 200 ms</td>
+                <td>How quickly the page responds to taps, clicks and key presses, across the visit.</td>
+              </tr>
+              <tr>
+                <td>CLS &mdash; Cumulative Layout Shift</td>
+                <td>&le; 0.1</td>
+                <td>How much visible content moved unexpectedly.</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>&ldquo;Good&rdquo; means the 75th percentile of real page views meets the threshold, segmented by
+            mobile and desktop. Averages hide the slowest quarter of your users, which is usually the quarter that
+            matters.</p>
+
+          <h2>1. Confirm the problem in field data first</h2>
+          <p>Before touching code, answer three questions:</p>
+          <ul>
+            <li><strong>Which template is failing?</strong> A site-wide LCP number is an average of very different
+              pages. Break it down by route or page type.</li>
+            <li><strong>Which device class?</strong> Mobile field data is usually the constraint; a fix that only
+              helps desktop is not a fix.</li>
+            <li><strong>Which metric is actually failing?</strong> Teams often assume LCP and spend weeks on images
+              while INP is the metric below threshold.</li>
+          </ul>
+          <p>Use the Chrome UX Report for a public baseline, and your own RUM for the detail. In the lab, reproduce
+            with CPU and network throttling that resembles a mid-tier phone, not a developer machine.</p>
+
+          <h2>2. Fix LCP before micro-optimising anything</h2>
+          <p>LCP is a timeline with four parts: time to first byte, resource load delay, resource load duration and
+            element render delay. Find which part dominates for the failing page:</p>
+          <ul>
+            <li><strong>Slow TTFB:</strong> fix the server, caching or CDN. Client-side changes cannot compensate for
+              an origin that takes two seconds to answer.</li>
+            <li><strong>Late resource discovery:</strong> the LCP image is often referenced from CSS, injected by
+              JavaScript, or lazy-loaded by mistake. Put it in the initial HTML, preload it, and set
+              <code>fetchpriority="high"</code>.</li>
+            <li><strong>Long load duration:</strong> compress and resize the image, serve AVIF or WebP, and avoid
+              sending a 2400&nbsp;px asset to a 390&nbsp;px viewport.</li>
+            <li><strong>Render delay:</strong> render-blocking CSS and JavaScript, web fonts, and client-side
+              rendering all push the paint later. Reduce critical CSS, defer non-critical scripts and consider SSR or
+              prerendering for content pages.</li>
+          </ul>
+          <p>A common own goal is lazy-loading the hero image. Lazy loading below-the-fold media is good; lazy
+            loading the element that defines LCP adds a round trip at exactly the wrong moment.</p>
+
+          <h2>3. Then attack INP</h2>
+          <p>INP is about responsiveness, and the usual cause is main-thread work: long tasks, expensive rendering,
+            heavy event handlers, hydration, and third-party scripts. The fix is to do less work per interaction and
+            to yield when you cannot.</p>
+          <ul>
+            <li><strong>Break up long tasks.</strong> Chunk large computations, and yield to the browser between
+              chunks so input can be processed.</li>
+            <li><strong>Move work off the main thread.</strong> Parsing, diffing and sorting large datasets belong in
+              a web worker.</li>
+            <li><strong>Reduce render scope.</strong> In Angular, use OnPush and signals; in React, memoise
+              deliberately and avoid re-rendering an entire table for one cell.</li>
+            <li><strong>Virtualise long lists.</strong> The DOM cost of 2,000 rows is paid on every interaction, not
+              just on load.</li>
+            <li><strong>Audit third parties.</strong> Chat widgets, tag managers, A/B testing and consent tooling can
+              own more main-thread time than the application. Load them after interaction or not at all.</li>
+            <li><strong>Watch hydration.</strong> A large client-rendered tree hydrating during the first tap makes a
+              fast server look slow. Use partial or incremental hydration where the framework supports it.</li>
+          </ul>
+          <div class="callout">
+            <p><strong>Test with real interactions.</strong> Click the primary action on a throttled device and
+              record a trace. If the interaction handler, framework work and paint together exceed 200&nbsp;ms, you
+              have found the work to remove.</p>
+          </div>
+
+          <h2>4. Treat CLS as a layout contract</h2>
+          <p>Layout shift is largely preventable with discipline:</p>
+          <ul>
+            <li>Always set <code>width</code> and <code>height</code> (or an aspect ratio) on images and video.</li>
+            <li>Reserve space for ads, embeds, banners and anything injected after load. An ad slot that collapses
+              and expands is a CLS machine.</li>
+            <li>Use <code>font-display: swap</code> with a metric-compatible fallback, or preload the font, to reduce
+              reflow when the web font arrives.</li>
+            <li>Do not insert content above existing content after it has rendered. Prefer a skeleton that matches the
+              final size.</li>
+            <li>Animate with <code>transform</code> and <code>opacity</code>, not properties that trigger layout.</li>
+          </ul>
+
+          <h2>5. Deal with third parties separately</h2>
+          <p>Third-party scripts deserve their own budget. A tag manager can add dozens of tags that no frontend
+            engineer reviews. Measure the cost of each one, remove what is not earning its place, and load the rest
+            asynchronously or after the first interaction. For advertising and consent, reserve the space and use the
+            provider&rsquo;s supported consent integration rather than improvising with timers.</p>
+
+          <h2>6. Do not optimise for a perfect lab score</h2>
+          <p>A Lighthouse 100 is a useful signal, not the goal. The lab run cannot see your users&rsquo; devices,
+            networks, caches or real interaction patterns. Use it for attribution and regression detection; use field
+            data to decide whether the product actually improved.</p>
+
+          <h2>7. Guard the result</h2>
+          <ul class="checklist">
+            <li>A performance budget in CI for the initial JavaScript and the LCP resource.</li>
+            <li>RUM alerts on p75 LCP and INP, by route and device class.</li>
+            <li>A pull-request question: does this add a blocking script, a font, an image without dimensions, or a
+              dependency on the critical path?</li>
+            <li>A quarterly review of third parties, with the default answer being removal.</li>
+            <li>Before/after field data recorded for every performance initiative, so the next decision is based on
+              evidence rather than opinion.</li>
+          </ul>
+
+          <p>The order matters because the metrics have different causes. Fix the origin and the LCP resource first,
+            then responsiveness, then layout stability. Do that with field data in front of you, and the numbers
+            move for reasons you can explain &mdash; which is also how you keep them from sliding back.</p>
+
+          <div class="callout">
+            <p><strong>Related reading:</strong> the framework-level checklist in
+              <a href="/articles/angular-performance-checklist.html">The Angular performance checklist</a> and the
+              component-level quality checks in the
+              <a href="/articles/wcag-2-2-component-checklist.html">WCAG 2.2 checklist</a>.</p>
+          </div>
+        </article>
+
+        <aside class="author-box">
+          <img alt="Rajat Malik" height="68" src="/assets/img/my-profile-img.jpg" width="68">
+          <div>
+            <h2>Written by Rajat Malik</h2>
+            <p>Senior Lead Software Engineer at Siemens and frontend architect with 15+ years building enterprise web
+              products. I write about Angular, React, performance, accessibility and the engineering practices around
+              them.</p>
+            <div class="author-links">
+              <a href="/about.html">About</a>
+              <a href="https://www.linkedin.com/in/errajatmalik/" rel="noopener" target="_blank">LinkedIn</a>
+              <a href="https://github.com/malikrajat" rel="noopener" target="_blank">GitHub</a>
+              <a href="mailto:contact@rajatmalik.dev">Email</a>
+            </div>
+          </div>
+        </aside>
+
+        <nav aria-label="More articles" class="article-nav">
+          <a href="/articles/angular-performance-checklist.html">
+            <span>Previous</span>
+            <strong>The Angular performance checklist</strong>
+          </a>
+          <a href="/articles/wcag-2-2-component-checklist.html">
+            <span>Next</span>
+            <strong>A WCAG 2.2 checklist for component libraries</strong>
+          </a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer light-background position-relative" id="footer">
+    <div class="container">
+      <nav aria-label="Footer" class="footer-nav">
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a aria-current="page" href="/articles/">Articles</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy-policy.html">Privacy policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/feed.xml">RSS</a>
+        <a href="https://www.google.com/settings/ads" rel="noopener" target="_blank">Ad settings</a>
+        <a href="/privacy-policy.html#california">Do not sell or share</a>
+        <button data-cookie-settings type="button">Cookie settings</button>
+      </nav>
+      <div class="copyright text-center">
+        <a class="medium" href="https://medium.com/@codewithrajat" rel="noopener" target="_blank" title="Medium"><i
+            class="bi bi-medium"></i></a>
+        <a class="linkedin" href="https://www.linkedin.com/in/errajatmalik/" rel="noopener" target="_blank"
+          title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a class="twitter" href="https://twitter.com/er_rajatmalik" rel="noopener" target="_blank" title="X"><i
+            class="bi bi-twitter-x"></i></a>
+        <a class="Github" href="https://github.com/malikrajat" rel="noopener" target="_blank" title="GitHub"><i
+            class="bi bi-github"></i></a>
+      </div>
+      <p class="footer-legal">&copy; <span data-year>2026</span> Rajat Malik &middot; Senior Lead Software Engineer at
+        Siemens &middot; <a href="mailto:contact@rajatmalik.dev">contact@rajatmalik.dev</a></p>
+    </div>
+  </footer>
+
+  <a class="scroll-top d-flex align-items-center justify-content-center" href="#"><i class="bi bi-arrow-up-short"
+      aria-hidden="true"></i><span class="visually-hidden">Back to top</span></a>
+
+  <script src="/assets/js/pages.js"></script>
+  <script src="/assets/js/consent.js"></script>
+</body>
+
+</html>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  One page, so one URL. The rest of the site is in-page sections (#skills,
-  #resume, #library, #talks, #portfolio, #contact), which are the same document
-  and must not be listed separately.
+  Every indexable URL on rajatmalik.dev. In-page sections (#skills, #resume,
+  #library, #talks, #portfolio, #contact) are the same document and are not
+  listed separately.
 
   `lastmod` is the day the page's content last changed, not the day this file
   was written.
@@ -10,8 +10,74 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://rajatmalik.dev/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://rajatmalik.dev/about.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rajatmalik.dev/articles/</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://rajatmalik.dev/articles/angular-performance-checklist.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rajatmalik.dev/articles/micro-frontend-boundaries.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rajatmalik.dev/articles/core-web-vitals-order-of-operations.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rajatmalik.dev/articles/design-systems-that-survive.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rajatmalik.dev/articles/ai-assisted-frontend-development.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rajatmalik.dev/articles/wcag-2-2-component-checklist.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://rajatmalik.dev/contact.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://rajatmalik.dev/privacy-policy.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://rajatmalik.dev/terms.html</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>

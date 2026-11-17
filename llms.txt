@@ -9,25 +9,28 @@
 
 Canonical page: https://rajatmalik.dev/
 Contact: contact@rajatmalik.dev
+Articles: https://rajatmalik.dev/articles/
+RSS: https://rajatmalik.dev/feed.xml
+Last updated: 2026-11-17
 
 ## Key facts
 
 - **Current role:** Senior Lead Software Engineer at Siemens.
 - **Experience:** 15+ years in software delivery, including 6+ years in energy
-  automation.
+  automation. Previously Siemens Energy and HCL.
 - **Specialisms:** Angular, React, TypeScript, micro-frontends, design systems,
   web performance, accessibility.
 - **Open source:** 30+ published libraries and tools, including Angular
   components, PDF tooling, a JavaScript sandbox, a VS Code extension and Chrome
   extensions.
 - **Writing:** 150+ technical articles on Medium, DEV Community, Hashnode and
-  Substack.
+  Substack, plus original in-depth articles on this site.
 - **Talks and recognition:** technical talks, and recognition at Product Jam 2025
   for AI-powered prototyping.
 - **Availability:** open to senior or lead frontend roles.
-- **Location:** Gurgaon, India.
+- **Location:** Gurgaon, Haryana, India.
 
-## What the page contains
+## What the home page contains
 
 - Overview and role fit
 - Skills, grouped by fundamentals, frameworks and UI, architecture and quality,
@@ -41,6 +44,45 @@ Contact: contact@rajatmalik.dev
 - Writing and articles
 - Testimonials
 - Contact details and a downloadable resume
+
+## Original articles on this site
+
+All six are original, long-form articles written for rajatmalik.dev. Each one
+states the problem, the approach, the trade-offs and how to verify the result.
+
+- **The Angular performance checklist I run before every release** — budgets,
+  field data, change detection, lazy loading, `@defer`, images, runtime leaks
+  and regression guards.
+  https://rajatmalik.dev/articles/angular-performance-checklist.html
+- **Where micro-frontend boundaries should actually go** — ownership-based
+  splitting, the shell contract, shared-state discipline, versioned contracts
+  and the independent-deploy test.
+  https://rajatmalik.dev/articles/micro-frontend-boundaries.html
+- **Core Web Vitals in 2026: the order of operations that moves the needle** —
+  LCP, INP and CLS, field versus lab data, and the sequence that avoids
+  optimising the wrong metric.
+  https://rajatmalik.dev/articles/core-web-vitals-order-of-operations.html
+- **Design systems that survive: tokens, contracts and honest review** —
+  semantic tokens, composition-based component APIs, accessibility ownership,
+  versioning and adoption metrics.
+  https://rajatmalik.dev/articles/design-systems-that-survive.html
+- **AI-assisted frontend development without lowering the bar** — where LLMs
+  help, failure modes such as hallucinated APIs and phantom dependencies, and
+  the review, testing and security gates that keep quality intact.
+  https://rajatmalik.dev/articles/ai-assisted-frontend-development.html
+- **A WCAG 2.2 checklist for component libraries** — the component-level
+  accessibility contract, the criteria added in WCAG 2.2, and testing beyond
+  automated scans.
+  https://rajatmalik.dev/articles/wcag-2-2-component-checklist.html
+
+## Editorial standards
+
+Articles are written by Rajat Malik and reviewed before publication. They are
+original to this site, not scraped or auto-generated summaries, and are not
+sponsored. Corrections are accepted at contact@rajatmalik.dev and noted on the
+affected page. Advertising is served by Google AdSense on content pages only;
+the contact and legal pages are ad-free, and ads are kept separate from
+editorial content. See the terms of use for the advertising disclosure.
 
 ## Selected projects
 
@@ -68,6 +110,15 @@ Contact: contact@rajatmalik.dev
 - Substack: https://codewithrajat.substack.com/
 - X: https://twitter.com/er_rajatmalik
 - Resume: https://rajatmalik.dev/assets/Rajat-JS-React-Angular.pdf
+
+## Site and policy pages
+
+- About: https://rajatmalik.dev/about.html
+- Articles: https://rajatmalik.dev/articles/
+- Contact: https://rajatmalik.dev/contact.html
+- Privacy policy: https://rajatmalik.dev/privacy-policy.html
+- Terms of use and advertising disclosure: https://rajatmalik.dev/terms.html
+- Sitemap: https://rajatmalik.dev/sitemap.xml
 
 ## Related sites
 

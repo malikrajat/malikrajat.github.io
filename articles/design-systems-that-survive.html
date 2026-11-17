@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Design systems that survive: tokens, contracts and honest review | Rajat Malik</title>
+  <meta name="description"
+    content="Why component libraries decay, how to design token and component APIs teams can adopt, and the governance and versioning that keep a design system healthy.">
+  <link href="https://rajatmalik.dev/articles/design-systems-that-survive.html" rel="canonical">
+  <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots">
+  <meta content="Rajat Malik" name="author">
+  <meta content="#080b18" name="theme-color">
+  <meta content="ca-pub-4991682021863699" name="google-adsense-account">
+
+  <meta content="Design systems that survive: tokens, contracts and honest review" property="og:title">
+  <meta content="Why component libraries decay, and how to design APIs, versioning and governance that last."
+    property="og:description">
+  <meta content="https://rajatmalik.dev/articles/design-systems-that-survive.html" property="og:url">
+  <meta content="article" property="og:type">
+  <meta content="Rajat Malik" property="og:site_name">
+  <meta content="en" property="og:locale">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" property="og:image">
+  <meta content="840" property="og:image:width">
+  <meta content="400" property="og:image:height">
+  <meta content="Design systems" property="og:image:alt">
+  <meta content="2026-11-17" property="article:published_time">
+  <meta content="Rajat Malik" property="article:author">
+  <meta content="Design systems" property="article:section">
+  <meta content="summary_large_image" name="twitter:card">
+  <meta content="@er_rajatmalik" name="twitter:site">
+  <meta content="@er_rajatmalik" name="twitter:creator">
+  <meta content="Design systems that survive" name="twitter:title">
+  <meta content="Why component libraries decay, and how to design APIs, versioning and governance that last."
+    name="twitter:description">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" name="twitter:image">
+
+  <meta content="lTgQD1uJlZUR7Iqd2vCEJ54on_Gtxdhb-zX2o-NGDJQ" name="google-site-verification">
+
+  <script src="/assets/js/consent-defaults.js"></script>
+  <script async crossorigin="anonymous"
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4991682021863699"></script>
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K533LRTH"></script>
+  <script>
+    gtag('js', new Date());
+  </script>
+
+  <link href="/assets/img/favicon.ico" rel="icon" sizes="any">
+  <link href="/assets/img/icon-192.png" rel="icon" sizes="192x192" type="image/png">
+  <link href="/assets/img/icon-512.png" rel="icon" sizes="512x512" type="image/png">
+  <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+  <link href="/manifest.webmanifest" rel="manifest">
+  <link href="/feed.xml" rel="alternate" title="Rajat Malik — articles and notes" type="application/rss+xml">
+
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,400&amp;family=Poppins:wght@0,300;0,400;0,500;0,600;0,700&amp;family=Raleway:wght@300;400;500;600;700&amp;family=DM+Mono&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Syne:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet">
+
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/css/main.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/modern.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/site-extras.css?v=5" rel="stylesheet">
+  <link href="/assets/css/pages.css?v=4" rel="stylesheet">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "@id": "https://rajatmalik.dev/articles/design-systems-that-survive.html#article",
+          "mainEntityOfPage": "https://rajatmalik.dev/articles/design-systems-that-survive.html",
+          "headline": "Design systems that survive: tokens, contracts and honest review",
+          "description": "Why component libraries decay, how to design token and component APIs teams can adopt, and the governance and versioning that keep a design system healthy.",
+          "datePublished": "2026-11-17",
+          "dateModified": "2026-11-17",
+          "inLanguage": "en",
+          "articleSection": "Design systems",
+          "keywords": "design systems, design tokens, component API, accessibility, governance",
+          "image": "https://rajatmalik.dev/assets/img/post.png",
+          "author": { "@id": "https://rajatmalik.dev/#person" },
+          "publisher": { "@id": "https://rajatmalik.dev/#person" },
+          "isPartOf": { "@id": "https://rajatmalik.dev/articles/#page" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://rajatmalik.dev/#person",
+          "name": "Rajat Malik",
+          "url": "https://rajatmalik.dev/",
+          "jobTitle": "Senior Lead Software Engineer",
+          "worksFor": { "@type": "Organization", "name": "Siemens" },
+          "sameAs": [
+            "https://www.linkedin.com/in/errajatmalik/",
+            "https://github.com/malikrajat"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://rajatmalik.dev/articles/design-systems-that-survive.html#breadcrumb",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://rajatmalik.dev/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://rajatmalik.dev/articles/" },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Design systems that survive",
+              "item": "https://rajatmalik.dev/articles/design-systems-that-survive.html"
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+</head>
+
+<body class="page-body">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="header dark-background" id="header">
+    <i aria-controls="navmenu" aria-expanded="false" aria-label="Open menu"
+      class="header-toggle d-xl-none bi bi-list" role="button" tabindex="0"></i>
+    <a class="logo d-flex align-items-center justify-content-center" href="/">
+      <span class="sitename">Rajat Malik</span>
+    </a>
+    <nav aria-label="Primary" class="navmenu" id="navmenu">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a aria-current="page" href="/articles/">Articles</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a class="header-resume" download href="/assets/Rajat-JS-React-Angular.pdf">Resume <i
+          class="bi bi-arrow-down-right"></i></a>
+      <p class="header-tagline">Senior Lead Software Engineer at <strong>Siemens</strong></p>
+    </div>
+  </header>
+
+  <main class="page-main" id="main-content">
+    <section class="page-hero">
+      <div class="page-wrap">
+        <nav aria-label="Breadcrumb" class="breadcrumbs">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/articles/">Articles</a></li>
+            <li><span aria-current="page">Design systems that survive</span></li>
+          </ol>
+        </nav>
+        <p class="page-eyebrow">Design systems &middot; Engineering</p>
+        <h1>Design systems that survive: tokens, contracts and honest review</h1>
+        <p class="page-lede">Most design systems do not fail at launch. They fail two years later, when the
+          components have forty props, three of them are deprecated, and every product team has a private fork. The
+          difference is API design and governance.</p>
+        <div class="article-meta">
+          <span><i class="bi bi-person"></i> Rajat Malik</span>
+          <span><i class="bi bi-calendar3"></i> 17 November 2026</span>
+          <span><i class="bi bi-clock"></i> 9 min read</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="page-wrap page-narrow">
+        <nav aria-label="On this page" class="toc" data-toc>
+          <p class="toc-title">On this page</p>
+        </nav>
+
+        <article class="prose">
+          <p>A component library is easy to start and hard to keep. The first twenty components take a quarter; the
+            next two years are spent on consistency, migration and the slow accumulation of exceptions. Treating the
+            system as a product &mdash; with users, a roadmap and a support burden &mdash; is what changes the
+            outcome.</p>
+
+          <h2>1. The design system is a product, not a side project</h2>
+          <p>The users are product engineers and designers. Their &ldquo;jobs to be done&rdquo; are concrete: build a
+            form that is accessible without researching ARIA, ship a table that does not fall apart at 200 rows, and
+            change a brand colour without editing forty files.</p>
+          <p>That framing changes priorities. Adoption is the success metric, not the number of components. A small
+            system that everyone uses beats a comprehensive one that teams route around. Fund maintenance explicitly:
+            if nobody owns upgrades, the system will be abandoned the first time a framework major lands.</p>
+
+          <h2>2. Tokens are the real public API</h2>
+          <p>Components are the visible surface, but tokens are what make the system configurable without forking it.
+            Define them by intent, not by appearance:</p>
+          <pre><code>/* Good: semantic, themeable */
+--color-surface-default: #ffffff;
+--color-surface-raised: #f6f7fb;
+--color-text-primary: #101828;
+--color-text-muted: #536076;
+--color-action-primary: #6d00b3;
+--space-inline-md: 0.75rem;
+--radius-control: 6px;
+
+/* Avoid: literal names that block theming */
+--purple-500: #6d00b3;
+--gray-200: #f6f7fb;</code></pre>
+          <p>Keep the token set small and stable. A theme should be a remapping of semantic tokens, not a parallel
+            stylesheet. Publish the token contract and treat renames as breaking changes; teams will hard-code the
+            values anyway, but at least the intended path is clear.</p>
+
+          <h2>3. Design component APIs for the common case</h2>
+          <p>A good component API makes the right thing easy and the wrong thing possible only with effort:</p>
+          <ul>
+            <li><strong>Prefer composition over configuration.</strong> Slots or content projection age better than a
+              boolean for every layout variant. A component with <code>hasHeader</code>, <code>hasFooter</code>,
+              <code>isCompact</code> and <code>isBordered</code> is four components wearing a trench coat.</li>
+            <li><strong>Use a small set of named variants</strong> for visual intent, and let layout be the
+              consumer&rsquo;s job.</li>
+            <li><strong>Make the common path the default.</strong> Accessible labels, sensible keyboard behaviour and
+              correct semantics should not require extra props.</li>
+            <li><strong>Avoid leaking implementation types.</strong> If the public API exposes a third-party object,
+              that library now owns your upgrade path.</li>
+            <li><strong>Document the contract</strong> &mdash; props, events, slots, states and keyboard behaviour
+              &mdash; in the same repository as the code.</li>
+          </ul>
+
+          <h2>4. Accessibility belongs in the component, not the page</h2>
+          <p>Every product team re-implementing focus management is a systemic bug. Components should own:</p>
+          <ul>
+            <li>Semantic roles, accessible names and state announcements.</li>
+            <li>Keyboard interaction and focus order, including focus return when a dialog closes.</li>
+            <li>Visible focus styles that meet contrast requirements.</li>
+            <li>Disabled, loading, error and empty states that are still understandable to assistive technology.</li>
+            <li>Reduced-motion behaviour and target sizes that meet WCAG 2.2.</li>
+          </ul>
+          <p>Test these behaviours in the component library, not only in the consuming application. A dialog that
+            traps focus correctly in the design-system test suite is fixed once for every product. See the
+            <a href="/articles/wcag-2-2-component-checklist.html">WCAG 2.2 component checklist</a> for the specific
+            checks.</p>
+
+          <h2>5. Documentation that answers real questions</h2>
+          <p>Generated prop tables are necessary but not sufficient. The pages teams actually need are:</p>
+          <ul>
+            <li><strong>When to use this component</strong> and, more usefully, when not to.</li>
+            <li><strong>Copy-paste examples</strong> for the 80% case, with realistic content rather than
+              &ldquo;Lorem ipsum&rdquo;.</li>
+            <li><strong>Accessibility notes:</strong> keyboard map, required labels, known limitations.</li>
+            <li><strong>Do/don&rsquo;t examples</strong> that show the visual consequence, not just rules.</li>
+            <li><strong>Migration notes</strong> for every breaking change, with a codemod where possible.</li>
+          </ul>
+          <p>Keep the documentation next to the code and run it in CI, so it cannot describe a component that no
+            longer exists.</p>
+
+          <h2>6. Versioning and deprecation without drama</h2>
+          <p>Semantic versioning is a promise, and design systems break it casually. A colour change is visual, not
+            breaking in API terms, but it can still break a product&rsquo;s contrast or brand review. Be explicit
+            about what counts as breaking:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Change</th>
+                <th>Version</th>
+                <th>What teams need</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>New optional prop or component</td>
+                <td>Minor</td>
+                <td>Release note and example</td>
+              </tr>
+              <tr>
+                <td>Token value change with visual impact</td>
+                <td>Minor or major, documented</td>
+                <td>Screenshot diff and migration note</td>
+              </tr>
+              <tr>
+                <td>Renamed token or removed prop</td>
+                <td>Major</td>
+                <td>Deprecation period, codemod, migration guide</td>
+              </tr>
+              <tr>
+                <td>Behaviour change in a form control</td>
+                <td>Major</td>
+                <td>Explicit review with consuming teams</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Deprecate before removing. Keep at least one minor release with a runtime warning and a documented
+            replacement. Publish a support window so teams can plan upgrades alongside product work rather than
+            discovering them during a release crunch.</p>
+
+          <h2>7. Measure adoption, not inventory</h2>
+          <p>Useful signals:</p>
+          <ul>
+            <li>Percentage of product screens using system components for primary flows.</li>
+            <li>Number of local forks or overrides, and why they exist.</li>
+            <li>Time to build a standard form, table or dialog with the system versus without it.</li>
+            <li>Accessibility defects traced back to components, and time to fix once centrally.</li>
+            <li>Upgrade lag: how long after a major release consuming teams move.</li>
+          </ul>
+          <p>Review these quarterly with the product teams. If adoption is low, the answer is usually not more
+            documentation; it is that the component does not fit the job. Fix the API.</p>
+
+          <h2>8. Governance without bureaucracy</h2>
+          <p>A small group should own the contract, but contributions should be welcome. A workable model:</p>
+          <ul>
+            <li>An RFC for new components and breaking API changes, with a short template and a stated decision
+              window.</li>
+            <li>A weekly or biweekly review that includes design and engineering, so visual and technical decisions
+              happen together.</li>
+            <li>Clear ownership for each component, including accessibility and documentation.</li>
+            <li>A rule that a component ships with tests, docs and an example, or it does not ship.</li>
+          </ul>
+
+          <h2>9. Start smaller than you want to</h2>
+          <p>The highest-value first release is usually tokens, typography, buttons, form controls, dialog, table and
+            a layout primitive &mdash; plus the documentation and release process. Those cover most screens. Add
+            components when a second team needs them, not when they look good in a catalogue.</p>
+
+          <ul class="checklist">
+            <li>Semantic tokens with a documented, stable contract.</li>
+            <li>Composition-based APIs and accessible defaults.</li>
+            <li>Tests for keyboard, focus, announcements and states.</li>
+            <li>Docs for when to use, when not to, and how to migrate.</li>
+            <li>Deprecation policy and a support window.</li>
+            <li>Adoption measured by real screens, not component count.</li>
+            <li>Explicit ownership and funding for maintenance.</li>
+          </ul>
+
+          <p>A design system earns its place by removing decisions, not by adding a catalogue. When teams reach for
+            it because it is the fastest way to build something correct, it will survive the next redesign, the next
+            framework upgrade and the next reorganisation.</p>
+
+          <div class="callout">
+            <p><strong>Related reading:</strong> where the shared layer belongs in a distributed frontend, in
+              <a href="/articles/micro-frontend-boundaries.html">Where micro-frontend boundaries should go</a>.</p>
+          </div>
+        </article>
+
+        <aside class="author-box">
+          <img alt="Rajat Malik" height="68" src="/assets/img/my-profile-img.jpg" width="68">
+          <div>
+            <h2>Written by Rajat Malik</h2>
+            <p>Senior Lead Software Engineer at Siemens and frontend architect with 15+ years building enterprise web
+              products. I write about Angular, React, performance, accessibility and the engineering practices around
+              them.</p>
+            <div class="author-links">
+              <a href="/about.html">About</a>
+              <a href="https://www.linkedin.com/in/errajatmalik/" rel="noopener" target="_blank">LinkedIn</a>
+              <a href="https://github.com/malikrajat" rel="noopener" target="_blank">GitHub</a>
+              <a href="mailto:contact@rajatmalik.dev">Email</a>
+            </div>
+          </div>
+        </aside>
+
+        <nav aria-label="More articles" class="article-nav">
+          <a href="/articles/micro-frontend-boundaries.html">
+            <span>Previous</span>
+            <strong>Where micro-frontend boundaries should go</strong>
+          </a>
+          <a href="/articles/ai-assisted-frontend-development.html">
+            <span>Next</span>
+            <strong>AI-assisted frontend development without lowering the bar</strong>
+          </a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer light-background position-relative" id="footer">
+    <div class="container">
+      <nav aria-label="Footer" class="footer-nav">
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a aria-current="page" href="/articles/">Articles</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy-policy.html">Privacy policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/feed.xml">RSS</a>
+        <a href="https://www.google.com/settings/ads" rel="noopener" target="_blank">Ad settings</a>
+        <a href="/privacy-policy.html#california">Do not sell or share</a>
+        <button data-cookie-settings type="button">Cookie settings</button>
+      </nav>
+      <div class="copyright text-center">
+        <a class="medium" href="https://medium.com/@codewithrajat" rel="noopener" target="_blank" title="Medium"><i
+            class="bi bi-medium"></i></a>
+        <a class="linkedin" href="https://www.linkedin.com/in/errajatmalik/" rel="noopener" target="_blank"
+          title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a class="twitter" href="https://twitter.com/er_rajatmalik" rel="noopener" target="_blank" title="X"><i
+            class="bi bi-twitter-x"></i></a>
+        <a class="Github" href="https://github.com/malikrajat" rel="noopener" target="_blank" title="GitHub"><i
+            class="bi bi-github"></i></a>
+      </div>
+      <p class="footer-legal">&copy; <span data-year>2026</span> Rajat Malik &middot; Senior Lead Software Engineer at
+        Siemens &middot; <a href="mailto:contact@rajatmalik.dev">contact@rajatmalik.dev</a></p>
+    </div>
+  </footer>
+
+  <a class="scroll-top d-flex align-items-center justify-content-center" href="#"><i class="bi bi-arrow-up-short"
+      aria-hidden="true"></i><span class="visually-hidden">Back to top</span></a>
+
+  <script src="/assets/js/pages.js"></script>
+  <script src="/assets/js/consent.js"></script>
+</body>
+
+</html>

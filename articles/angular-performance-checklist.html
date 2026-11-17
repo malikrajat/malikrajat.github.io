@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>The Angular performance checklist I run before every release | Rajat Malik</title>
+  <meta name="description"
+    content="A practical Angular performance checklist: budgets, field data, change detection, lazy loading, defer, images, runtime leaks and the regression guards that keep an app fast.">
+  <link href="https://rajatmalik.dev/articles/angular-performance-checklist.html" rel="canonical">
+  <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots">
+  <meta content="Rajat Malik" name="author">
+  <meta content="#080b18" name="theme-color">
+  <meta content="ca-pub-4991682021863699" name="google-adsense-account">
+
+  <meta content="The Angular performance checklist I run before every release" property="og:title">
+  <meta
+    content="Budgets, field data, change detection, lazy loading, defer, images, runtime leaks and regression guards: the order I actually work in."
+    property="og:description">
+  <meta content="https://rajatmalik.dev/articles/angular-performance-checklist.html" property="og:url">
+  <meta content="article" property="og:type">
+  <meta content="Rajat Malik" property="og:site_name">
+  <meta content="en" property="og:locale">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" property="og:image">
+  <meta content="840" property="og:image:width">
+  <meta content="400" property="og:image:height">
+  <meta content="Angular performance checklist" property="og:image:alt">
+  <meta content="2026-11-17" property="article:published_time">
+  <meta content="Rajat Malik" property="article:author">
+  <meta content="Angular" property="article:section">
+  <meta content="summary_large_image" name="twitter:card">
+  <meta content="@er_rajatmalik" name="twitter:site">
+  <meta content="@er_rajatmalik" name="twitter:creator">
+  <meta content="The Angular performance checklist I run before every release" name="twitter:title">
+  <meta
+    content="Budgets, field data, change detection, lazy loading, defer, images, runtime leaks and regression guards."
+    name="twitter:description">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" name="twitter:image">
+
+  <meta content="lTgQD1uJlZUR7Iqd2vCEJ54on_Gtxdhb-zX2o-NGDJQ" name="google-site-verification">
+
+  <script src="/assets/js/consent-defaults.js"></script>
+  <script async crossorigin="anonymous"
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4991682021863699"></script>
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K533LRTH"></script>
+  <script>
+    gtag('js', new Date());
+  </script>
+
+  <link href="/assets/img/favicon.ico" rel="icon" sizes="any">
+  <link href="/assets/img/icon-192.png" rel="icon" sizes="192x192" type="image/png">
+  <link href="/assets/img/icon-512.png" rel="icon" sizes="512x512" type="image/png">
+  <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+  <link href="/manifest.webmanifest" rel="manifest">
+  <link href="/feed.xml" rel="alternate" title="Rajat Malik — articles and notes" type="application/rss+xml">
+
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,400&amp;family=Poppins:wght@0,300;0,400;0,500;0,600;0,700&amp;family=Raleway:wght@300;400;500;600;700&amp;family=DM+Mono&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Syne:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet">
+
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/css/main.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/modern.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/site-extras.css?v=5" rel="stylesheet">
+  <link href="/assets/css/pages.css?v=4" rel="stylesheet">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "@id": "https://rajatmalik.dev/articles/angular-performance-checklist.html#article",
+          "mainEntityOfPage": "https://rajatmalik.dev/articles/angular-performance-checklist.html",
+          "headline": "The Angular performance checklist I run before every release",
+          "description": "A practical Angular performance checklist covering budgets, field data, change detection, lazy loading, defer, images, runtime leaks and regression guards.",
+          "datePublished": "2026-11-17",
+          "dateModified": "2026-11-17",
+          "inLanguage": "en",
+          "articleSection": "Angular",
+          "keywords": "Angular performance, Core Web Vitals, change detection, zoneless, lazy loading, @defer",
+          "image": "https://rajatmalik.dev/assets/img/post.png",
+          "author": { "@id": "https://rajatmalik.dev/#person" },
+          "publisher": { "@id": "https://rajatmalik.dev/#person" },
+          "isPartOf": { "@id": "https://rajatmalik.dev/articles/#page" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://rajatmalik.dev/#person",
+          "name": "Rajat Malik",
+          "url": "https://rajatmalik.dev/",
+          "jobTitle": "Senior Lead Software Engineer",
+          "worksFor": { "@type": "Organization", "name": "Siemens" },
+          "sameAs": [
+            "https://www.linkedin.com/in/errajatmalik/",
+            "https://github.com/malikrajat"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://rajatmalik.dev/articles/angular-performance-checklist.html#breadcrumb",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://rajatmalik.dev/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://rajatmalik.dev/articles/" },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Angular performance checklist",
+              "item": "https://rajatmalik.dev/articles/angular-performance-checklist.html"
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+</head>
+
+<body class="page-body">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="header dark-background" id="header">
+    <i aria-controls="navmenu" aria-expanded="false" aria-label="Open menu"
+      class="header-toggle d-xl-none bi bi-list" role="button" tabindex="0"></i>
+    <a class="logo d-flex align-items-center justify-content-center" href="/">
+      <span class="sitename">Rajat Malik</span>
+    </a>
+    <nav aria-label="Primary" class="navmenu" id="navmenu">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a aria-current="page" href="/articles/">Articles</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a class="header-resume" download href="/assets/Rajat-JS-React-Angular.pdf">Resume <i
+          class="bi bi-arrow-down-right"></i></a>
+      <p class="header-tagline">Senior Lead Software Engineer at <strong>Siemens</strong></p>
+    </div>
+  </header>
+
+  <main class="page-main" id="main-content">
+    <section class="page-hero">
+      <div class="page-wrap">
+        <nav aria-label="Breadcrumb" class="breadcrumbs">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/articles/">Articles</a></li>
+            <li><span aria-current="page">Angular performance checklist</span></li>
+          </ol>
+        </nav>
+        <p class="page-eyebrow">Angular &middot; Performance</p>
+        <h1>The Angular performance checklist I run before every release</h1>
+        <p class="page-lede">Performance work goes wrong when it starts with a tool. This is the order I work in:
+          agree what &ldquo;fast&rdquo; means, measure it, fix the biggest cause, then make the fix impossible to
+          regress.</p>
+        <div class="article-meta">
+          <span><i class="bi bi-person"></i> Rajat Malik</span>
+          <span><i class="bi bi-calendar3"></i> 17 November 2026</span>
+          <span><i class="bi bi-clock"></i> 12 min read</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="page-wrap page-narrow">
+        <nav aria-label="On this page" class="toc" data-toc>
+          <p class="toc-title">On this page</p>
+        </nav>
+
+        <article class="prose">
+          <p>Most Angular performance problems are not mysterious. They are ordinary decisions that were reasonable
+            in isolation &mdash; one more shared module, one more third-party script, one more subscription &mdash;
+            and became expensive in aggregate. A checklist helps because it forces the same questions on every
+            release instead of only when a dashboard turns red.</p>
+
+          <p>This is the list I use, in the order I use it. It applies to Angular 16 and later, including current
+            versions with signals and zoneless change detection.</p>
+
+          <h2>1. Start with a budget, not a tool</h2>
+          <p>A budget turns performance into an engineering constraint instead of a preference. Pick numbers that
+            map to user experience, write them down, and treat a breach as a bug:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Measure</th>
+                <th>Target</th>
+                <th>Why this one</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>LCP (field, p75, mobile)</td>
+                <td>&le; 2.5 s</td>
+                <td>The largest element is what users perceive as &ldquo;loaded&rdquo;.</td>
+              </tr>
+              <tr>
+                <td>INP (field, p75)</td>
+                <td>&le; 200 ms</td>
+                <td>Captures the interaction delays that make an app feel sticky.</td>
+              </tr>
+              <tr>
+                <td>CLS (field, p75)</td>
+                <td>&le; 0.1</td>
+                <td>Layout jumps destroy trust, especially during checkout or data entry.</td>
+              </tr>
+              <tr>
+                <td>Initial route JavaScript</td>
+                <td>Team-specific, e.g. &le; 180 KB gzip</td>
+                <td>Keeps parse and execution cost bounded on mid-tier phones.</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>The exact thresholds for Core Web Vitals come from Google&rsquo;s published guidance; the JavaScript
+            number is yours to set. What matters is that the budget is visible in review and checked automatically.
+          </p>
+
+          <h2>2. Measure before you touch anything</h2>
+          <p>Lab tools tell you what <em>could</em> happen. Field data tells you what <em>did</em>. Use both, and
+            keep them separate in your head:</p>
+          <ul>
+            <li><strong>Field:</strong> the Chrome UX Report or your own RUM collection, segmented by route, device
+              class and country. A single site-wide average hides the checkout page that is three times slower than
+              the marketing pages.</li>
+            <li><strong>Lab:</strong> Lighthouse or the Performance panel against a throttled mid-tier profile.
+              Useful for attribution and for catching regressions before users do.</li>
+            <li><strong>Baseline:</strong> record the numbers before the change. Without a before, a &ldquo;fast&rdquo;
+              result is just a feeling.</li>
+          </ul>
+          <div class="callout">
+            <p><strong>Do not optimise a lab score for its own sake.</strong> A 100 in Lighthouse with a slow
+              server, an unstable layout and a blocked main thread is still a bad experience. Field metrics and
+              real interaction traces decide.</p>
+          </div>
+
+          <h2>3. Change detection is usually the biggest Angular lever</h2>
+          <p>Angular is efficient by default, but a default component checks more often than most screens need.
+            Three habits remove most of the waste:</p>
+          <ul>
+            <li>Set <code>ChangeDetectionStrategy.OnPush</code> on every component. Make it the review default and
+              justify exceptions.</li>
+            <li>Prefer signals, <code>computed()</code> and <code>input()</code> over mutable fields read from
+              templates. Dependencies become explicit and updates become fine-grained.</li>
+            <li>Never call a function that builds or filters a collection directly from a template. Use a computed
+              value or a pure pipe.</li>
+          </ul>
+          <pre><code>@Component({
+  selector: 'app-orders',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  template: `
+    &#64;for (order of visibleOrders(); track order.id) {
+      &lt;app-order-row [order]="order" /&gt;
+    }
+  `
+})
+export class OrdersComponent {
+  readonly orders = input.required&lt;Order[]&gt;();
+  readonly filter = signal&lt;string&gt;('');
+
+  readonly visibleOrders = computed(() =&gt; {
+    const term = this.filter().trim().toLowerCase();
+    return term
+      ? this.orders().filter(o =&gt; o.customer.toLowerCase().includes(term))
+      : this.orders();
+  });
+}</code></pre>
+          <p>If the application is ready for it, zoneless change detection removes the monkey-patching of browser
+            APIs and the broad checks that come with it. Adopt it deliberately: audit third-party code that assumes
+            Zone.js, and make sure async state is expressed through signals or explicit change detection.</p>
+
+          <h2>4. Ship less JavaScript</h2>
+          <p>On mobile, JavaScript is the most expensive asset per byte: it must be downloaded, parsed, compiled and
+            executed. The wins, roughly in order of impact:</p>
+          <ul>
+            <li><strong>Route-level lazy loading</strong> for every feature area, not just the largest one.</li>
+            <li><strong>Defer what is below the fold</strong> with <code>&#64;defer</code>. This is not only about
+              the network; it also keeps heavy components out of the initial change-detection path.</li>
+            <li><strong>Check the bundle graph</strong>, not just the total. A single barrel file or a shared module
+              can pull an entire charting library into the first route.</li>
+            <li><strong>Drop unused polyfills</strong> and keep the browser support matrix honest.</li>
+            <li><strong>Load third parties after the app is interactive</strong>, and question each one. Analytics,
+              chat widgets and A/B tools are often larger than the application code they measure.</li>
+          </ul>
+          <pre><code>&#64;defer (on viewport) {
+  &lt;app-analytics-panel /&gt;
+} &#64;placeholder (minimum 200ms) {
+  &lt;div class="panel-skeleton" aria-hidden="true"&gt;&lt;/div&gt;
+} &#64;error {
+  &lt;p&gt;This panel could not load. &lt;button (click)="retry()"&gt;Retry&lt;/button&gt;&lt;/p&gt;
+}</code></pre>
+
+          <h2>5. Choose the rendering strategy per route</h2>
+          <p>Not every page needs the same treatment. Server-side rendering or prerendering is usually the right
+            answer for the landing page, documentation and any route where the largest element should arrive as
+            HTML. Authenticated dashboards may be better as client-rendered applications with a fast shell.</p>
+          <p>When you do render on the server, verify hydration: mismatched markup, browser-only APIs executed
+            during render, and duplicated data requests all show up as jank or double work. Test with JavaScript
+            throttled and with JavaScript disabled for the content that must be indexable.</p>
+
+          <h2>6. Images, fonts and the LCP element</h2>
+          <p>The largest contentful paint is often an image or a hero heading. Treat that element as a first-class
+            performance concern:</p>
+          <ul>
+            <li>Use <code>NgOptimizedImage</code> (or explicit <code>srcset</code>, <code>sizes</code> and
+              dimensions) so the browser downloads an appropriately sized file.</li>
+            <li>Give every image intrinsic <code>width</code> and <code>height</code> to reserve space and prevent
+              layout shift.</li>
+            <li>Set <code>fetchpriority="high"</code> on the LCP image only; lazy-load everything below the fold.
+            </li>
+            <li>Preload the LCP image and the critical font, and nothing else. Over-preloading delays the resources
+              that matter.</li>
+            <li>Use modern formats (AVIF, WebP) and compress at the size actually displayed.</li>
+            <li>Subset fonts, use <code>font-display: swap</code>, and match the fallback metrics to avoid a visible
+              reflow.</li>
+          </ul>
+
+          <h2>7. Fix runtime cost: leaks, long tasks and big lists</h2>
+          <p>A page can load quickly and still feel slow two minutes later. The usual causes are mundane:</p>
+          <ul>
+            <li><strong>Leaked subscriptions and listeners.</strong> Use <code>takeUntilDestroyed()</code> or the
+              <code>DestroyRef</code> API, and remove DOM listeners in the same place they were added.</li>
+            <li><strong>Long tasks on the main thread.</strong> Move parsing, sorting and heavy computation into a
+              worker or behind an explicit loading state. Break up work that blocks input.</li>
+            <li><strong>Unvirtualised lists.</strong> The Angular CDK virtual scroll (or pagination) keeps DOM size
+              and change detection proportional to what is visible.</li>
+            <li><strong>Repeated expensive formatting.</strong> Cache derived values instead of recalculating them
+              for every row and every keystroke.</li>
+          </ul>
+          <p>Take a memory snapshot before and after navigating away from a heavy route. If the heap keeps growing,
+            you have a leak, and no amount of bundle optimisation will hide it.</p>
+
+          <h2>8. Make delivery boringly good</h2>
+          <p>Compression, caching and a CDN are not optional at scale. Serve hashed assets with a long
+            <code>Cache-Control</code>, keep HTML short-lived, enable Brotli, and avoid redirect chains. Make sure
+            the origin is close enough to users or fronted by a CDN. These are one-time fixes that keep paying out.
+          </p>
+
+          <h2>9. Put a guard on it</h2>
+          <p>The final step is the one teams skip: make the improvement permanent.</p>
+          <ul class="checklist">
+            <li>A CI budget check on the initial bundle, with the build failing on a meaningful regression.</li>
+            <li>Lighthouse CI (or an equivalent lab check) on the routes that matter, not the whole site.</li>
+            <li>RUM alerts on p75 LCP and INP, segmented by route and device.</li>
+            <li>A named owner for performance, and a short checklist item in the pull-request template.</li>
+            <li>A quarterly review that deletes or replaces what is no longer used. Performance debt is mostly
+              accumulation.</li>
+          </ul>
+
+          <p>The pattern behind all of this is simple: make the user-visible metric the goal, use the framework
+            properly, remove work rather than micro-optimising it, and automate the guard rail. That is how a
+            Lighthouse score goes from 20 to 97 and stays there after the next ten features ship.</p>
+
+          <div class="callout">
+            <p><strong>Related reading:</strong> the same measurement-first approach applied to
+              <a href="/articles/core-web-vitals-order-of-operations.html">Core Web Vitals</a>, and the component-level
+              quality checks in the <a href="/articles/wcag-2-2-component-checklist.html">WCAG 2.2 checklist</a>.</p>
+          </div>
+        </article>
+
+        <aside class="author-box">
+          <img alt="Rajat Malik" height="68" src="/assets/img/my-profile-img.jpg" width="68">
+          <div>
+            <h2>Written by Rajat Malik</h2>
+            <p>Senior Lead Software Engineer at Siemens and frontend architect with 15+ years building enterprise web
+              products. I write about Angular, React, performance, accessibility and the engineering practices around
+              them.</p>
+            <div class="author-links">
+              <a href="/about.html">About</a>
+              <a href="https://www.linkedin.com/in/errajatmalik/" rel="noopener" target="_blank">LinkedIn</a>
+              <a href="https://github.com/malikrajat" rel="noopener" target="_blank">GitHub</a>
+              <a href="mailto:contact@rajatmalik.dev">Email</a>
+            </div>
+          </div>
+        </aside>
+
+        <nav aria-label="More articles" class="article-nav">
+          <a href="/articles/">
+            <span>All articles</span>
+            <strong>Browse the article index</strong>
+          </a>
+          <a href="/articles/core-web-vitals-order-of-operations.html">
+            <span>Next</span>
+            <strong>Core Web Vitals in 2026: the order of operations</strong>
+          </a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer light-background position-relative" id="footer">
+    <div class="container">
+      <nav aria-label="Footer" class="footer-nav">
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a aria-current="page" href="/articles/">Articles</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy-policy.html">Privacy policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/feed.xml">RSS</a>
+        <a href="https://www.google.com/settings/ads" rel="noopener" target="_blank">Ad settings</a>
+        <a href="/privacy-policy.html#california">Do not sell or share</a>
+        <button data-cookie-settings type="button">Cookie settings</button>
+      </nav>
+      <div class="copyright text-center">
+        <a class="medium" href="https://medium.com/@codewithrajat" rel="noopener" target="_blank" title="Medium"><i
+            class="bi bi-medium"></i></a>
+        <a class="linkedin" href="https://www.linkedin.com/in/errajatmalik/" rel="noopener" target="_blank"
+          title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a class="twitter" href="https://twitter.com/er_rajatmalik" rel="noopener" target="_blank" title="X"><i
+            class="bi bi-twitter-x"></i></a>
+        <a class="Github" href="https://github.com/malikrajat" rel="noopener" target="_blank" title="GitHub"><i
+            class="bi bi-github"></i></a>
+      </div>
+      <p class="footer-legal">&copy; <span data-year>2026</span> Rajat Malik &middot; Senior Lead Software Engineer at
+        Siemens &middot; <a href="mailto:contact@rajatmalik.dev">contact@rajatmalik.dev</a></p>
+    </div>
+  </footer>
+
+  <a class="scroll-top d-flex align-items-center justify-content-center" href="#"><i class="bi bi-arrow-up-short"
+      aria-hidden="true"></i><span class="visually-hidden">Back to top</span></a>
+
+  <script src="/assets/js/pages.js"></script>
+  <script src="/assets/js/consent.js"></script>
+</body>
+
+</html>

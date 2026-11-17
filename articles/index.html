@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Articles on frontend architecture, Angular, React and performance | Rajat Malik</title>
+  <meta name="description"
+    content="Original, practical articles by Rajat Malik on Angular and React performance, micro-frontend architecture, design systems, accessibility and AI-assisted frontend delivery.">
+  <link href="https://rajatmalik.dev/articles/" rel="canonical">
+  <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots">
+  <meta content="Rajat Malik" name="author">
+  <meta content="#080b18" name="theme-color">
+  <meta content="ca-pub-4991682021863699" name="google-adsense-account">
+
+  <meta content="Rajat Malik — frontend engineering articles" property="og:title">
+  <meta
+    content="Practical, original writing on Angular and React performance, architecture, design systems and accessibility."
+    property="og:description">
+  <meta content="https://rajatmalik.dev/articles/" property="og:url">
+  <meta content="website" property="og:type">
+  <meta content="Rajat Malik" property="og:site_name">
+  <meta content="en" property="og:locale">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" property="og:image">
+  <meta content="840" property="og:image:width">
+  <meta content="400" property="og:image:height">
+  <meta content="Rajat Malik — frontend engineering articles" property="og:image:alt">
+  <meta content="summary_large_image" name="twitter:card">
+  <meta content="@er_rajatmalik" name="twitter:site">
+  <meta content="@er_rajatmalik" name="twitter:creator">
+  <meta content="Rajat Malik — frontend engineering articles" name="twitter:title">
+  <meta
+    content="Practical, original writing on Angular and React performance, architecture, design systems and accessibility."
+    name="twitter:description">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" name="twitter:image">
+
+  <meta content="lTgQD1uJlZUR7Iqd2vCEJ54on_Gtxdhb-zX2o-NGDJQ" name="google-site-verification">
+
+  <!-- Consent defaults must load before any Google tag. -->
+  <script src="/assets/js/consent-defaults.js"></script>
+  <script async crossorigin="anonymous"
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4991682021863699"></script>
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K533LRTH"></script>
+  <script>
+    gtag('js', new Date());
+  </script>
+
+  <!-- Favicons -->
+  <link href="/assets/img/favicon.ico" rel="icon" sizes="any">
+  <link href="/assets/img/icon-192.png" rel="icon" sizes="192x192" type="image/png">
+  <link href="/assets/img/icon-512.png" rel="icon" sizes="512x512" type="image/png">
+  <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+  <link href="/manifest.webmanifest" rel="manifest">
+  <link href="/feed.xml" rel="alternate" title="Rajat Malik — articles and notes" type="application/rss+xml">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,400&amp;family=Poppins:wght@0,300;0,400;0,500;0,600;0,700&amp;family=Raleway:wght@300;400;500;600;700&amp;family=DM+Mono&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Syne:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet">
+
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/css/main.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/modern.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/site-extras.css?v=5" rel="stylesheet">
+  <link href="/assets/css/pages.css?v=4" rel="stylesheet">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "@id": "https://rajatmalik.dev/articles/#page",
+          "url": "https://rajatmalik.dev/articles/",
+          "name": "Articles on frontend architecture, Angular, React and performance",
+          "description": "Original, practical articles by Rajat Malik on Angular and React performance, micro-frontend architecture, design systems, accessibility and AI-assisted frontend delivery.",
+          "inLanguage": "en",
+          "isPartOf": { "@id": "https://rajatmalik.dev/#website" },
+          "about": { "@id": "https://rajatmalik.dev/#person" },
+          "hasPart": [
+            { "@id": "https://rajatmalik.dev/articles/angular-performance-checklist.html#article" },
+            { "@id": "https://rajatmalik.dev/articles/micro-frontend-boundaries.html#article" },
+            { "@id": "https://rajatmalik.dev/articles/core-web-vitals-order-of-operations.html#article" },
+            { "@id": "https://rajatmalik.dev/articles/design-systems-that-survive.html#article" },
+            { "@id": "https://rajatmalik.dev/articles/ai-assisted-frontend-development.html#article" },
+            { "@id": "https://rajatmalik.dev/articles/wcag-2-2-component-checklist.html#article" }
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://rajatmalik.dev/#person",
+          "name": "Rajat Malik",
+          "url": "https://rajatmalik.dev/",
+          "jobTitle": "Senior Lead Software Engineer",
+          "worksFor": { "@type": "Organization", "name": "Siemens" },
+          "sameAs": [
+            "https://www.linkedin.com/in/errajatmalik/",
+            "https://github.com/malikrajat",
+            "https://medium.com/@codewithrajat",
+            "https://dev.to/codewithrajat"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://rajatmalik.dev/#website",
+          "url": "https://rajatmalik.dev/",
+          "name": "Rajat Malik",
+          "inLanguage": "en",
+          "publisher": { "@id": "https://rajatmalik.dev/#person" }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://rajatmalik.dev/articles/#breadcrumb",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://rajatmalik.dev/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://rajatmalik.dev/articles/" }
+          ]
+        }
+      ]
+    }
+  </script>
+</head>
+
+<body class="page-body">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="header dark-background" id="header">
+    <i aria-controls="navmenu" aria-expanded="false" aria-label="Open menu"
+      class="header-toggle d-xl-none bi bi-list" role="button" tabindex="0"></i>
+    <a class="logo d-flex align-items-center justify-content-center" href="/">
+      <span class="sitename">Rajat Malik</span>
+    </a>
+    <nav aria-label="Primary" class="navmenu" id="navmenu">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a aria-current="page" href="/articles/">Articles</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a class="header-resume" download href="/assets/Rajat-JS-React-Angular.pdf">Resume <i
+          class="bi bi-arrow-down-right"></i></a>
+      <p class="header-tagline">Senior Lead Software Engineer at <strong>Siemens</strong></p>
+    </div>
+  </header>
+
+  <main class="page-main" id="main-content">
+    <section class="page-hero">
+      <div class="page-wrap">
+        <nav aria-label="Breadcrumb" class="breadcrumbs">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><span aria-current="page">Articles</span></li>
+          </ol>
+        </nav>
+        <p class="page-eyebrow">Writing</p>
+        <h1>Practical frontend engineering, written from the work.</h1>
+        <p class="page-lede">Long-form notes on Angular and React performance, architecture that holds up,
+          design systems, accessibility and using AI without lowering the engineering bar. No recycled listicles
+          &mdash; each article describes an approach I use, the trade-offs, and how to tell whether it worked.</p>
+        <div class="article-meta">
+          <span><i class="bi bi-journal-text"></i> 6 in-depth articles</span>
+          <span><i class="bi bi-clock"></i> 8&ndash;12 minute reads</span>
+          <span><i class="bi bi-arrow-repeat"></i> Updated 17 November 2026</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="page-wrap">
+        <div class="article-grid">
+          <article class="article-card">
+            <p class="card-kicker">Angular &middot; Performance</p>
+            <h2><a href="/articles/angular-performance-checklist.html">The Angular performance checklist I run
+                before every release</a></h2>
+            <p>A field-before-lab checklist covering change detection, bundle size, rendering strategy, images,
+              runtime leaks and the regression guards that keep a fast app fast.</p>
+            <p class="card-foot">17 November 2026 &middot; 12 min read</p>
+          </article>
+
+          <article class="article-card">
+            <p class="card-kicker">Architecture &middot; Micro-frontends</p>
+            <h2><a href="/articles/micro-frontend-boundaries.html">Where micro-frontend boundaries should actually
+                go</a></h2>
+            <p>Most micro-frontend pain is a boundary problem, not a tooling problem. How to split by ownership,
+              define the shell contract, and test that teams can really deploy alone.</p>
+            <p class="card-foot">17 November 2026 &middot; 9 min read</p>
+          </article>
+
+          <article class="article-card">
+            <p class="card-kicker">Web performance &middot; Core Web Vitals</p>
+            <h2><a href="/articles/core-web-vitals-order-of-operations.html">Core Web Vitals in 2026: the order of
+                operations that moves the needle</a></h2>
+            <p>LCP, INP and CLS reward different fixes. A practical sequence for deciding what to work on first,
+              with the field-data checks that stop you optimising the wrong thing.</p>
+            <p class="card-foot">17 November 2026 &middot; 10 min read</p>
+          </article>
+
+          <article class="article-card">
+            <p class="card-kicker">Design systems &middot; Engineering</p>
+            <h2><a href="/articles/design-systems-that-survive.html">Design systems that survive: tokens, contracts
+                and honest review</a></h2>
+            <p>Why component libraries decay, how to design APIs that teams can adopt without a migration every
+              quarter, and the governance that stays out of the way.</p>
+            <p class="card-foot">17 November 2026 &middot; 9 min read</p>
+          </article>
+
+          <article class="article-card">
+            <p class="card-kicker">AI &middot; Engineering practice</p>
+            <h2><a href="/articles/ai-assisted-frontend-development.html">AI-assisted frontend development without
+                lowering the bar</a></h2>
+            <p>Where LLMs genuinely help, where they quietly add risk, and the review, testing and security gates
+              that make the speed-up real instead of borrowed.</p>
+            <p class="card-foot">17 November 2026 &middot; 8 min read</p>
+          </article>
+
+          <article class="article-card">
+            <p class="card-kicker">Accessibility &middot; WCAG 2.2</p>
+            <h2><a href="/articles/wcag-2-2-component-checklist.html">A WCAG 2.2 checklist for component
+                libraries</a></h2>
+            <p>The accessibility checks that belong at component level, what changed in WCAG 2.2, and how to test
+              beyond an automated scan.</p>
+            <p class="card-foot">17 November 2026 &middot; 10 min read</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section" id="editorial-standards">
+      <div class="page-wrap page-narrow prose">
+        <h2>Editorial standards</h2>
+        <p>These articles are written by <a href="/about.html">Rajat Malik</a> and published on this site. They are
+          based on first-hand engineering work, documentation and testing, not on scraped or auto-generated
+          summaries. Where an article states a measurement or an outcome, it comes from a real project; where it
+          states an opinion, it is labelled as one.</p>
+        <ul class="checklist">
+          <li><strong>Original:</strong> every article is written for this site and is not republished from another
+            publication.</li>
+          <li><strong>Reviewed:</strong> code samples and recommendations are checked against current framework
+            documentation before publication.</li>
+          <li><strong>Corrections:</strong> if something is wrong or out of date, email
+            <a href="mailto:contact@rajatmalik.dev?subject=Correction">contact@rajatmalik.dev</a> and the article will
+            be corrected with a note.</li>
+          <li><strong>Independent:</strong> no article is sponsored, and advertising is served separately from the
+            editorial content. See the <a href="/terms.html#advertising">advertising disclosure</a>.</li>
+        </ul>
+
+        <div class="callout">
+          <p><strong>Looking for the short version?</strong> The <a href="/#services">writing section</a> on the home
+            page links to Medium, Substack, DEV and the newsletter, and the
+            <a href="/llms.txt">plain-text profile</a> summarises this site for answer engines.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer light-background position-relative" id="footer">
+    <div class="container">
+      <nav aria-label="Footer" class="footer-nav">
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a aria-current="page" href="/articles/">Articles</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy-policy.html">Privacy policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/feed.xml">RSS</a>
+        <a href="https://www.google.com/settings/ads" rel="noopener" target="_blank">Ad settings</a>
+        <a href="/privacy-policy.html#california">Do not sell or share</a>
+        <button data-cookie-settings type="button">Cookie settings</button>
+      </nav>
+      <div class="copyright text-center">
+        <a class="medium" href="https://medium.com/@codewithrajat" rel="noopener" target="_blank" title="Medium"><i
+            class="bi bi-medium"></i></a>
+        <a class="linkedin" href="https://www.linkedin.com/in/errajatmalik/" rel="noopener" target="_blank"
+          title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a class="twitter" href="https://twitter.com/er_rajatmalik" rel="noopener" target="_blank" title="X"><i
+            class="bi bi-twitter-x"></i></a>
+        <a class="Github" href="https://github.com/malikrajat" rel="noopener" target="_blank" title="GitHub"><i
+            class="bi bi-github"></i></a>
+      </div>
+      <p class="footer-legal">&copy; <span data-year>2026</span> Rajat Malik &middot; Senior Lead Software Engineer at
+        Siemens &middot; <a href="mailto:contact@rajatmalik.dev">contact@rajatmalik.dev</a></p>
+    </div>
+  </footer>
+
+  <a class="scroll-top d-flex align-items-center justify-content-center" href="#"><i class="bi bi-arrow-up-short"
+      aria-hidden="true"></i><span class="visually-hidden">Back to top</span></a>
+
+  <script src="/assets/js/pages.js"></script>
+  <script src="/assets/js/consent.js"></script>
+</body>
+
+</html>

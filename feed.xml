@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>Rajat Malik — articles and notes</title>
+    <link>https://rajatmalik.dev/articles/</link>
+    <atom:link href="https://rajatmalik.dev/feed.xml" rel="self" type="application/rss+xml" />
+    <description>Original, practical articles on Angular and React performance, micro-frontend architecture, design systems, accessibility and AI-assisted frontend delivery.</description>
+    <language>en</language>
+    <lastBuildDate>Tue, 17 Nov 2026 09:00:00 +0530</lastBuildDate>
+    <managingEditor>contact@rajatmalik.dev (Rajat Malik)</managingEditor>
+    <webMaster>contact@rajatmalik.dev (Rajat Malik)</webMaster>
+    <copyright>© 2026 Rajat Malik</copyright>
+    <ttl>10080</ttl>
+
+    <item>
+      <title>The Angular performance checklist I run before every release</title>
+      <link>https://rajatmalik.dev/articles/angular-performance-checklist.html</link>
+      <guid isPermaLink="true">https://rajatmalik.dev/articles/angular-performance-checklist.html</guid>
+      <pubDate>Tue, 17 Nov 2026 09:00:00 +0530</pubDate>
+      <dc:creator>Rajat Malik</dc:creator>
+      <category>Angular</category>
+      <category>Performance</category>
+      <description>A field-before-lab checklist covering change detection, bundle size, rendering strategy, images, runtime leaks and the regression guards that keep a fast Angular app fast.</description>
+    </item>
+
+    <item>
+      <title>Where micro-frontend boundaries should actually go</title>
+      <link>https://rajatmalik.dev/articles/micro-frontend-boundaries.html</link>
+      <guid isPermaLink="true">https://rajatmalik.dev/articles/micro-frontend-boundaries.html</guid>
+      <pubDate>Tue, 17 Nov 2026 09:00:00 +0530</pubDate>
+      <dc:creator>Rajat Malik</dc:creator>
+      <category>Architecture</category>
+      <category>Micro-frontends</category>
+      <description>Most micro-frontend pain is a boundary problem, not a tooling problem. How to split by ownership, define the shell contract, share less and test independent deployability.</description>
+    </item>
+
+    <item>
+      <title>Core Web Vitals in 2026: the order of operations that moves the needle</title>
+      <link>https://rajatmalik.dev/articles/core-web-vitals-order-of-operations.html</link>
+      <guid isPermaLink="true">https://rajatmalik.dev/articles/core-web-vitals-order-of-operations.html</guid>
+      <pubDate>Tue, 17 Nov 2026 09:00:00 +0530</pubDate>
+      <dc:creator>Rajat Malik</dc:creator>
+      <category>Performance</category>
+      <category>Core Web Vitals</category>
+      <description>LCP, INP and CLS reward different fixes. A practical sequence for deciding what to work on first, with the field-data checks that stop you optimising the wrong thing.</description>
+    </item>
+
+    <item>
+      <title>Design systems that survive: tokens, contracts and honest review</title>
+      <link>https://rajatmalik.dev/articles/design-systems-that-survive.html</link>
+      <guid isPermaLink="true">https://rajatmalik.dev/articles/design-systems-that-survive.html</guid>
+      <pubDate>Tue, 17 Nov 2026 09:00:00 +0530</pubDate>
+      <dc:creator>Rajat Malik</dc:creator>
+      <category>Design systems</category>
+      <description>Why component libraries decay, how to design token and component APIs teams can adopt, and the governance and versioning that keep a design system healthy.</description>
+    </item>
+
+    <item>
+      <title>AI-assisted frontend development without lowering the bar</title>
+      <link>https://rajatmalik.dev/articles/ai-assisted-frontend-development.html</link>
+      <guid isPermaLink="true">https://rajatmalik.dev/articles/ai-assisted-frontend-development.html</guid>
+      <pubDate>Tue, 17 Nov 2026 09:00:00 +0530</pubDate>
+      <dc:creator>Rajat Malik</dc:creator>
+      <category>AI</category>
+      <category>Engineering practice</category>
+      <description>Where LLMs genuinely help frontend teams, where they add risk, and the review, testing and security gates that turn a speed-up into durable quality.</description>
+    </item>
+
+    <item>
+      <title>A WCAG 2.2 checklist for component libraries</title>
+      <link>https://rajatmalik.dev/articles/wcag-2-2-component-checklist.html</link>
+      <guid isPermaLink="true">https://rajatmalik.dev/articles/wcag-2-2-component-checklist.html</guid>
+      <pubDate>Tue, 17 Nov 2026 09:00:00 +0530</pubDate>
+      <dc:creator>Rajat Malik</dc:creator>
+      <category>Accessibility</category>
+      <category>WCAG 2.2</category>
+      <description>The accessibility checks that belong at component level, what changed in WCAG 2.2, and how to test beyond an automated scan with keyboard and screen readers.</description>
+    </item>
+  </channel>
+</rss>

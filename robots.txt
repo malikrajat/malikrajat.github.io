@@ -1,13 +1,14 @@
-# robots.txt for rajatmalik.dev - the portfolio of Rajat Malik
+# robots.txt for rajatmalik.dev - the portfolio and articles of Rajat Malik
 #
-# One public page, no login, no private area and no user-generated content on
-# the server, so there is nothing here to disallow. The rules below are
-# permissions rather than restrictions because several crawlers only read a rule
-# that names them.
+# Every page is public: no login, no private area and no user-generated content.
+# The rules below are permissions rather than restrictions, because several
+# crawlers only read a rule that names them explicitly.
 #
 # Machine-readable alternatives to the HTML:
-#   /llms.txt    - a short profile for assistants and answer engines
-#   /sitemap.xml - the public URL of this site
+#   /sitemap.xml          - every indexable URL
+#   /llms.txt             - a short profile for assistants and answer engines
+#   /feed.xml             - RSS feed of the articles
+#   /ads.txt              - authorised digital sellers (Google AdSense)
 
 User-agent: *
 Allow: /
@@ -35,6 +36,17 @@ User-agent: Baiduspider
 Allow: /
 
 User-agent: YandexBot
+Allow: /
+
+# Google advertising crawlers. These verify ad-relevant content and must be
+# able to read every page that can display ads.
+User-agent: AdsBot-Google
+Allow: /
+
+User-agent: AdsBot-Google-Mobile
+Allow: /
+
+User-agent: Mediapartners-Google
 Allow: /
 
 # AI assistants and answer engines

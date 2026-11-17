@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Where micro-frontend boundaries should actually go | Rajat Malik</title>
+  <meta name="description"
+    content="Most micro-frontend pain is a boundary problem, not a tooling problem. How to split by ownership, define the shell contract, share less and test independent deployability.">
+  <link href="https://rajatmalik.dev/articles/micro-frontend-boundaries.html" rel="canonical">
+  <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots">
+  <meta content="Rajat Malik" name="author">
+  <meta content="#080b18" name="theme-color">
+  <meta content="ca-pub-4991682021863699" name="google-adsense-account">
+
+  <meta content="Where micro-frontend boundaries should actually go" property="og:title">
+  <meta
+    content="Split by ownership, define the shell contract, share less and prove that teams can deploy alone."
+    property="og:description">
+  <meta content="https://rajatmalik.dev/articles/micro-frontend-boundaries.html" property="og:url">
+  <meta content="article" property="og:type">
+  <meta content="Rajat Malik" property="og:site_name">
+  <meta content="en" property="og:locale">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" property="og:image">
+  <meta content="840" property="og:image:width">
+  <meta content="400" property="og:image:height">
+  <meta content="Micro-frontend boundaries" property="og:image:alt">
+  <meta content="2026-11-17" property="article:published_time">
+  <meta content="Rajat Malik" property="article:author">
+  <meta content="Architecture" property="article:section">
+  <meta content="summary_large_image" name="twitter:card">
+  <meta content="@er_rajatmalik" name="twitter:site">
+  <meta content="@er_rajatmalik" name="twitter:creator">
+  <meta content="Where micro-frontend boundaries should actually go" name="twitter:title">
+  <meta
+    content="Split by ownership, define the shell contract, share less and prove that teams can deploy alone."
+    name="twitter:description">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" name="twitter:image">
+
+  <meta content="lTgQD1uJlZUR7Iqd2vCEJ54on_Gtxdhb-zX2o-NGDJQ" name="google-site-verification">
+
+  <script src="/assets/js/consent-defaults.js"></script>
+  <script async crossorigin="anonymous"
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4991682021863699"></script>
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K533LRTH"></script>
+  <script>
+    gtag('js', new Date());
+  </script>
+
+  <link href="/assets/img/favicon.ico" rel="icon" sizes="any">
+  <link href="/assets/img/icon-192.png" rel="icon" sizes="192x192" type="image/png">
+  <link href="/assets/img/icon-512.png" rel="icon" sizes="512x512" type="image/png">
+  <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+  <link href="/manifest.webmanifest" rel="manifest">
+  <link href="/feed.xml" rel="alternate" title="Rajat Malik — articles and notes" type="application/rss+xml">
+
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,400&amp;family=Poppins:wght@0,300;0,400;0,500;0,600;0,700&amp;family=Raleway:wght@300;400;500;600;700&amp;family=DM+Mono&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Syne:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet">
+
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/css/main.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/modern.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/site-extras.css?v=5" rel="stylesheet">
+  <link href="/assets/css/pages.css?v=4" rel="stylesheet">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "@id": "https://rajatmalik.dev/articles/micro-frontend-boundaries.html#article",
+          "mainEntityOfPage": "https://rajatmalik.dev/articles/micro-frontend-boundaries.html",
+          "headline": "Where micro-frontend boundaries should actually go",
+          "description": "Most micro-frontend pain is a boundary problem, not a tooling problem. How to split by ownership, define the shell contract, share less and test independent deployability.",
+          "datePublished": "2026-11-17",
+          "dateModified": "2026-11-17",
+          "inLanguage": "en",
+          "articleSection": "Architecture",
+          "keywords": "micro-frontends, module federation, frontend architecture, team boundaries, design systems",
+          "image": "https://rajatmalik.dev/assets/img/post.png",
+          "author": { "@id": "https://rajatmalik.dev/#person" },
+          "publisher": { "@id": "https://rajatmalik.dev/#person" },
+          "isPartOf": { "@id": "https://rajatmalik.dev/articles/#page" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://rajatmalik.dev/#person",
+          "name": "Rajat Malik",
+          "url": "https://rajatmalik.dev/",
+          "jobTitle": "Senior Lead Software Engineer",
+          "worksFor": { "@type": "Organization", "name": "Siemens" },
+          "sameAs": [
+            "https://www.linkedin.com/in/errajatmalik/",
+            "https://github.com/malikrajat"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://rajatmalik.dev/articles/micro-frontend-boundaries.html#breadcrumb",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://rajatmalik.dev/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://rajatmalik.dev/articles/" },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Micro-frontend boundaries",
+              "item": "https://rajatmalik.dev/articles/micro-frontend-boundaries.html"
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+</head>
+
+<body class="page-body">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="header dark-background" id="header">
+    <i aria-controls="navmenu" aria-expanded="false" aria-label="Open menu"
+      class="header-toggle d-xl-none bi bi-list" role="button" tabindex="0"></i>
+    <a class="logo d-flex align-items-center justify-content-center" href="/">
+      <span class="sitename">Rajat Malik</span>
+    </a>
+    <nav aria-label="Primary" class="navmenu" id="navmenu">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a aria-current="page" href="/articles/">Articles</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a class="header-resume" download href="/assets/Rajat-JS-React-Angular.pdf">Resume <i
+          class="bi bi-arrow-down-right"></i></a>
+      <p class="header-tagline">Senior Lead Software Engineer at <strong>Siemens</strong></p>
+    </div>
+  </header>
+
+  <main class="page-main" id="main-content">
+    <section class="page-hero">
+      <div class="page-wrap">
+        <nav aria-label="Breadcrumb" class="breadcrumbs">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/articles/">Articles</a></li>
+            <li><span aria-current="page">Micro-frontend boundaries</span></li>
+          </ol>
+        </nav>
+        <p class="page-eyebrow">Architecture &middot; Micro-frontends</p>
+        <h1>Where micro-frontend boundaries should actually go</h1>
+        <p class="page-lede">Module federation, web components and iframes are implementation details. The hard
+          question is who owns which slice of the product, and what the pieces are allowed to assume about each
+          other. Get that wrong and no amount of tooling saves you.</p>
+        <div class="article-meta">
+          <span><i class="bi bi-person"></i> Rajat Malik</span>
+          <span><i class="bi bi-calendar3"></i> 17 November 2026</span>
+          <span><i class="bi bi-clock"></i> 9 min read</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="page-wrap page-narrow">
+        <nav aria-label="On this page" class="toc" data-toc>
+          <p class="toc-title">On this page</p>
+        </nav>
+
+        <article class="prose">
+          <p>I have worked on micro-frontend programmes that made delivery faster and on ones that quietly became a
+            distributed monolith with more pipelines. The difference was rarely the bundler. It was whether the
+            boundaries matched the organisation, and whether the contracts between the pieces were small enough to
+            keep.</p>
+
+          <h2>1. A micro-frontend is an ownership boundary, not a folder</h2>
+          <p>Start with the team map, not the component tree. A useful boundary has three properties:</p>
+          <ul>
+            <li><strong>It has a clear owner.</strong> One team can decide what changes, release it, and be
+              accountable for its quality.</li>
+            <li><strong>It delivers a complete user outcome.</strong> A vertical slice such as &ldquo;checkout&rdquo;
+              or &ldquo;fleet diagnostics&rdquo; is a better boundary than &ldquo;all forms&rdquo; or &ldquo;the
+              shared header&rdquo;.</li>
+            <li><strong>It can change without coordinated releases.</strong> If every change needs three teams in a
+              room, you have a module, not a micro-frontend.</li>
+          </ul>
+          <p>If the organisation has one frontend team, the honest answer is usually a modular monolith with strong
+            internal boundaries. Micro-frontends add network, versioning and observability costs that only pay off
+            when independent ownership is real.</p>
+
+          <h2>2. Define the shell contract first</h2>
+          <p>The shell &mdash; the application that composes the page &mdash; is the most important piece to design
+            early, because every other decision depends on it. It should own as little product logic as possible and
+            provide exactly these things:</p>
+          <ul>
+            <li><strong>Layout and composition:</strong> where a remote mounts, and what space it gets.</li>
+            <li><strong>Routing:</strong> the top-level URL structure, plus a documented way for a remote to own its
+              sub-routes.</li>
+            <li><strong>Identity and session:</strong> authentication state, current user, permissions and tenant.
+              Remotes consume it; they do not each implement their own auth flow.</li>
+            <li><strong>Cross-cutting services:</strong> notifications, telemetry, feature flags, error reporting,
+              localization and the design system.</li>
+            <li><strong>Lifecycle:</strong> mount, unmount, error and retry. A remote that fails must not take the
+              page down with it.</li>
+          </ul>
+          <p>Write the contract as types and documentation, not as a wiki page that drifts. If a remote needs
+            something new from the shell, that is a versioned change with a migration path &mdash; not a Slack
+            message.</p>
+
+          <h2>3. Split vertically, not by layer</h2>
+          <p>The most common mistake is splitting by technical layer: one remote for the header, one for forms, one
+            for charts, one for the footer. That creates a dependency graph where every product change touches
+            several repositories and every release is a coordination exercise.</p>
+          <p>Split by business capability instead. A team that owns &ldquo;billing&rdquo; should own its routes,
+            state, API calls, components and tests. The shell should not know how billing calculates a total; it
+            should only know where billing renders and what user context it needs.</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Good boundary</th>
+                <th>Painful boundary</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Checkout, owned end to end by one team</td>
+                <td>All buttons, owned by a &ldquo;UI platform&rdquo; team</td>
+              </tr>
+              <tr>
+                <td>Device fleet diagnostics</td>
+                <td>All charts in the product</td>
+              </tr>
+              <tr>
+                <td>Account administration and permissions</td>
+                <td>All forms across every domain</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>4. Share less than you think</h2>
+          <p>Every shared dependency is a runtime and release coupling. A small, deliberate shared layer is healthy;
+            a large one recreates the monolith without the tooling.</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Share through the shell</th>
+                <th>Keep inside the remote</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Design-system components and tokens</td>
+                <td>Feature-specific state and API clients</td>
+              </tr>
+              <tr>
+                <td>Authentication and user context</td>
+                <td>Business rules for that domain</td>
+              </tr>
+              <tr>
+                <td>Logging, metrics and error reporting</td>
+                <td>Local caches and optimistic updates</td>
+              </tr>
+              <tr>
+                <td>Routing primitives and navigation events</td>
+                <td>Internal component structure and styling</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Be especially careful with shared state. A global store that every remote writes to is a distributed
+            database with no schema, no transactions and no owner. Prefer explicit events or a narrow, read-mostly
+            context object. If two remotes genuinely need to collaborate, treat that as a product boundary problem
+            and reconsider the split.</p>
+
+          <h2>5. Make the contract explicit and versioned</h2>
+          <p>The shell and each remote should agree on a small interface: the inputs it receives, the events it
+            emits and the browser APIs it may use. Anything else is private.</p>
+          <pre><code>export interface RemoteContext {
+  readonly locale: string;
+  readonly user: { id: string; roles: string[]; tenantId: string };
+  readonly navigate: (path: string) =&gt; void;
+  readonly notify: (message: string, level: 'info' | 'error') =&gt; void;
+}
+
+export interface RemoteHandle {
+  mount(target: HTMLElement, context: RemoteContext): Promise&lt;void&gt;;
+  unmount(): Promise&lt;void&gt;;
+}</code></pre>
+          <p>Version the contract and support at least one previous version during a migration. Log which remote
+            version is running in production; when something breaks, you need to know what changed without guessing.
+            Avoid exposing the shell&rsquo;s internal framework objects as part of the contract &mdash; that turns an
+            implementation detail into a public API.</p>
+
+          <h2>6. The independent-deploy test</h2>
+          <p>This is the test I use to decide whether a split is real. Can one team, on a normal Tuesday, change
+            their remote, run their own pipeline, and have it live for a subset of users without any other team
+            deploying, approving or even being awake?</p>
+          <p>If the answer is no because of a shared lockfile, a shared release train, a shared bundle or a shared
+            database migration, then the boundary is organisational theatre. Either fix the coupling or merge the
+            slices back together.</p>
+
+          <h2>7. Design for failure and observability</h2>
+          <p>Distributed frontends fail in more ways than a single application: a remote chunk can 404, an API
+            contract can drift, a slow remote can block a route. The shell needs:</p>
+          <ul>
+            <li>A timeout and an error boundary per remote, with a useful fallback rather than a blank page.</li>
+            <li>Retry with a version pin, so a bad deploy can be rolled back independently.</li>
+            <li>Per-remote performance and error telemetry, tagged with the version.</li>
+            <li>Load-order rules that keep the critical path small: render the primary task first, load secondary
+              panels after.</li>
+          </ul>
+
+          <h2>8. Know when not to do this</h2>
+          <p>Micro-frontends are a solution to an organisational scaling problem. They are a poor answer to a purely
+            technical one. If the product is small, the team is one team, or the main problem is an inconsistent UI,
+            a design system and a modular monolith will deliver more value with far less operational cost.</p>
+
+          <h2>9. The short checklist</h2>
+          <ul class="checklist">
+            <li>One team, one vertical slice, one deployable unit.</li>
+            <li>Shell owns composition, auth, routing, telemetry and design tokens; nothing else.</li>
+            <li>Shared state is narrow, explicit and read-mostly.</li>
+            <li>Contracts are typed, versioned and documented.</li>
+            <li>Independent deploy is proven, not assumed.</li>
+            <li>Every remote has an error boundary, a timeout and versioned telemetry.</li>
+            <li>The decision is revisited when the team topology changes.</li>
+          </ul>
+
+          <p>Boundaries are a design decision about people first and code second. When they match how the
+            organisation actually works, micro-frontends disappear into the background and delivery gets faster.
+            When they do not, the architecture becomes a second job.</p>
+
+          <div class="callout">
+            <p><strong>Related reading:</strong> how to keep the shared layer consistent in
+              <a href="/articles/design-systems-that-survive.html">design systems that survive</a>, and the
+              release-safety checks in the <a href="/articles/angular-performance-checklist.html">Angular performance
+                checklist</a>.</p>
+          </div>
+        </article>
+
+        <aside class="author-box">
+          <img alt="Rajat Malik" height="68" src="/assets/img/my-profile-img.jpg" width="68">
+          <div>
+            <h2>Written by Rajat Malik</h2>
+            <p>Senior Lead Software Engineer at Siemens and frontend architect with 15+ years building enterprise web
+              products. I write about Angular, React, performance, accessibility and the engineering practices around
+              them.</p>
+            <div class="author-links">
+              <a href="/about.html">About</a>
+              <a href="https://www.linkedin.com/in/errajatmalik/" rel="noopener" target="_blank">LinkedIn</a>
+              <a href="https://github.com/malikrajat" rel="noopener" target="_blank">GitHub</a>
+              <a href="mailto:contact@rajatmalik.dev">Email</a>
+            </div>
+          </div>
+        </aside>
+
+        <nav aria-label="More articles" class="article-nav">
+          <a href="/articles/angular-performance-checklist.html">
+            <span>Previous</span>
+            <strong>The Angular performance checklist</strong>
+          </a>
+          <a href="/articles/design-systems-that-survive.html">
+            <span>Next</span>
+            <strong>Design systems that survive</strong>
+          </a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer light-background position-relative" id="footer">
+    <div class="container">
+      <nav aria-label="Footer" class="footer-nav">
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a aria-current="page" href="/articles/">Articles</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy-policy.html">Privacy policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/feed.xml">RSS</a>
+        <a href="https://www.google.com/settings/ads" rel="noopener" target="_blank">Ad settings</a>
+        <a href="/privacy-policy.html#california">Do not sell or share</a>
+        <button data-cookie-settings type="button">Cookie settings</button>
+      </nav>
+      <div class="copyright text-center">
+        <a class="medium" href="https://medium.com/@codewithrajat" rel="noopener" target="_blank" title="Medium"><i
+            class="bi bi-medium"></i></a>
+        <a class="linkedin" href="https://www.linkedin.com/in/errajatmalik/" rel="noopener" target="_blank"
+          title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a class="twitter" href="https://twitter.com/er_rajatmalik" rel="noopener" target="_blank" title="X"><i
+            class="bi bi-twitter-x"></i></a>
+        <a class="Github" href="https://github.com/malikrajat" rel="noopener" target="_blank" title="GitHub"><i
+            class="bi bi-github"></i></a>
+      </div>
+      <p class="footer-legal">&copy; <span data-year>2026</span> Rajat Malik &middot; Senior Lead Software Engineer at
+        Siemens &middot; <a href="mailto:contact@rajatmalik.dev">contact@rajatmalik.dev</a></p>
+    </div>
+  </footer>
+
+  <a class="scroll-top d-flex align-items-center justify-content-center" href="#"><i class="bi bi-arrow-up-short"
+      aria-hidden="true"></i><span class="visually-hidden">Back to top</span></a>
+
+  <script src="/assets/js/pages.js"></script>
+  <script src="/assets/js/consent.js"></script>
+</body>
+
+</html>

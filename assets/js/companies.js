@@ -100,12 +100,11 @@
         card.target = '_blank';
         card.rel = 'noopener';
       }
-      card.setAttribute('aria-label', company.name + (company.url ? ' — opens in a new tab' : ''));
 
       var img = document.createElement('img');
       img.className = 'company-mark';
       img.src = company.logo;
-      img.alt = company.name + ' logo';
+      img.alt = company.name;
       img.loading = 'lazy';
       img.decoding = 'async';
 

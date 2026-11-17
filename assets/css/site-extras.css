@@ -510,9 +510,9 @@ body.hero-fluid-off .hero:before {
 .stats-toggle {
   align-items: center;
   background: transparent;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, .28);
   border-radius: 999px;
-  color: var(--muted);
+  color: #c9d4e5;
   cursor: pointer;
   display: inline-flex;
   font-family: var(--body);

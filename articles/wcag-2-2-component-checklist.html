@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>A WCAG 2.2 checklist for component libraries | Rajat Malik</title>
+  <meta name="description"
+    content="The accessibility checks that belong at component level, what changed in WCAG 2.2, and how to test beyond an automated scan with keyboard and screen readers.">
+  <link href="https://rajatmalik.dev/articles/wcag-2-2-component-checklist.html" rel="canonical">
+  <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots">
+  <meta content="Rajat Malik" name="author">
+  <meta content="#080b18" name="theme-color">
+  <meta content="ca-pub-4991682021863699" name="google-adsense-account">
+
+  <meta content="A WCAG 2.2 checklist for component libraries" property="og:title">
+  <meta content="Component-level accessibility checks, what changed in WCAG 2.2, and how to test beyond automation."
+    property="og:description">
+  <meta content="https://rajatmalik.dev/articles/wcag-2-2-component-checklist.html" property="og:url">
+  <meta content="article" property="og:type">
+  <meta content="Rajat Malik" property="og:site_name">
+  <meta content="en" property="og:locale">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" property="og:image">
+  <meta content="840" property="og:image:width">
+  <meta content="400" property="og:image:height">
+  <meta content="WCAG 2.2 component checklist" property="og:image:alt">
+  <meta content="2026-11-17" property="article:published_time">
+  <meta content="Rajat Malik" property="article:author">
+  <meta content="Accessibility" property="article:section">
+  <meta content="summary_large_image" name="twitter:card">
+  <meta content="@er_rajatmalik" name="twitter:site">
+  <meta content="@er_rajatmalik" name="twitter:creator">
+  <meta content="A WCAG 2.2 checklist for component libraries" name="twitter:title">
+  <meta content="Component-level accessibility checks, what changed in WCAG 2.2, and how to test beyond automation."
+    name="twitter:description">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" name="twitter:image">
+
+  <meta content="lTgQD1uJlZUR7Iqd2vCEJ54on_Gtxdhb-zX2o-NGDJQ" name="google-site-verification">
+
+  <script src="/assets/js/consent-defaults.js"></script>
+  <script async crossorigin="anonymous"
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4991682021863699"></script>
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K533LRTH"></script>
+  <script>
+    gtag('js', new Date());
+  </script>
+
+  <link href="/assets/img/favicon.ico" rel="icon" sizes="any">
+  <link href="/assets/img/icon-192.png" rel="icon" sizes="192x192" type="image/png">
+  <link href="/assets/img/icon-512.png" rel="icon" sizes="512x512" type="image/png">
+  <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+  <link href="/manifest.webmanifest" rel="manifest">
+  <link href="/feed.xml" rel="alternate" title="Rajat Malik — articles and notes" type="application/rss+xml">
+
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,400&amp;family=Poppins:wght@0,300;0,400;0,500;0,600;0,700&amp;family=Raleway:wght@300;400;500;600;700&amp;family=DM+Mono&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Syne:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet">
+
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/css/main.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/modern.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/site-extras.css?v=5" rel="stylesheet">
+  <link href="/assets/css/pages.css?v=4" rel="stylesheet">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "@id": "https://rajatmalik.dev/articles/wcag-2-2-component-checklist.html#article",
+          "mainEntityOfPage": "https://rajatmalik.dev/articles/wcag-2-2-component-checklist.html",
+          "headline": "A WCAG 2.2 checklist for component libraries",
+          "description": "The accessibility checks that belong at component level, what changed in WCAG 2.2, and how to test beyond an automated scan with keyboard and screen readers.",
+          "datePublished": "2026-11-17",
+          "dateModified": "2026-11-17",
+          "inLanguage": "en",
+          "articleSection": "Accessibility",
+          "keywords": "WCAG 2.2, accessibility, component library, keyboard navigation, screen reader, ARIA",
+          "image": "https://rajatmalik.dev/assets/img/post.png",
+          "author": { "@id": "https://rajatmalik.dev/#person" },
+          "publisher": { "@id": "https://rajatmalik.dev/#person" },
+          "isPartOf": { "@id": "https://rajatmalik.dev/articles/#page" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://rajatmalik.dev/#person",
+          "name": "Rajat Malik",
+          "url": "https://rajatmalik.dev/",
+          "jobTitle": "Senior Lead Software Engineer",
+          "worksFor": { "@type": "Organization", "name": "Siemens" },
+          "sameAs": [
+            "https://www.linkedin.com/in/errajatmalik/",
+            "https://github.com/malikrajat"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://rajatmalik.dev/articles/wcag-2-2-component-checklist.html#breadcrumb",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://rajatmalik.dev/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://rajatmalik.dev/articles/" },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "WCAG 2.2 component checklist",
+              "item": "https://rajatmalik.dev/articles/wcag-2-2-component-checklist.html"
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+</head>
+
+<body class="page-body">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="header dark-background" id="header">
+    <i aria-controls="navmenu" aria-expanded="false" aria-label="Open menu"
+      class="header-toggle d-xl-none bi bi-list" role="button" tabindex="0"></i>
+    <a class="logo d-flex align-items-center justify-content-center" href="/">
+      <span class="sitename">Rajat Malik</span>
+    </a>
+    <nav aria-label="Primary" class="navmenu" id="navmenu">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a aria-current="page" href="/articles/">Articles</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a class="header-resume" download href="/assets/Rajat-JS-React-Angular.pdf">Resume <i
+          class="bi bi-arrow-down-right"></i></a>
+      <p class="header-tagline">Senior Lead Software Engineer at <strong>Siemens</strong></p>
+    </div>
+  </header>
+
+  <main class="page-main" id="main-content">
+    <section class="page-hero">
+      <div class="page-wrap">
+        <nav aria-label="Breadcrumb" class="breadcrumbs">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/articles/">Articles</a></li>
+            <li><span aria-current="page">WCAG 2.2 component checklist</span></li>
+          </ol>
+        </nav>
+        <p class="page-eyebrow">Accessibility &middot; WCAG 2.2</p>
+        <h1>A WCAG 2.2 checklist for component libraries</h1>
+        <p class="page-lede">Accessibility implemented per page is re-implemented per page. These are the checks that
+          belong in the component itself, plus what changed in WCAG 2.2 and how to test what automation cannot see.</p>
+        <div class="article-meta">
+          <span><i class="bi bi-person"></i> Rajat Malik</span>
+          <span><i class="bi bi-calendar3"></i> 17 November 2026</span>
+          <span><i class="bi bi-clock"></i> 10 min read</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="page-wrap page-narrow">
+        <nav aria-label="On this page" class="toc" data-toc>
+          <p class="toc-title">On this page</p>
+        </nav>
+
+        <article class="prose">
+          <p>WCAG 2.2 is the current recommendation, and its Level A and AA criteria are also the reference point for
+            many legal and procurement requirements &mdash; including the European Accessibility Act, whose
+            obligations have applied since 28 June 2025. A component library is the highest-leverage place to meet
+            them: fix a dialog once and every product inherits the fix.</p>
+
+          <h2>1. What changed in WCAG 2.2</h2>
+          <p>WCAG 2.2 added criteria that matter directly to interactive components:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Criterion</th>
+                <th>Level</th>
+                <th>What it means for a component</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2.4.11 Focus Not Obscured (Minimum)</td>
+                <td>AA</td>
+                <td>A focused control must not be completely hidden by sticky headers, footers, popovers or cookie
+                  banners.</td>
+              </tr>
+              <tr>
+                <td>2.5.7 Dragging Movements</td>
+                <td>AA</td>
+                <td>Sliders, sortable lists and drag handles need a non-drag alternative.</td>
+              </tr>
+              <tr>
+                <td>2.5.8 Target Size (Minimum)</td>
+                <td>AA</td>
+                <td>Pointer targets should be at least 24&times;24 CSS pixels, with defined exceptions.</td>
+              </tr>
+              <tr>
+                <td>3.2.6 Consistent Help</td>
+                <td>A</td>
+                <td>Help mechanisms appear in the same relative order across pages.</td>
+              </tr>
+              <tr>
+                <td>3.3.7 Redundant Entry</td>
+                <td>A</td>
+                <td>Do not ask for the same information twice in a process unless it is essential or auto-filled.</td>
+              </tr>
+              <tr>
+                <td>3.3.8 Accessible Authentication (Minimum)</td>
+                <td>AA</td>
+                <td>No cognitive function test for login without an alternative; allow paste and password managers.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Focus Appearance (2.4.13) is Level AAA, but its intent &mdash; a clearly visible focus indicator
+            &mdash; is worth meeting at component level regardless, because focus visibility is also a practical
+            usability requirement.</p>
+
+          <h2>2. The component-level checklist</h2>
+          <h3>Keyboard</h3>
+          <ul class="checklist">
+            <li>Every interactive element is reachable with <kbd>Tab</kbd> and operable with the expected keys.</li>
+            <li>Composite widgets follow the expected pattern: arrow keys inside a menu, tab list or grid; <kbd>Esc</kbd>
+              to close overlays.</li>
+            <li>Focus is never trapped except inside a modal dialog, where it is contained and restored on close.</li>
+            <li>Focus order follows the visual order, including after dynamic content is inserted.</li>
+            <li>Custom controls do not swallow browser shortcuts or scroll keys unnecessarily.</li>
+          </ul>
+
+          <h3>Names, roles and states</h3>
+          <ul class="checklist">
+            <li>Use native elements first. A <code>button</code> is better than a <code>div</code> with a role and
+              three key handlers.</li>
+            <li>Every control has an accessible name, including icon-only buttons.</li>
+            <li>State is exposed: expanded, selected, checked, invalid, busy, current page.</li>
+            <li>Live regions announce asynchronous results &mdash; and do not announce on every keystroke.</li>
+            <li>Decorative icons are hidden from assistive technology; meaningful icons have a name.</li>
+          </ul>
+
+          <h3>Forms</h3>
+          <ul class="checklist">
+            <li>Labels are programmatically associated, not just visually adjacent.</li>
+            <li>Required fields, formats and expected input are described before submission.</li>
+            <li>Errors are announced, tied to the field, and explain how to fix the problem.</li>
+            <li>Autocomplete tokens are set for common fields (name, email, address, one-time code).</li>
+            <li>Paste and password managers are not blocked.</li>
+            <li>Entering the same information again is avoided within a flow.</li>
+          </ul>
+
+          <h3>Focus and overlays</h3>
+          <ul class="checklist">
+            <li>Dialogs, drawers and menus move focus in on open and return it to the trigger on close.</li>
+            <li>The page behind a modal is inert, including to screen readers.</li>
+            <li>Sticky headers and banners never completely cover the focused element.</li>
+            <li>Focus indicators have sufficient contrast and are not removed for aesthetics.</li>
+          </ul>
+
+          <h3>Pointer, touch and motion</h3>
+          <ul class="checklist">
+            <li>Targets are at least 24&times;24 CSS pixels, or meet a documented exception.</li>
+            <li>Interactions that rely on dragging or a path-based gesture have a single-pointer alternative.</li>
+            <li>Hover-only content is also available on focus and on touch.</li>
+            <li>Animations respect <code>prefers-reduced-motion</code>; nothing flashes more than three times a
+              second.</li>
+            <li>Orientation and text resizing to 200% do not break the component.</li>
+          </ul>
+
+          <h3>Colour and content</h3>
+          <ul class="checklist">
+            <li>Text meets 4.5:1 contrast (3:1 for large text); UI boundaries and focus indicators meet 3:1.</li>
+            <li>Colour is never the only way to convey status; add text, icon or pattern.</li>
+            <li>Disabled states remain readable and are not the only explanation of why an action is unavailable.</li>
+            <li>Error messages and empty states are written in plain language.</li>
+          </ul>
+
+          <h2>3. Test beyond the automated scan</h2>
+          <p>Automated tools catch a useful minority of issues &mdash; missing labels, some contrast failures, invalid
+            ARIA. They cannot tell you whether a dialog feels right to a keyboard user or whether a screen reader
+            announces a state change at the correct moment.</p>
+          <p>A practical test stack:</p>
+          <ol>
+            <li><strong>Static checks in CI:</strong> lint rules for ARIA, axe or equivalent in component tests.</li>
+            <li><strong>Keyboard-only pass:</strong> complete the component&rsquo;s primary task without a mouse.
+              Watch where focus goes and whether it is visible.</li>
+            <li><strong>Screen-reader pass:</strong> at least one desktop pair (for example NVDA with Firefox or
+              Chrome) and one mobile pair (VoiceOver with Safari, or TalkBack with Chrome). Listen to the name, role,
+              state and error announcements.</li>
+            <li><strong>Zoom and reflow:</strong> 200% zoom and a 320&nbsp;px viewport. Check that content does not
+              clip or require horizontal scrolling.</li>
+            <li><strong>Reduced motion and high contrast:</strong> emulate both and confirm the component remains
+              usable.</li>
+          </ol>
+          <div class="callout">
+            <p><strong>Test with disabled users, not only for them.</strong> A short usability session with someone
+              who uses assistive technology will find issues no checklist predicts. Budget for it before a major
+              release, not after a complaint.</p>
+          </div>
+
+          <h2>4. Document the contract</h2>
+          <p>For each component, publish:</p>
+          <ul>
+            <li>The keyboard map.</li>
+            <li>Required accessible names and labels.</li>
+            <li>Announced states and live-region behaviour.</li>
+            <li>Known limitations and the recommended workaround.</li>
+            <li>Contrast and target-size notes for designers.</li>
+          </ul>
+          <p>Documentation is part of accessibility: if a consuming team cannot tell what the component already
+            handles, they will either duplicate it badly or remove it.</p>
+
+          <h2>5. Common failures worth a lint rule</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Pattern</th>
+                <th>Why it fails</th>
+                <th>Fix</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>&lt;div onclick&gt;</code></td>
+                <td>Not focusable, no role, no keyboard activation.</td>
+                <td>Use <code>&lt;button&gt;</code>.</td>
+              </tr>
+              <tr>
+                <td><code>outline: none</code></td>
+                <td>Focus becomes invisible.</td>
+                <td>Replace with a visible custom focus style.</td>
+              </tr>
+              <tr>
+                <td>Icon-only close button</td>
+                <td>No accessible name.</td>
+                <td>Add visually hidden text or <code>aria-label</code>.</td>
+              </tr>
+              <tr>
+                <td>Modal without inert background</td>
+                <td>Screen readers and keyboard users escape the dialog.</td>
+                <td>Use a tested dialog primitive with focus management.</td>
+              </tr>
+              <tr>
+                <td>Error colour only</td>
+                <td>Status is lost without colour perception.</td>
+                <td>Add an icon and text message, tied to the field.</td>
+              </tr>
+              <tr>
+                <td>Auto-advancing carousel</td>
+                <td>Content moves before it can be read.</td>
+                <td>Pause control, no autoplay, or respect reduced motion.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>6. The short version</h2>
+          <ul class="checklist">
+            <li>Native semantics first; ARIA only to fill a gap.</li>
+            <li>Keyboard, focus and announcements are component responsibilities.</li>
+            <li>WCAG 2.2&rsquo;s new criteria are mostly about focus, targets, dragging and forms &mdash; design them
+              in, not on.</li>
+            <li>Automate what can be automated, then test by keyboard and screen reader.</li>
+            <li>Document the accessibility contract and keep it in the same release as the code.</li>
+            <li>Fix once in the library, benefit everywhere.</li>
+          </ul>
+
+          <p>Accessibility is not a separate project that runs after the component ships. At component level it is
+            cheaper, more consistent and far more likely to survive the next redesign. That is the whole argument for
+            putting it in the design system.</p>
+
+          <div class="callout">
+            <p><strong>Related reading:</strong> how accessibility fits into the component API in
+              <a href="/articles/design-systems-that-survive.html">Design systems that survive</a>, and the
+              performance checks that overlap with interaction quality in the
+              <a href="/articles/angular-performance-checklist.html">Angular performance checklist</a>.</p>
+          </div>
+        </article>
+
+        <aside class="author-box">
+          <img alt="Rajat Malik" height="68" src="/assets/img/my-profile-img.jpg" width="68">
+          <div>
+            <h2>Written by Rajat Malik</h2>
+            <p>Senior Lead Software Engineer at Siemens and frontend architect with 15+ years building enterprise web
+              products. I write about Angular, React, performance, accessibility and the engineering practices around
+              them.</p>
+            <div class="author-links">
+              <a href="/about.html">About</a>
+              <a href="https://www.linkedin.com/in/errajatmalik/" rel="noopener" target="_blank">LinkedIn</a>
+              <a href="https://github.com/malikrajat" rel="noopener" target="_blank">GitHub</a>
+              <a href="mailto:contact@rajatmalik.dev">Email</a>
+            </div>
+          </div>
+        </aside>
+
+        <nav aria-label="More articles" class="article-nav">
+          <a href="/articles/ai-assisted-frontend-development.html">
+            <span>Previous</span>
+            <strong>AI-assisted frontend development without lowering the bar</strong>
+          </a>
+          <a href="/articles/">
+            <span>All articles</span>
+            <strong>Browse the article index</strong>
+          </a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer light-background position-relative" id="footer">
+    <div class="container">
+      <nav aria-label="Footer" class="footer-nav">
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a aria-current="page" href="/articles/">Articles</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy-policy.html">Privacy policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/feed.xml">RSS</a>
+        <a href="https://www.google.com/settings/ads" rel="noopener" target="_blank">Ad settings</a>
+        <a href="/privacy-policy.html#california">Do not sell or share</a>
+        <button data-cookie-settings type="button">Cookie settings</button>
+      </nav>
+      <div class="copyright text-center">
+        <a class="medium" href="https://medium.com/@codewithrajat" rel="noopener" target="_blank" title="Medium"><i
+            class="bi bi-medium"></i></a>
+        <a class="linkedin" href="https://www.linkedin.com/in/errajatmalik/" rel="noopener" target="_blank"
+          title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a class="twitter" href="https://twitter.com/er_rajatmalik" rel="noopener" target="_blank" title="X"><i
+            class="bi bi-twitter-x"></i></a>
+        <a class="Github" href="https://github.com/malikrajat" rel="noopener" target="_blank" title="GitHub"><i
+            class="bi bi-github"></i></a>
+      </div>
+      <p class="footer-legal">&copy; <span data-year>2026</span> Rajat Malik &middot; Senior Lead Software Engineer at
+        Siemens &middot; <a href="mailto:contact@rajatmalik.dev">contact@rajatmalik.dev</a></p>
+    </div>
+  </footer>
+
+  <a class="scroll-top d-flex align-items-center justify-content-center" href="#"><i class="bi bi-arrow-up-short"
+      aria-hidden="true"></i><span class="visually-hidden">Back to top</span></a>
+
+  <script src="/assets/js/pages.js"></script>
+  <script src="/assets/js/consent.js"></script>
+</body>
+
+</html>

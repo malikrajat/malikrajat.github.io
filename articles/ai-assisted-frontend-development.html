@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>AI-assisted frontend development without lowering the bar | Rajat Malik</title>
+  <meta name="description"
+    content="Where LLMs genuinely help frontend teams, where they add risk, and the review, testing and security gates that turn a speed-up into durable quality.">
+  <link href="https://rajatmalik.dev/articles/ai-assisted-frontend-development.html" rel="canonical">
+  <meta content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" name="robots">
+  <meta content="Rajat Malik" name="author">
+  <meta content="#080b18" name="theme-color">
+  <meta content="ca-pub-4991682021863699" name="google-adsense-account">
+
+  <meta content="AI-assisted frontend development without lowering the bar" property="og:title">
+  <meta content="Where LLMs help, where they add risk, and the gates that keep quality intact."
+    property="og:description">
+  <meta content="https://rajatmalik.dev/articles/ai-assisted-frontend-development.html" property="og:url">
+  <meta content="article" property="og:type">
+  <meta content="Rajat Malik" property="og:site_name">
+  <meta content="en" property="og:locale">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" property="og:image">
+  <meta content="840" property="og:image:width">
+  <meta content="400" property="og:image:height">
+  <meta content="AI-assisted frontend development" property="og:image:alt">
+  <meta content="2026-11-17" property="article:published_time">
+  <meta content="Rajat Malik" property="article:author">
+  <meta content="Engineering practice" property="article:section">
+  <meta content="summary_large_image" name="twitter:card">
+  <meta content="@er_rajatmalik" name="twitter:site">
+  <meta content="@er_rajatmalik" name="twitter:creator">
+  <meta content="AI-assisted frontend development without lowering the bar" name="twitter:title">
+  <meta content="Where LLMs help, where they add risk, and the gates that keep quality intact."
+    name="twitter:description">
+  <meta content="https://rajatmalik.dev/assets/img/post.png" name="twitter:image">
+
+  <meta content="lTgQD1uJlZUR7Iqd2vCEJ54on_Gtxdhb-zX2o-NGDJQ" name="google-site-verification">
+
+  <script src="/assets/js/consent-defaults.js"></script>
+  <script async crossorigin="anonymous"
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4991682021863699"></script>
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-K533LRTH"></script>
+  <script>
+    gtag('js', new Date());
+  </script>
+
+  <link href="/assets/img/favicon.ico" rel="icon" sizes="any">
+  <link href="/assets/img/icon-192.png" rel="icon" sizes="192x192" type="image/png">
+  <link href="/assets/img/icon-512.png" rel="icon" sizes="512x512" type="image/png">
+  <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180">
+  <link href="/manifest.webmanifest" rel="manifest">
+  <link href="/feed.xml" rel="alternate" title="Rajat Malik — articles and notes" type="application/rss+xml">
+
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin href="https://fonts.gstatic.com" rel="preconnect">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,400&amp;family=Poppins:wght@0,300;0,400;0,500;0,600;0,700&amp;family=Raleway:wght@300;400;500;600;700&amp;family=DM+Mono&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Syne:wght@500;600;700;800&amp;display=swap"
+    rel="stylesheet">
+
+  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/assets/css/main.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/modern.css?v=20261117" rel="stylesheet">
+  <link href="/assets/css/site-extras.css?v=5" rel="stylesheet">
+  <link href="/assets/css/pages.css?v=4" rel="stylesheet">
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "BlogPosting",
+          "@id": "https://rajatmalik.dev/articles/ai-assisted-frontend-development.html#article",
+          "mainEntityOfPage": "https://rajatmalik.dev/articles/ai-assisted-frontend-development.html",
+          "headline": "AI-assisted frontend development without lowering the bar",
+          "description": "Where LLMs genuinely help frontend teams, where they add risk, and the review, testing and security gates that turn a speed-up into durable quality.",
+          "datePublished": "2026-11-17",
+          "dateModified": "2026-11-17",
+          "inLanguage": "en",
+          "articleSection": "Engineering practice",
+          "keywords": "AI-assisted development, GitHub Copilot, LLM, code review, frontend engineering",
+          "image": "https://rajatmalik.dev/assets/img/post.png",
+          "author": { "@id": "https://rajatmalik.dev/#person" },
+          "publisher": { "@id": "https://rajatmalik.dev/#person" },
+          "isPartOf": { "@id": "https://rajatmalik.dev/articles/#page" }
+        },
+        {
+          "@type": "Person",
+          "@id": "https://rajatmalik.dev/#person",
+          "name": "Rajat Malik",
+          "url": "https://rajatmalik.dev/",
+          "jobTitle": "Senior Lead Software Engineer",
+          "worksFor": { "@type": "Organization", "name": "Siemens" },
+          "sameAs": [
+            "https://www.linkedin.com/in/errajatmalik/",
+            "https://github.com/malikrajat"
+          ]
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": "https://rajatmalik.dev/articles/ai-assisted-frontend-development.html#breadcrumb",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://rajatmalik.dev/" },
+            { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://rajatmalik.dev/articles/" },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "AI-assisted frontend development",
+              "item": "https://rajatmalik.dev/articles/ai-assisted-frontend-development.html"
+            }
+          ]
+        }
+      ]
+    }
+  </script>
+</head>
+
+<body class="page-body">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <header class="header dark-background" id="header">
+    <i aria-controls="navmenu" aria-expanded="false" aria-label="Open menu"
+      class="header-toggle d-xl-none bi bi-list" role="button" tabindex="0"></i>
+    <a class="logo d-flex align-items-center justify-content-center" href="/">
+      <span class="sitename">Rajat Malik</span>
+    </a>
+    <nav aria-label="Primary" class="navmenu" id="navmenu">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about.html">About</a></li>
+        <li><a aria-current="page" href="/articles/">Articles</a></li>
+        <li><a href="/contact.html">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-cta">
+      <a class="header-resume" download href="/assets/Rajat-JS-React-Angular.pdf">Resume <i
+          class="bi bi-arrow-down-right"></i></a>
+      <p class="header-tagline">Senior Lead Software Engineer at <strong>Siemens</strong></p>
+    </div>
+  </header>
+
+  <main class="page-main" id="main-content">
+    <section class="page-hero">
+      <div class="page-wrap">
+        <nav aria-label="Breadcrumb" class="breadcrumbs">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li><a href="/articles/">Articles</a></li>
+            <li><span aria-current="page">AI-assisted frontend development</span></li>
+          </ol>
+        </nav>
+        <p class="page-eyebrow">AI &middot; Engineering practice</p>
+        <h1>AI-assisted frontend development without lowering the bar</h1>
+        <p class="page-lede">The useful question is not whether to use AI tools. It is which parts of the work they
+          genuinely accelerate, which parts they quietly make worse, and what gates keep the output at the same
+          standard as everything else you ship.</p>
+        <div class="article-meta">
+          <span><i class="bi bi-person"></i> Rajat Malik</span>
+          <span><i class="bi bi-calendar3"></i> 17 November 2026</span>
+          <span><i class="bi bi-clock"></i> 8 min read</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-section">
+      <div class="page-wrap page-narrow">
+        <nav aria-label="On this page" class="toc" data-toc>
+          <p class="toc-title">On this page</p>
+        </nav>
+
+        <article class="prose">
+          <p>I use AI tools every day, mainly for the parts of frontend work that are high-volume and low-ambiguity:
+            scaffolding, repetitive refactors, test structure, documentation and the first pass at an unfamiliar API.
+            I do not treat the output as authored code. It is a draft from a fast, confident colleague who has not
+            read the ticket, cannot run the application, and will not be on call if it breaks.</p>
+
+          <h2>1. Use it where the feedback loop is fast</h2>
+          <p>AI assistance pays off when a wrong answer is cheap to detect. Good candidates:</p>
+          <ul>
+            <li><strong>Boilerplate with a known shape:</strong> a component skeleton, a test file, a typed API client
+              following an existing pattern.</li>
+            <li><strong>Mechanical refactors:</strong> renaming, extracting a function, converting a callback to
+              async/await, updating a deprecated API across many files.</li>
+            <li><strong>Explanation:</strong> summarising an unfamiliar module, explaining a stack trace, or mapping a
+              legacy pattern to its modern equivalent.</li>
+            <li><strong>Test ideas:</strong> edge cases you might not have listed, as long as you verify each one.</li>
+            <li><strong>Documentation cleanup:</strong> turning working notes into a readable README or changelog.
+            </li>
+          </ul>
+          <p>It is weaker where correctness is expensive to check: complex state machines, security boundaries,
+            performance-critical rendering, accessibility semantics, and anything whose requirements live in a
+            conversation rather than the prompt.</p>
+
+          <h2>2. Know the failure modes</h2>
+          <p>The risks are consistent enough to name:</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Failure</th>
+                <th>What it looks like</th>
+                <th>Gate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Hallucinated APIs</td>
+                <td>A method that does not exist, or exists with different arguments in this version.</td>
+                <td>Compile, run, read the docs for the exact version.</td>
+              </tr>
+              <tr>
+                <td>Phantom dependencies</td>
+                <td>A plausible package name that is not the real library &mdash; or is a malicious lookalike.</td>
+                <td>Dependency allowlist and manual install.</td>
+              </tr>
+              <tr>
+                <td>Insecure defaults</td>
+                <td><code>innerHTML</code> with user data, disabled TLS checks, secrets in sample code.</td>
+                <td>Security lint, review checklist, secret scanning.</td>
+              </tr>
+              <tr>
+                <td>Accessibility regressions</td>
+                <td>Clickable <code>div</code>s, missing labels, focus traps that do not release.</td>
+                <td>Automated a11y tests plus manual keyboard passes.</td>
+              </tr>
+              <tr>
+                <td>Tests that assert the bug</td>
+                <td>A test generated from the implementation, which passes whether or not the behaviour is right.</td>
+                <td>Write the expectation first; review tests as carefully as code.</td>
+              </tr>
+              <tr>
+                <td>Licence contamination</td>
+                <td>Copied code with an incompatible licence, or attribution stripped.</td>
+                <td>Provenance check for anything non-trivial.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>3. Give the model your constraints, not just the task</h2>
+          <p>Generic prompts produce generic code. The context that improves output is the same context a new
+            teammate would need:</p>
+          <ul>
+            <li>The framework and exact major version, and the patterns already used in the repository.</li>
+            <li>The test runner, lint rules and type strictness.</li>
+            <li>The accessibility requirements and the design-system components to use.</li>
+            <li>The public contract: inputs, outputs, error states and what must not change.</li>
+            <li>An example of an existing file that is considered good.</li>
+          </ul>
+          <p>Ask for a plan before the patch on anything larger than a single function. Reviewing a five-line plan
+            is cheaper than reviewing a 400-line diff that solved the wrong problem.</p>
+
+          <h2>4. Keep the engineering gates exactly where they are</h2>
+          <p>The speed-up is real only if it survives the same quality system as handwritten code. That means:</p>
+          <ul class="checklist">
+            <li>Types, lint and formatting pass with no blanket suppressions added.</li>
+            <li>Unit and integration tests cover the behaviour, not just the happy path.</li>
+            <li>A human reviews the diff for correctness, security, accessibility and fit.</li>
+            <li>New dependencies are approved and pinned, with a real package and a maintained release history.</li>
+            <li>The bundle and performance budgets still pass.</li>
+            <li>No secrets, customer data or proprietary source is pasted into a third-party tool without approval.
+            </li>
+          </ul>
+          <p>If a team finds itself weakening a gate to keep the velocity, the tool is not the problem. The workflow
+            is.</p>
+
+          <h2>5. A workflow that holds up</h2>
+          <p>This is the loop I use for a non-trivial change:</p>
+          <ol>
+            <li><strong>Write the contract first.</strong> Types, function signature, expected behaviour and the
+              failing test. This is the part I do not delegate.</li>
+            <li><strong>Ask for a plan.</strong> Two or three options, with trade-offs, before any code.</li>
+            <li><strong>Generate the smallest diff that satisfies the contract.</strong> One concern per change.</li>
+            <li><strong>Run it.</strong> Compile, test, and exercise the real UI, including keyboard and error
+              states.</li>
+            <li><strong>Review as if a colleague wrote it.</strong> Because in effect one did. Assume the comment
+              &ldquo;this looks right&rdquo; is not a review.</li>
+            <li><strong>Record the decision.</strong> If the generated approach is non-obvious, leave a short note in
+              the pull request or the code.</li>
+          </ol>
+          <div class="callout">
+            <p><strong>Disclose substantial generation in the pull request.</strong> Reviewers calibrate their
+              attention differently when they know a large part of the diff was machine-drafted. That is not
+              bureaucracy; it is how review stays effective.</p>
+          </div>
+
+          <h2>6. Measure the gain honestly</h2>
+          <p>Lines of code generated is not a useful metric; it measures output, not outcome. Track:</p>
+          <ul>
+            <li>Lead time for comparable changes, before and after adoption.</li>
+            <li>Change failure rate and rework, to catch quality debt early.</li>
+            <li>Review time and review comments per change.</li>
+            <li>Defects found in production that trace back to generated code.</li>
+            <li>Time spent on repetitive tasks that the team would rather not do.</li>
+          </ul>
+          <p>If lead time improves and failure rate does not, you have found a good use. If both improve for a quarter
+            and then quality collapses, look for skipped review and tests.</p>
+
+          <h2>7. Team norms worth writing down</h2>
+          <ul>
+            <li>AI output is a draft, not an authority. The engineer who submits it owns it.</li>
+            <li>Do not paste secrets, personal data or unreleased proprietary code into tools that are not approved
+              for it.</li>
+            <li>Verify every API against the documentation for the version in use.</li>
+            <li>Never let a model choose a dependency; approve it like any other supply-chain decision.</li>
+            <li>Use AI to raise the floor &mdash; tests, docs, consistency &mdash; before using it to raise the
+              ceiling.</li>
+          </ul>
+
+          <p>The teams that benefit most are not the ones generating the most code. They are the ones with strong
+            tests, clear contracts, fast feedback and reviewers who read carefully. AI amplifies that system. It also
+            amplifies the absence of one.</p>
+
+          <div class="callout">
+            <p><strong>Related reading:</strong> the quality gates that make AI-assisted work safe overlap with the
+              <a href="/articles/angular-performance-checklist.html">Angular performance checklist</a> and the
+              <a href="/articles/wcag-2-2-component-checklist.html">WCAG 2.2 component checklist</a>.</p>
+          </div>
+        </article>
+
+        <aside class="author-box">
+          <img alt="Rajat Malik" height="68" src="/assets/img/my-profile-img.jpg" width="68">
+          <div>
+            <h2>Written by Rajat Malik</h2>
+            <p>Senior Lead Software Engineer at Siemens and frontend architect with 15+ years building enterprise web
+              products. I write about Angular, React, performance, accessibility and the engineering practices around
+              them.</p>
+            <div class="author-links">
+              <a href="/about.html">About</a>
+              <a href="https://www.linkedin.com/in/errajatmalik/" rel="noopener" target="_blank">LinkedIn</a>
+              <a href="https://github.com/malikrajat" rel="noopener" target="_blank">GitHub</a>
+              <a href="mailto:contact@rajatmalik.dev">Email</a>
+            </div>
+          </div>
+        </aside>
+
+        <nav aria-label="More articles" class="article-nav">
+          <a href="/articles/design-systems-that-survive.html">
+            <span>Previous</span>
+            <strong>Design systems that survive</strong>
+          </a>
+          <a href="/articles/wcag-2-2-component-checklist.html">
+            <span>Next</span>
+            <strong>A WCAG 2.2 checklist for component libraries</strong>
+          </a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer light-background position-relative" id="footer">
+    <div class="container">
+      <nav aria-label="Footer" class="footer-nav">
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a aria-current="page" href="/articles/">Articles</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/privacy-policy.html">Privacy policy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="/feed.xml">RSS</a>
+        <a href="https://www.google.com/settings/ads" rel="noopener" target="_blank">Ad settings</a>
+        <a href="/privacy-policy.html#california">Do not sell or share</a>
+        <button data-cookie-settings type="button">Cookie settings</button>
+      </nav>
+      <div class="copyright text-center">
+        <a class="medium" href="https://medium.com/@codewithrajat" rel="noopener" target="_blank" title="Medium"><i
+            class="bi bi-medium"></i></a>
+        <a class="linkedin" href="https://www.linkedin.com/in/errajatmalik/" rel="noopener" target="_blank"
+          title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        <a class="twitter" href="https://twitter.com/er_rajatmalik" rel="noopener" target="_blank" title="X"><i
+            class="bi bi-twitter-x"></i></a>
+        <a class="Github" href="https://github.com/malikrajat" rel="noopener" target="_blank" title="GitHub"><i
+            class="bi bi-github"></i></a>
+      </div>
+      <p class="footer-legal">&copy; <span data-year>2026</span> Rajat Malik &middot; Senior Lead Software Engineer at
+        Siemens &middot; <a href="mailto:contact@rajatmalik.dev">contact@rajatmalik.dev</a></p>
+    </div>
+  </footer>
+
+  <a class="scroll-top d-flex align-items-center justify-content-center" href="#"><i class="bi bi-arrow-up-short"
+      aria-hidden="true"></i><span class="visually-hidden">Back to top</span></a>
+
+  <script src="/assets/js/pages.js"></script>
+  <script src="/assets/js/consent.js"></script>
+</body>
+
+</html>

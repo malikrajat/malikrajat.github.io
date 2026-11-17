@@ -851,6 +851,7 @@ section,
   padding: 15px;
 }
 
+.portfolio .portfolio-content .portfolio-info h3,
 .portfolio .portfolio-content .portfolio-info h4 {
   font-size: 14px;
   padding: 5px 10px;

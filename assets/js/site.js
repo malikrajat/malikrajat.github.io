@@ -45,8 +45,9 @@
   SITE_CONFIG.goatcounterCode = SITE_CONFIG.goatcounterCode || 'rajatmalik';
 
   /* Optional read-only GoatCounter API token, for source/location breakdowns.
-   * SECURITY: this file is public on a static site. See the header comment. */
-  SITE_CONFIG.apiToken = SITE_CONFIG.apiToken || '1c695hmitnua1tky3tyuqkvf41m5zmxfxrgx26x4hca0oy546a';
+   * SECURITY: this file is public on a static site. See the header comment.
+   * Leave empty unless you accept that the token is public. */
+  SITE_CONFIG.apiToken = SITE_CONFIG.apiToken || '';
 
   /* Show the visit total in the footer */
   SITE_CONFIG.showFooterCount = SITE_CONFIG.showFooterCount !== false;
