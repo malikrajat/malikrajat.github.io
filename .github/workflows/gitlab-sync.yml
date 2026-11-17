@@ -31,7 +31,7 @@ jobs:
       GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
       GITLAB_HOST: ${{ vars.GITLAB_HOST || 'gitlab.com' }}
       GITLAB_NAMESPACE: ${{ vars.GITLAB_NAMESPACE || github.repository_owner }}
-      GITLAB_PROJECT: ${{ vars.GITLAB_PROJECT_PATH }}
+      GITLAB_PROJECT: ${{ vars.GITLAB_PROJECT_PATH || 'malikrajat-github-io' }}
 
     steps:
       - name: Push branches and tags to GitLab
