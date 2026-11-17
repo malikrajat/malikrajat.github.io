@@ -1,0 +1,108 @@
+name: GitLab Mirror
+
+# On every push, copy this repository's branches and tags to GitLab.
+#
+# That is the whole job: force-update everything that changed, delete what was
+# deleted on GitHub, and nothing else. No metadata, no visibility, no project
+# creation, no schedule.
+#
+# Needs one secret: GITLAB_TOKEN (GitLab personal access token, scope
+# `write_repository`).
+# Optional variables: GITLAB_HOST (default gitlab.com), GITLAB_NAMESPACE
+# (default: the repository owner), GITLAB_PROJECT_PATH (default: the repo name).
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gitlab-mirror-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    env:
+      GITLAB_TOKEN: ${{ secrets.GITLAB_TOKEN }}
+      GITLAB_HOST: ${{ vars.GITLAB_HOST || 'gitlab.com' }}
+      GITLAB_NAMESPACE: ${{ vars.GITLAB_NAMESPACE || github.repository_owner }}
+      GITLAB_PROJECT: ${{ vars.GITLAB_PROJECT_PATH }}
+
+    steps:
+      - name: Push branches and tags to GitLab
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -z "${GITLAB_TOKEN}" ]; then
+            echo "::error::GITLAB_TOKEN secret is missing."
+            exit 1
+          fi
+
+          PROJECT="${GITLAB_PROJECT:-${GITHUB_REPOSITORY#*/}}"
+
+          # Credentials go through askpass, never into a remote URL.
+          mkdir -p "$RUNNER_TEMP/bin"
+          printf '#!/bin/sh\nprintf "%%s\\n" "$GITLAB_TOKEN"\n' > "$RUNNER_TEMP/bin/askpass-gitlab"
+          printf '#!/bin/sh\nprintf "%%s\\n" "$GITHUB_TOKEN"\n'  > "$RUNNER_TEMP/bin/askpass-github"
+          chmod 700 "$RUNNER_TEMP/bin/askpass-gitlab" "$RUNNER_TEMP/bin/askpass-github"
+
+          M="$RUNNER_TEMP/mirror.git"
+          git init --bare --quiet "$M"
+          git -C "$M" remote add origin "https://x-access-token@github.com/${GITHUB_REPOSITORY}.git"
+          GIT_ASKPASS="$RUNNER_TEMP/bin/askpass-github" GIT_TERMINAL_PROMPT=0 \
+            git -C "$M" fetch --quiet --prune origin \
+              '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
+
+          if [ "$(git -C "$M" for-each-ref refs/heads | wc -l)" -eq 0 ]; then
+            echo "No commits to mirror yet."
+            exit 0
+          fi
+
+          git -C "$M" remote add gitlab \
+            "https://oauth2@${GITLAB_HOST}/${GITLAB_NAMESPACE}/${PROJECT}.git"
+          export GIT_ASKPASS="$RUNNER_TEMP/bin/askpass-gitlab"
+          export GIT_TERMINAL_PROMPT=0
+
+          # The one guard: never force-push over a project that shares no
+          # history with GitHub. Eight lines, and it is the difference between
+          # a mirror and somebody's deleted work.
+          remote_heads=$(git -C "$M" ls-remote --heads gitlab)
+          if [ -n "$remote_heads" ]; then
+            shared=false
+            for sha in $(echo "$remote_heads" | awk '{print $1}'); do
+              if git -C "$M" cat-file -e "${sha}^{commit}" 2>/dev/null; then
+                shared=true
+                break
+              fi
+            done
+            if [ "$shared" = false ]; then
+              echo "::error::${GITLAB_NAMESPACE}/${PROJECT} on GitLab has history that is not in GitHub. Refusing to overwrite it."
+              exit 1
+            fi
+          fi
+
+          # Deleted on GitHub → deleted on GitLab. `--prune` handles branches;
+          # tags need an explicit list.
+          deleted=()
+          for ref in $(git -C "$M" ls-remote --heads gitlab | awk '{print $2}') \
+                     $(git -C "$M" ls-remote --tags --refs gitlab | awk '{print $2}'); do
+            git -C "$M" show-ref --verify --quiet "$ref" || deleted+=(":$ref")
+          done
+          if [ ${#deleted[@]} -gt 0 ]; then
+            echo "Deleting refs removed on GitHub:"
+            printf '  %s\n' "${deleted[@]}"
+            git -C "$M" push --quiet gitlab "${deleted[@]}"
+          fi
+
+          # Explicit refspecs, forced, branch-pruned. Never `--mirror`, which
+          # would also publish refs/pull/*.
+          git -C "$M" push --quiet --prune --force gitlab \
+            '+refs/heads/*:refs/heads/*' '+refs/tags/*:refs/tags/*'
+
+          echo "Mirrored $(git -C "$M" for-each-ref refs/heads | wc -l) branch(es) and $(git -C "$M" for-each-ref refs/tags | wc -l) tag(s) to ${GITLAB_HOST}/${GITLAB_NAMESPACE}/${PROJECT}"
