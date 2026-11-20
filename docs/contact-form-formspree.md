@@ -21,7 +21,7 @@ Single place, [index.html#L2372](../index.html#L2372):
 ```html
 <form action="https://formspree.io/f/mpwzqzge"
       class="php-email-form"
-      data-aos="fade-up" data-aos-delay="200"
+      data-reveal="up"
       method="post">
 ```
 

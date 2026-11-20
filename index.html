@@ -117,7 +117,8 @@
           "name": "Rajat Malik - Senior Lead Software Engineer and Frontend Architect",
           "inLanguage": "en",
           "isPartOf": { "@id": "https://rajatmalik.dev/#website" },
-          "mainEntity": { "@id": "https://rajatmalik.dev/#person" }
+          "mainEntity": { "@id": "https://rajatmalik.dev/#person" },
+          "hasPart": { "@id": "https://rajatmalik.dev/#sites" }
         },
         {
           "@type": "WebSite",
@@ -127,6 +128,70 @@
           "description": "The portfolio of Rajat Malik: senior lead software engineer, frontend architect, open-source author and technical writer.",
           "inLanguage": "en",
           "publisher": { "@id": "https://rajatmalik.dev/#person" }
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://rajatmalik.dev/#sites",
+          "name": "Sites owned and run by Rajat Malik",
+          "description": "The live websites and web apps designed, built, deployed and maintained by Rajat Malik.",
+          "numberOfItems": 6,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": { "@id": "https://rajatmalik.dev/#website" }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "WebSite",
+                "name": "DeepWork",
+                "url": "https://deepwork.rajatmalik.dev/",
+                "author": { "@id": "https://rajatmalik.dev/#person" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "WebSite",
+                "name": "DeepWork Web App",
+                "url": "https://app.deepwork.rajatmalik.dev/",
+                "author": { "@id": "https://rajatmalik.dev/#person" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "WebSite",
+                "name": "DailyMilk",
+                "url": "https://dailymilk.rajatmalik.dev/",
+                "author": { "@id": "https://rajatmalik.dev/#person" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "item": {
+                "@type": "WebSite",
+                "name": "MetaPurge",
+                "url": "https://metapurge.rajatmalik.dev/",
+                "author": { "@id": "https://rajatmalik.dev/#person" }
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 6,
+              "item": {
+                "@type": "WebSite",
+                "name": "Rents Collections",
+                "url": "https://rents.up.railway.app/",
+                "author": { "@id": "https://rajatmalik.dev/#person" }
+              }
+            }
+          ]
         }
       ]
     }
@@ -155,13 +220,12 @@
     rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
-  <link href="assets/css/main.css?v=20261117" rel="stylesheet">
-  <link href="assets/css/modern.css?v=20261117" rel="stylesheet">
+  <link href="assets/css/main.css?v=20261119" rel="stylesheet">
+  <link href="assets/css/modern.css?v=20261119" rel="stylesheet">
   <link href="assets/css/site-extras.css?v=5" rel="stylesheet">
   <link href="assets/css/pages.css?v=4" rel="stylesheet">
 
@@ -208,14 +272,14 @@
 
     <nav class="navmenu" id="navmenu">
       <ul>
-        <li><a class="active" href="#hero"><i class="bi bi-house navicon"></i>Overview</a></li>
+        <li><a href="#hero"><i class="bi bi-house navicon"></i>Overview</a></li>
         <li><a href="#skills"><i class="bi bi-tools navicon"></i> Skills</a></li>
         <li><a href="#resume"><i class="bi bi-file-earmark-text navicon"></i> Experience</a></li>
         <li><a href="#companies"><i class="bi bi-building navicon"></i> Companies</a></li>
         <li><a href="#about"><i class="bi bi-person navicon"></i> About</a></li>
         <li><a href="#stats"><i class="bi bi-graph-up navicon"></i> Stats</a></li>
         <li><a href="#library"><i class="bi bi-book navicon"></i> Libraries &amp; Tools </a></li>
-        <li><a href="#products"><i class="bi bi-box-seam navicon"></i> Products</a></li>
+        <li><a href="#sites"><i class="bi bi-globe2 navicon"></i> Live sites</a></li>
         <li><a href="#talks"><i class="bi bi-mic-fill navicon"></i> Talks</a></li>
         <li><a href="#portfolio"><i class="bi bi-images navicon"></i> Portfolio</a></li>
         <li><a href="#services"><i class="bi bi-newspaper navicon"></i> Writing </a></li>
@@ -236,9 +300,9 @@
   <main class="main" id="main-content">
 
     <!-- Hero Section -->
-    <section class="hero section dark-background" id="hero">
-      <img alt="" class="" data-aos="fade-in" src="assets/img/hero-bg.png">
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <section class="hero section dark-background" id="hero" tabindex="-1">
+      <img alt="" class="" data-reveal="fade" src="assets/img/hero-bg.png">
+      <div class="container" data-reveal="up">
         <div class="hero-copy">
           <p class="hero-kicker"><span></span> Available for a senior / lead frontend role</p>
           <p class="hero-overline">Frontend architect &amp; product-minded engineer</p>
@@ -324,9 +388,9 @@
       </div>
     </section><!-- /Hero Section -->
     <!-- About Section -->
-    <section class="about section" id="about">
+    <section class="about section" id="about" tabindex="-1">
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-reveal="up">
         <h2>About</h2>
         <strong>
           Senior Lead Software Engineer at Siemens | Frontend Architect &amp; Engineering Lead | Angular, React &amp;
@@ -344,7 +408,7 @@
           lifting Core Web Vitals on products where speed directly affects revenue and retention.
         </p>
       </div><!-- End Section Title -->
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="container" data-reveal="up">
         <div class="row gy-4 justify-content-center">
           <div class="col-lg-4">
             <img alt="Rajat Malik, Senior Lead Software Engineer at Siemens" class="img-fluid"
@@ -430,8 +494,8 @@
     </section><!-- /About Section -->
 
     <!-- Stats Section -->
-    <section class="stats section" id="stats">
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+    <section class="stats section" id="stats" tabindex="-1">
+      <div class="container" data-reveal="up">
 
         <div class="row gy-4">
 
@@ -486,9 +550,9 @@
     <!-- /Stats Section -->
 
     <!-- Companies & Clients Section -->
-    <section class="companies section" id="companies">
+    <section class="companies section" id="companies" tabindex="-1">
 
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-reveal="up">
         <h2>Companies &amp; Clients</h2>
         <p>The organisations behind the work &mdash; currently Siemens, with earlier roles across Siemens Energy,
           Siemens Mobility and HCL, and client programmes including AT&amp;T, Airtel, GIPL, RMG Worldwide and AllCAD
@@ -496,7 +560,7 @@
           engineering software.</p>
       </div><!-- End Section Title -->
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="container" data-reveal="up">
         <ul class="company-grid" id="company-grid" aria-label="Companies and clients I have worked with">
           <!-- Rendered by assets/js/companies.js.
                Add an entry there and drop the logo file into assets/img/logos/ -->
@@ -513,7 +577,7 @@
 
     <section class="recruiter-brief section" id="recruiter-brief">
       <div class="container">
-        <div class="brief-intro" data-aos="fade-up">
+        <div class="brief-intro" data-reveal="up">
           <p class="section-eyebrow">Recruiter brief</p>
           <h2>Senior frontend leadership, with product outcomes to prove it.</h2>
           <p>I help teams that need a stronger, faster, more maintainable web product &mdash; owning the technical
@@ -521,32 +585,32 @@
             role at any company.</p>
         </div>
         <div class="row g-4">
-          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-md-6 col-lg-3" data-reveal="up">
             <article class="brief-card"><i class="bi bi-person-workspace"></i>
               <h3>Role fit</h3>
               <p>Lead Frontend Engineer, Frontend Architect or Staff-level product engineer.</p>
             </article>
           </div>
-          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="150">
+          <div class="col-md-6 col-lg-3" data-reveal="up">
             <article class="brief-card"><i class="bi bi-code-slash"></i>
               <h3>Core stack</h3>
               <p>Angular, React, TypeScript, design systems and micro-frontends.</p>
             </article>
           </div>
-          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-md-6 col-lg-3" data-reveal="up">
             <article class="brief-card"><i class="bi bi-briefcase"></i>
               <h3>Currently at</h3>
               <p>Senior Lead Software Engineer at Siemens for 6+ years &mdash; previously Siemens Energy and HCL.</p>
             </article>
           </div>
-          <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="250">
+          <div class="col-md-6 col-lg-3" data-reveal="up">
             <article class="brief-card"><i class="bi bi-lightning-charge"></i>
               <h3>Open to</h3>
               <p>Full-time senior and lead frontend roles at any company &mdash; remote, hybrid or on-site.</p>
             </article>
           </div>
         </div>
-        <div class="brief-actions" data-aos="fade-up"><a class="button button-primary"
+        <div class="brief-actions" data-reveal="up"><a class="button button-primary"
             href="./assets/Rajat-JS-React-Angular.pdf" download>View full resume <i class="bi bi-download"></i></a><a
             class="button button-dark" href="#contact">Discuss an opportunity <i class="bi bi-arrow-up-right"></i></a>
         </div>
@@ -554,10 +618,10 @@
     </section>
 
     <!-- Skills Section -->
-    <section class="skills section light-background" id="skills">
+    <section class="skills section light-background" id="skills" tabindex="-1">
 
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-reveal="up">
         <h2>Skills</h2>
         <p>Angular and React at depth, TypeScript everywhere, and the engineering practices that keep large codebases
           healthy: architecture and module boundaries, design systems, performance budgets, accessibility, testing and
@@ -565,58 +629,40 @@
           the critical path myself.</p>
       </div><!-- End Section Title -->
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="container" data-reveal="up">
 
-        <div class="row skills-content skills-animation">
+        <div class="row skills-content">
 
           <div class="col-lg-3">
             <h3 class="resume-title">Languages &amp; Fundamentals</h3>
             <div class="progress">
               <span class="skill"><span>TypeScript</span> <i class="val">95%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="95" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="95"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>JavaScript (ES6+)</span> <i class="val">95%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="95" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="95"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>HTML5 &amp; semantic markup</span> <i class="val">95%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="95" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="95"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>CSS3, Sass, Tailwind &amp; Bootstrap</span> <i class="val">92%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="92" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="92"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>RxJS &amp; reactive programming</span> <i class="val">90%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="90" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="90"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>Web APIs (IndexedDB, Storage, Workers)</span> <i class="val">88%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="88" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="88"></progress>
             </div><!-- End Skills Item -->
           </div>
 
@@ -624,58 +670,37 @@
             <h3 class="resume-title">Frameworks &amp; UI</h3>
             <div class="progress">
               <span class="skill"><span>Angular (v2 to latest, incl. signals)</span> <i class="val">95%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="95" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="95"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>React (16 to 19, hooks &amp; concurrent)</span> <i class="val">92%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="92" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="92"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>Next.js &amp; SSR / SSG</span> <i class="val">82%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="82" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="82"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>React Native</span> <i class="val">80%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="80" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="80"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>Vue.js</span> <i class="val">75%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="75" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="75"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>Angular Material, Bootstrap &amp; PrimeNG</span> <i class="val">90%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="90" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="90"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>Design systems &amp; component libraries</span> <i class="val">90%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="90" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="90"></progress>
             </div><!-- End Skills Item -->
           </div>
 
@@ -683,58 +708,37 @@
             <h3 class="resume-title">Architecture &amp; Quality</h3>
             <div class="progress">
               <span class="skill"><span>Micro-frontends &amp; module federation</span> <i class="val">92%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="92" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="92"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>State management (NgRx, Redux, Signals)</span> <i class="val">92%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="92" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="92"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>Web performance &amp; Core Web Vitals</span> <i class="val">92%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="92" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="92"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>Accessibility (WCAG 2.2, ARIA)</span> <i class="val">88%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="88" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="88"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>Unit testing (Jest, Jasmine, Vitest)</span> <i class="val">90%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="90" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="90"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>E2E testing (Playwright, Cypress)</span> <i class="val">85%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="85" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="85"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>Web security (OWASP, CSP, XSS)</span> <i class="val">85%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="85" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="85"></progress>
             </div><!-- End Skills Item -->
           </div>
 
@@ -742,58 +746,37 @@
             <h3 class="resume-title">Delivery, Tooling &amp; AI</h3>
             <div class="progress">
               <span class="skill"><span>Technical leadership &amp; mentoring</span> <i class="val">92%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="92" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="92"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>CI/CD (GitHub Actions, Jenkins)</span> <i class="val">85%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="85" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="85"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>Build tooling (Nx, Vite, Webpack)</span> <i class="val">88%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="88" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="88"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>Git workflows &amp; code review</span> <i class="val">92%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="92" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="92"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>Docker &amp; cloud-native delivery</span> <i class="val">82%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="82" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="82"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>NPM package authoring &amp; publishing</span> <i class="val">92%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="92" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="92"></progress>
             </div><!-- End Skills Item -->
 
             <div class="progress">
               <span class="skill"><span>AI-assisted development (Copilot, LLM APIs)</span> <i class="val">90%</i></span>
-              <div aria-hidden="true" class="progress-bar-wrap">
-                <div aria-valuemax="100" aria-valuemin="0" aria-valuenow="90" class="progress-bar" role="progressbar">
-                </div>
-              </div>
+              <progress aria-hidden="true" class="skill-meter" max="100" value="90"></progress>
             </div><!-- End Skills Item -->
           </div>
 
@@ -805,7 +788,7 @@
     <!-- /Skills Section -->
 
     <section class="technical-proof section" id="technical-proof">
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-reveal="up">
         <p class="section-eyebrow">Technical credibility</p>
         <h2>Engineering systems, not just screens.</h2>
         <p>Senior-level frontend decisions that improve product quality, team velocity and long-term maintainability
@@ -813,38 +796,38 @@
       </div>
       <div class="container">
         <div class="row g-3">
-          <div class="col-md-6 col-lg-4" data-aos="fade-up">
+          <div class="col-md-6 col-lg-4" data-reveal="up">
             <div class="proof-item"><i class="bi bi-diagram-3"></i>
               <h3>Scalable architecture</h3>
               <p>Micro-frontends, modular boundaries, and backend-driven patterns built for independent delivery.</p>
             </div>
           </div>
-          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="80">
+          <div class="col-md-6 col-lg-4" data-reveal="up">
             <div class="proof-item"><i class="bi bi-speedometer2"></i>
               <h3>Web performance</h3>
               <p>Core Web Vitals, profiling, lazy loading, and rendering strategy that make products feel fast.</p>
             </div>
           </div>
-          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="160">
+          <div class="col-md-6 col-lg-4" data-reveal="up">
             <div class="proof-item"><i class="bi bi-universal-access"></i>
               <h3>Accessible by design</h3>
               <p>Inclusive, responsive interfaces with accessibility considered from component design through release.
               </p>
             </div>
           </div>
-          <div class="col-md-6 col-lg-4" data-aos="fade-up">
+          <div class="col-md-6 col-lg-4" data-reveal="up">
             <div class="proof-item"><i class="bi bi-check2-circle"></i>
               <h3>Quality engineering</h3>
               <p>Pragmatic unit, integration, and end-to-end testing strategies that reduce release risk.</p>
             </div>
           </div>
-          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="80">
+          <div class="col-md-6 col-lg-4" data-reveal="up">
             <div class="proof-item"><i class="bi bi-palette2"></i>
               <h3>Design systems</h3>
               <p>Reusable UI foundations that bring visual consistency, accessibility, and speed to product teams.</p>
             </div>
           </div>
-          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="160">
+          <div class="col-md-6 col-lg-4" data-reveal="up">
             <div class="proof-item"><i class="bi bi-stars"></i>
               <h3>AI-enabled delivery</h3>
               <p>Thoughtful use of AI tools to prototype, automate repetitive work, and accelerate well-engineered
@@ -856,10 +839,10 @@
     </section>
 
     <!-- Resume Section -->
-    <section class="resume section" id="resume">
+    <section class="resume section" id="resume" tabindex="-1">
 
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-reveal="up">
         <h2>Resume</h2>
         <p>15+ years of frontend engineering, the last 6+ of them at Siemens leading delivery and architecture on
           enterprise energy automation products, and before that at Siemens Energy and HCL across telecom,
@@ -874,7 +857,7 @@
 
         <div class="row">
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-6" data-reveal="up">
             <h3 class="resume-title">Summary</h3>
 
             <div class="resume-item pb-0">
@@ -917,7 +900,7 @@
 
           </div>
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-6" data-reveal="up">
             <h3 class="resume-title">Professional Experience</h3>
             <div class="resume-item">
               <h4>Senior Lead Software Engineer &mdash; Siemens</h4>
@@ -1056,9 +1039,9 @@
     <!-- /Resume Section -->
 
     <!-- Talks Section -->
-    <section class="talks section light-background" id="talks">
+    <section class="talks section light-background" id="talks" tabindex="-1">
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-reveal="up">
         <h2>Technical Talks</h2>
         <p>I speak at internal engineering forums, meetups and conferences on frontend architecture, performance and
           modern web tooling &mdash; the same topics I work on day to day, translated into practical takeaways teams can
@@ -1067,7 +1050,7 @@
 
       <div class="container">
         <div class="row gy-4">
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-4 col-md-6" data-reveal="up">
             <div class="card">
               <div class="card-body">
                 <h3 class="card-title">Modern Web Performance Optimization Techniques</h3>
@@ -1081,7 +1064,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-4 col-md-6" data-reveal="up">
             <div class="card">
               <div class="card-body">
                 <h3 class="card-title">Building Scalable Frontend Architectures</h3>
@@ -1095,7 +1078,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+          <div class="col-lg-4 col-md-6" data-reveal="up">
             <div class="card">
               <div class="card-body">
                 <h3 class="card-title">Angular Performance Mastery</h3>
@@ -1118,10 +1101,10 @@
     </section><!-- End Talks Section -->
 
     <!-- library Section -->
-    <section class="portfolio section light-background" id="library">
+    <section class="portfolio section light-background" id="library" tabindex="-1">
 
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-reveal="up">
         <h2>Libraries &amp; Tools</h2>
         <p>
           Alongside client work I design, build and publish my own developer tooling — thirty-three open-source projects
@@ -1141,7 +1124,7 @@
 
         <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
-          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+          <ul class="portfolio-filters isotope-filters" data-reveal="up">
             <li class="filter-active" data-filter="*">All</li>
             <li data-filter=".filter-chrome">Chrome Extension</li>
             <li data-filter=".filter-vscode">VS Code Extension</li>
@@ -1150,7 +1133,7 @@
           </ul>
           <!-- End Portfolio Filters -->
 
-          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+          <div class="row gy-4 isotope-container" data-reveal="up">
 
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-library filter-branding">
               <div class="portfolio-content h-100">
@@ -1601,15 +1584,17 @@
 
     </section><!-- /library Section -->
 
-    <!-- Products Section -->
-    <section class="products section" id="products">
+    <!-- Live sites Section -->
+    <section class="products section" id="sites" tabindex="-1">
 
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Products</h2>
+      <div class="container section-title" data-reveal="up">
+        <h2>Sites I own &amp; run</h2>
         <p>
-          Client delivery and open source are only part of the work. These are the products I own end to end &mdash;
-          architecture, interface, release and the site that explains each one.
+          This portfolio is one of six live properties I own and maintain end to end: this site, the DeepWork
+          product site, its installable web app, the DailyMilk operations dashboard, the MetaPurge privacy tool and
+          the Rents Collections rent-operations platform. Each is a separate site with its own content and its own
+          job &mdash; and every one of them is designed, built, deployed and kept running by me.
         </p>
       </div><!-- End Section Title -->
 
@@ -1617,7 +1602,7 @@
 
         <div class="row gy-4">
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-6" data-reveal="up">
             <article class="product-card">
               <figure class="product-shot">
                 <img alt="The rajatmalik.dev home page: a dark hero with the name, role line and contact strip"
@@ -1645,7 +1630,7 @@
           </div>
           <!-- End Product -->
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-6" data-reveal="up">
             <article class="product-card">
               <figure class="product-shot">
                 <img
@@ -1675,7 +1660,7 @@
           </div>
           <!-- End Product -->
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-6" data-reveal="up">
             <article class="product-card">
               <figure class="product-shot">
                 <img alt="The DeepWork web app: the 25 minute focus clock, sidebar navigation and the day timeline"
@@ -1703,7 +1688,7 @@
           </div>
           <!-- End Product -->
 
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-6" data-reveal="up">
             <article class="product-card">
               <div aria-label="DailyMilk" class="product-shot product-shot-placeholder" role="img">
                 <i class="bi bi-droplet-half"></i>
@@ -1732,17 +1717,77 @@
           </div>
           <!-- End Product -->
 
+          <div class="col-lg-6" data-reveal="up">
+            <article class="product-card">
+              <div aria-label="MetaPurge" class="product-shot product-shot-placeholder" role="img">
+                <i class="bi bi-shield-check"></i>
+                <span class="product-monogram">MetaPurge</span>
+                <span class="product-monogram-sub">Metadata removal, on your device</span>
+              </div>
+              <div class="product-body">
+                <p class="product-kicker">Privacy tool <span class="product-host">metapurge.rajatmalik.dev</span></p>
+                <h3>MetaPurge</h3>
+                <p class="product-summary">An image metadata remover that runs entirely in the browser. EXIF, GPS
+                  coordinates, camera serials, timestamps and edit history are stripped inside the tab, and the
+                  file is never uploaded &mdash; no account, no server round-trip, and it keeps working offline.</p>
+                <ul class="product-tags">
+                  <li>Privacy</li>
+                  <li>On-device</li>
+                  <li>No uploads</li>
+                </ul>
+                <div class="product-actions">
+                  <a aria-label="Visit metapurge.rajatmalik.dev in a new tab" href="https://metapurge.rajatmalik.dev/"
+                    rel="noopener" target="_blank">Visit metapurge.rajatmalik.dev <i
+                      class="bi bi-arrow-up-right"></i></a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- End Product -->
+
+          <div class="col-lg-6" data-reveal="up">
+            <article class="product-card">
+              <div aria-label="Rents Collections" class="product-shot product-shot-placeholder" role="img">
+                <i class="bi bi-buildings"></i>
+                <span class="product-monogram">Rents Collections</span>
+                <span class="product-monogram-sub">Rent operations, calmly under control</span>
+              </div>
+              <div class="product-body">
+                <p class="product-kicker">Rent platform <span class="product-host">rents.up.railway.app</span></p>
+                <h3>Rents Collections</h3>
+                <p class="product-summary">A workspace for landlords, caretakers and tenants: properties, units and
+                  leases, rent schedules and payments with approvals from caretakers and landlords, maintenance
+                  requests, team access and an audit trail. Built with React, NestJS and PostgreSQL, with verified
+                  accounts and an English/Hindi interface.</p>
+                <ul class="product-tags">
+                  <li>Rent operations</li>
+                  <li>Landlord &amp; tenant</li>
+                  <li>English &amp; Hindi</li>
+                </ul>
+                <div class="product-actions">
+                  <a aria-label="Create a Rents Collections landlord account in a new tab"
+                    href="https://rents.up.railway.app/register" rel="noopener" target="_blank">Create an account <i
+                      class="bi bi-arrow-up-right"></i></a>
+                  <a aria-label="Visit Rents Collections in a new tab" href="https://rents.up.railway.app/"
+                    rel="noopener" target="_blank">Visit rents.up.railway.app <i
+                      class="bi bi-box-arrow-up-right"></i></a>
+                </div>
+              </div>
+            </article>
+          </div>
+          <!-- End Product -->
+
         </div>
 
       </div>
 
-    </section><!-- /Products Section -->
+    </section><!-- /Live sites Section -->
 
     <!-- Portfolio Section -->
-    <section class="portfolio section light-background" id="portfolio">
+    <section class="portfolio section light-background" id="portfolio" tabindex="-1">
 
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-reveal="up">
         <h2>Portfolio</h2>
         <p>Selected product work from 15+ years of frontend delivery &mdash; enterprise platforms, telecom and energy
           systems, and the modernization programmes behind them. Each entry lists the problem, what I owned, and the
@@ -1753,7 +1798,7 @@
 
         <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
 
-          <ul class="portfolio-filters isotope-filters" data-aos="fade-up" data-aos-delay="100">
+          <ul class="portfolio-filters isotope-filters" data-reveal="up">
             <li class="filter-active" data-filter="*">All</li>
             <li data-filter=".filter-app">Energy</li>
             <li data-filter=".filter-product">Partial</li>
@@ -1763,7 +1808,7 @@
           </ul>
           <!-- End Portfolio Filters -->
 
-          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
+          <div class="row gy-4 isotope-container" data-reveal="up">
 
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
               <div class="portfolio-content h-100">
@@ -2020,10 +2065,10 @@
     </section><!-- /Portfolio Section -->
 
     <!-- Services Section -->
-    <section class="services section" id="services">
+    <section class="services section" id="services" tabindex="-1">
 
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-reveal="up">
         <h2>Writing</h2>
         <p>
           Writing is how I keep my thinking sharp and give back to the community. I publish 150+ technical articles
@@ -2038,7 +2083,7 @@
 
         <div class="row gy-4">
 
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-reveal="up">
             <div class="icon flex-shrink-0">
               <img src="https://cdn.simpleicons.org/medium/000000" width="35" height="35" alt="Medium">
             </div>
@@ -2050,7 +2095,7 @@
           </div>
           <!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-reveal="up">
             <div class="icon flex-shrink-0">
               <img src="https://cdn.simpleicons.org/substack/000000" width="35" height="35" alt="Substack">
             </div>
@@ -2062,7 +2107,7 @@
           </div>
           <!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="300">
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-reveal="up">
             <div class="icon flex-shrink-0">
               <img src="https://cdn.simpleicons.org/dev.to/000000" width="35" height="35" alt="Dev.to">
             </div>
@@ -2074,7 +2119,7 @@
           </div>
           <!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="400">
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-reveal="up">
             <div class="icon flex-shrink-0">
               <img src="https://cdn.simpleicons.org/hashnode/000000" width="35" height="35" alt="Hashnode">
             </div>
@@ -2086,7 +2131,7 @@
           </div>
           <!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="500">
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-reveal="up">
             <div class="icon flex-shrink-0">
               <img src="/assets/img/linkedin.png" width="24" height="24" alt="LinkedIn">
             </div>
@@ -2099,7 +2144,7 @@
           </div>
           <!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="550">
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-reveal="up">
             <div class="icon flex-shrink-0">
               <img src="/assets/img/linkedin.png" width="24" height="24" alt="LinkedIn Newsletter">
             </div>
@@ -2113,7 +2158,7 @@
           </div>
           <!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="600">
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-reveal="up">
             <div class="icon flex-shrink-0">
               <img src="https://cdn.simpleicons.org/threads/000000" width="35" height="35" alt="Threads">
             </div>
@@ -2125,7 +2170,7 @@
           </div>
           <!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="700">
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-reveal="up">
             <div class="icon flex-shrink-0">
               <img src="https://cdn.simpleicons.org/x/000000" width="35" height="35" alt="X">
             </div>
@@ -2137,7 +2182,7 @@
           </div>
           <!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="800">
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-reveal="up">
             <div class="icon flex-shrink-0">
               <img src="https://cdn.simpleicons.org/bluesky/000000" width="35" height="35" alt="Bluesky">
             </div>
@@ -2149,7 +2194,7 @@
           </div>
           <!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="900">
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-reveal="up">
             <div class="icon flex-shrink-0">
               <img src="https://cdn.simpleicons.org/github/000000" width="35" height="35" alt="GitHub">
             </div>
@@ -2161,7 +2206,7 @@
           </div>
           <!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="1000">
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-reveal="up">
             <div class="icon flex-shrink-0">
               <img src="https://cdn.simpleicons.org/reddit/000000" width="35" height="35" alt="Reddit">
             </div>
@@ -2173,7 +2218,7 @@
           </div>
           <!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="1100">
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-reveal="up">
             <div class="icon flex-shrink-0">
               <img src="https://cdn.simpleicons.org/googlechrome/000000" width="35" height="35" alt="Website">
             </div>
@@ -2185,7 +2230,7 @@
           </div>
           <!-- End Service Item -->
 
-          <div class="col-lg-4 col-md-6 service-item d-flex" data-aos="fade-up" data-aos-delay="1200">
+          <div class="col-lg-4 col-md-6 service-item d-flex" data-reveal="up">
             <div class="icon flex-shrink-0">
               <img src="https://cdn.simpleicons.org/github/000000" width="35" height="35" alt="Portfolio">
             </div>
@@ -2206,7 +2251,7 @@
 
     <!-- On-site articles Section -->
     <section class="articles-teaser section" id="articles">
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-reveal="up">
         <p class="section-eyebrow">Articles on this site</p>
         <h2>Original, in-depth writing</h2>
         <p>Long-form notes on Angular and React performance, architecture, design systems, accessibility and
@@ -2215,7 +2260,7 @@
       </div>
       <div class="container">
         <div class="article-grid">
-          <article class="article-card" data-aos="fade-up">
+          <article class="article-card" data-reveal="up">
             <p class="card-kicker">Angular &middot; Performance</p>
             <h3><a href="articles/angular-performance-checklist.html">The Angular performance checklist I run before
                 every release</a></h3>
@@ -2223,7 +2268,7 @@
               keep a fast app fast.</p>
             <p class="card-foot">12 min read</p>
           </article>
-          <article class="article-card" data-aos="fade-up" data-aos-delay="80">
+          <article class="article-card" data-reveal="up">
             <p class="card-kicker">Architecture &middot; Micro-frontends</p>
             <h3><a href="articles/micro-frontend-boundaries.html">Where micro-frontend boundaries should actually
                 go</a></h3>
@@ -2231,28 +2276,28 @@
               alone.</p>
             <p class="card-foot">9 min read</p>
           </article>
-          <article class="article-card" data-aos="fade-up" data-aos-delay="120">
+          <article class="article-card" data-reveal="up">
             <p class="card-kicker">Web performance &middot; Core Web Vitals</p>
             <h3><a href="articles/core-web-vitals-order-of-operations.html">Core Web Vitals in 2026: the order of
                 operations</a></h3>
             <p>LCP, INP and CLS reward different fixes. A practical sequence for deciding what to work on first.</p>
             <p class="card-foot">10 min read</p>
           </article>
-          <article class="article-card" data-aos="fade-up" data-aos-delay="160">
+          <article class="article-card" data-reveal="up">
             <p class="card-kicker">Design systems &middot; Engineering</p>
             <h3><a href="articles/design-systems-that-survive.html">Design systems that survive</a></h3>
             <p>Semantic tokens, composition-based APIs, accessibility ownership and the governance that stays out of
               the way.</p>
             <p class="card-foot">9 min read</p>
           </article>
-          <article class="article-card" data-aos="fade-up" data-aos-delay="200">
+          <article class="article-card" data-reveal="up">
             <p class="card-kicker">AI &middot; Engineering practice</p>
             <h3><a href="articles/ai-assisted-frontend-development.html">AI-assisted frontend development without
                 lowering the bar</a></h3>
             <p>Where LLMs help, where they quietly add risk, and the gates that make the speed-up real.</p>
             <p class="card-foot">8 min read</p>
           </article>
-          <article class="article-card" data-aos="fade-up" data-aos-delay="240">
+          <article class="article-card" data-reveal="up">
             <p class="card-kicker">Accessibility &middot; WCAG 2.2</p>
             <h3><a href="articles/wcag-2-2-component-checklist.html">A WCAG 2.2 checklist for component
                 libraries</a></h3>
@@ -2268,16 +2313,16 @@
     <!-- /On-site articles Section -->
 
     <!-- Testimonials Section -->
-    <section class="testimonials section" id="testimonials">
+    <section class="testimonials section" id="testimonials" tabindex="-1">
 
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-reveal="up">
         <h2>Testimonials</h2>
         <p>Feedback from engineering managers, product owners and clients I have worked with &mdash; on technical
           leadership, delivery reliability and the quality of what actually shipped.</p>
       </div><!-- End Section Title -->
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="container" data-reveal="up">
 
         <div class="swiper init-swiper">
           <script class="swiper-config" type="application/json">
@@ -2407,7 +2452,7 @@
     </section><!-- /Testimonials Section -->
 
     <section class="case-studies section" id="case-studies">
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-reveal="up">
         <p class="section-eyebrow">Selected impact</p>
         <h2>Work that moves the numbers.</h2>
         <p>Three engagements that show how I work and what changed: the problem, the approach, and the measured result.
@@ -2415,7 +2460,7 @@
       </div>
       <div class="container">
         <div class="row g-4">
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-4" data-reveal="up">
             <article class="case-card"><img src="assets/img/energy.jpg" alt="Energy automation platform">
               <div><span>Energy automation</span>
                 <h3>Rebuilt a critical product experience for speed and adoption.</h3>
@@ -2427,7 +2472,7 @@
               </div>
             </article>
           </div>
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="180">
+          <div class="col-lg-4" data-reveal="up">
             <article class="case-card"><img src="assets/img/telicom.jpeg" alt="Telecom application">
               <div><span>Telecom platforms</span>
                 <h3>Scaled frontend delivery across complex, business-critical systems.</h3>
@@ -2439,7 +2484,7 @@
               </div>
             </article>
           </div>
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="260">
+          <div class="col-lg-4" data-reveal="up">
             <article class="case-card"><img src="assets/img/post.png"
                 alt="Partial parcel and goods transmission system">
               <div><span>Product modernization</span>
@@ -2458,7 +2503,7 @@
 
     <section class="engagements section" id="work-with-me">
       <div class="container">
-        <div class="engagement-panel" data-aos="fade-up">
+        <div class="engagement-panel" data-reveal="up">
           <div>
             <p class="section-eyebrow">Why hire me</p>
             <h2>The direction, the delivery and the proof behind it.</h2>
@@ -2479,7 +2524,7 @@
     </section>
 
     <section class="availability section" id="availability">
-      <div class="container" data-aos="fade-up">
+      <div class="container" data-reveal="up">
         <div class="availability-card">
           <div>
             <p class="section-eyebrow">Next role</p>
@@ -2496,10 +2541,10 @@
     </section>
 
     <!-- Contact Section -->
-    <section class="contact section" id="contact">
+    <section class="contact section" id="contact" tabindex="-1">
 
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
+      <div class="container section-title" data-reveal="up">
         <h2>Contact Me</h2>
         <p>Hiring for a senior frontend role, or need help with an architecture, performance or modernization
           problem? Reach me on whichever channel suits you &mdash; email, LinkedIn or GitHub &mdash;
@@ -2507,7 +2552,7 @@
       </div><!-- End Section Title -->
 
       <!-- Every way to reach me, one click each -->
-      <div class="container" data-aos="fade-up">
+      <div class="container" data-reveal="up">
         <ul class="contact-channels" aria-label="All contact channels">
           <li>
             <a class="channel-card"
@@ -2578,14 +2623,14 @@
         </ul>
       </div>
 
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
+      <div class="container" data-reveal="up">
 
         <div class="row gy-4">
 
           <div class="col-lg-5">
 
             <div class="info-wrap">
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+              <div class="info-item d-flex" data-reveal="up">
                 <i class="bi bi-geo-alt flex-shrink-0"></i>
                 <div>
                   <h3>Address</h3>
@@ -2593,7 +2638,7 @@
                 </div>
               </div><!-- End Info Item -->
 
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="350">
+              <div class="info-item d-flex" data-reveal="up">
                 <i class="bi bi-linkedin flex-shrink-0"></i>
                 <div>
                   <h3>LinkedIn</h3>
@@ -2602,7 +2647,7 @@
                 </div>
               </div><!-- End Info Item -->
 
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="380">
+              <div class="info-item d-flex" data-reveal="up">
                 <i class="bi bi-github flex-shrink-0"></i>
                 <div>
                   <h3>GitHub</h3>
@@ -2611,7 +2656,7 @@
                 </div>
               </div><!-- End Info Item -->
 
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+              <div class="info-item d-flex" data-reveal="up">
                 <i class="bi bi-envelope flex-shrink-0"></i>
                 <div>
                   <h3>Email Me</h3>
@@ -2636,8 +2681,8 @@
           </div>
 
           <div class="col-lg-7">
-            <form action="https://formspree.io/f/mpwzqzge" class="php-email-form" data-aos="fade-up"
-              data-aos-delay="200" method="post">
+            <form action="https://formspree.io/f/mpwzqzge" class="php-email-form" data-reveal="up"
+              method="post">
               <div class="row gy-4">
 
                 <div class="col-md-6">
@@ -2863,10 +2908,8 @@
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/typed.js/typed.umd.js"></script>
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
   <script src="assets/vendor/jquery/jquery-3.7.1.min.js"></script>
@@ -2875,9 +2918,9 @@
 
   <!-- Main JS File -->
   <script src="assets/js/fluid-background.js?v=20260911-3"></script>
-  <script src="assets/js/companies.js?v=2"></script>
-  <script src="assets/js/site.js?v=1"></script>
-  <script src="assets/js/main.js?v=20260911-2"></script>
+  <script src="assets/js/companies.js?v=3"></script>
+  <script src="assets/js/site.js?v=2"></script>
+  <script src="assets/js/main.js?v=20261119"></script>
   <script src="assets/js/consent.js"></script>
 
   <script>

@@ -11,7 +11,7 @@ Canonical page: https://rajatmalik.dev/
 Contact: contact@rajatmalik.dev
 Articles: https://rajatmalik.dev/articles/
 RSS: https://rajatmalik.dev/feed.xml
-Last updated: 2026-11-17
+Last updated: 2026-11-19
 
 ## Key facts
 
@@ -38,7 +38,7 @@ Last updated: 2026-11-17
 - Professional experience and education
 - Companies and clients
 - Open-source libraries and developer tools, with links to npm and GitHub
-- Products he owns and runs, with links to each live site
+- The live sites and web apps he owns and runs, with a link to each host
 - Technical talks
 - Portfolio and case studies
 - Writing and articles
@@ -91,6 +91,12 @@ editorial content. See the terms of use for the advertising disclosure.
 - **DailyMilk** - a dairy operations dashboard for milk delivery logistics and
   stock management, built with Angular signals:
   https://dailymilk.rajatmalik.dev/
+- **MetaPurge** - an on-device image metadata remover that strips EXIF, GPS and
+  camera data in the browser, with no uploads and no account:
+  https://metapurge.rajatmalik.dev/
+- **Rents Collections** - a rent-operations workspace for landlords, caretakers
+  and tenants, covering properties, leases, rent schedules, payment approvals
+  and maintenance requests: https://rents.up.railway.app/
 - **TracePulse** - framework-agnostic request monitoring and performance
   observability.
 - **rm-ng-editor**, **rm-ng-typeahead**, **rm-ng-dynamic-layout**,
@@ -126,3 +132,5 @@ editorial content. See the terms of use for the advertising disclosure.
 - DeepWork product page: https://deepwork.rajatmalik.dev/
 - DeepWork web app: https://app.deepwork.rajatmalik.dev/
 - DailyMilk: https://dailymilk.rajatmalik.dev/
+- MetaPurge: https://metapurge.rajatmalik.dev/
+- Rents Collections: https://rents.up.railway.app/

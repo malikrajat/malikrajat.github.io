@@ -89,7 +89,7 @@
     var grid = document.getElementById('company-grid');
     if (!grid) return;
 
-    grid.innerHTML = '';
+    grid.replaceChildren();
 
     COMPANIES.forEach(function (company) {
       var item = el('li', 'company-item' + (company.current ? ' is-current' : ''));

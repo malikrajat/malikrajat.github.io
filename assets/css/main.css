@@ -320,13 +320,17 @@ h6 {
 
 .navmenu a:hover,
 .navmenu .active,
-.navmenu .active:focus {
+.navmenu .active:focus,
+.navmenu a:is(:target-current, .target-current),
+.navmenu a:is(:target-current, .target-current):focus {
   color: var(--nav-hover-color);
 }
 
 .navmenu a:hover .navicon,
 .navmenu .active .navicon,
-.navmenu .active:focus .navicon {
+.navmenu .active:focus .navicon,
+.navmenu a:is(:target-current, .target-current) .navicon,
+.navmenu a:is(:target-current, .target-current):focus .navicon {
   color: var(--accent-color);
 }
 
@@ -462,15 +466,6 @@ h6 {
   visibility: visible;
   opacity: 1;
   bottom: 15px;
-}
-
-/*--------------------------------------------------------------
-# Disable aos animation delay on mobile devices
---------------------------------------------------------------*/
-@media screen and (max-width: 768px) {
-  [data-aos-delay] {
-    transition-delay: 0 !important;
-  }
 }
 
 /*--------------------------------------------------------------
@@ -716,18 +711,6 @@ section,
 .skills .progress .skill .val {
   float: right;
   font-style: normal;
-}
-
-.skills .progress-bar-wrap {
-  background: color-mix(in srgb, var(--default-color), transparent 90%);
-  height: 10px;
-}
-
-.skills .progress-bar {
-  width: 1px;
-  height: 10px;
-  transition: 0.9s;
-  background-color: var(--accent-color);
 }
 
 /*--------------------------------------------------------------

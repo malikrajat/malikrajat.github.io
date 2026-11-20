@@ -15,7 +15,7 @@ a { color:inherit; } a:hover { color:inherit; }
 .header .social-links { display:none; }.header .navmenu { margin-left:auto; }
 .header .navmenu ul { align-items:center; display:flex; gap:.2rem; list-style:none; margin:0; padding:0; }
 .header .navmenu a { border-radius:999px; color:#d7deeb; display:block; font-family:var(--body); font-size:.78rem; font-weight:700; letter-spacing:0; padding:.5rem .75rem; text-transform:none; }
-.header .navmenu a i { display:none; }.header .navmenu a:hover,.header .navmenu a.active { background:rgba(138,0,229,.18); color:var(--lime); }
+.header .navmenu a i { display:none; }.header .navmenu a:hover,.header .navmenu a.active,.header .navmenu a:is(:target-current, .target-current) { background:rgba(138,0,229,.18); color:var(--lime); }
 .header-resume { align-items:center; border:1px solid rgba(199,154,255,.75); color:var(--lime); display:inline-flex; font-family:var(--body); font-size:.76rem; font-weight:800; gap:.45rem; letter-spacing:.01em; padding:.62rem .85rem; text-transform:none; white-space:nowrap; }.header-resume:hover { background:var(--accent); border-color:var(--accent); color:#fff; }
 .header~main,.header~#footer { margin-left:0!important; }
 
@@ -55,7 +55,10 @@ a { color:inherit; } a:hover { color:inherit; }
 /* Skills and career */
 .skills .skills-content { background:#fff; border:1px solid var(--line); padding:clamp(1.5rem,4vw,3rem); }.skills .progress { background:none; border-bottom:1px solid var(--line); border-radius:0; height:auto; margin-bottom:1rem; padding-bottom:.85rem; }
 .skills .skill { color:var(--ink); display:flex; font-family:var(--display); font-size:.78rem; font-weight:700; justify-content:space-between; margin-bottom:.55rem; }.skills .skill .val { color:var(--violet); font-family:var(--mono); font-size:.65rem; font-style:normal; }
-.skills .progress-bar-wrap { background:#e8ecf4; height:4px; }.skills .progress-bar { background:linear-gradient(90deg,var(--violet),var(--cyan)); }
+.skills progress.skill-meter { appearance:none; background:#e8ecf4; border:0 solid; border-radius:999px; display:block; height:4px; inline-size:100%; overflow:clip; }
+.skills progress.skill-meter::-webkit-progress-bar { background:transparent; }
+.skills progress.skill-meter::-webkit-progress-value { background:linear-gradient(90deg,var(--violet),var(--cyan)); border-radius:999px; transition:inline-size .3s; }
+.skills progress.skill-meter::-moz-progress-bar { background:linear-gradient(90deg,var(--violet),var(--cyan)); border-radius:999px; transition:inline-size .3s; }
 .resume { background:rgba(255,255,255,.16); }.resume .resume-title { color:var(--ink); font-family:var(--display); font-size:1.25rem; font-weight:700; letter-spacing:-.04em; margin:0 0 1.3rem; }
 .resume .resume-item { border-left:2px solid var(--violet); padding:0 0 1.8rem 1.4rem; position:relative; }.resume .resume-item:before { background:var(--lime); border:2px solid var(--violet); border-radius:50%; content:""; height:13px; left:-7px; position:absolute; top:3px; width:13px; }
 .resume .resume-item h4 { color:var(--ink); font-family:var(--display); font-size:1rem; font-weight:700; }.resume .resume-item h5 { background:#eef1f7; color:var(--violet); font-family:var(--mono); font-size:.7rem; padding:.3rem .5rem; }.resume .resume-item ul { padding-left:1rem; }
@@ -126,4 +129,21 @@ a { color:inherit; } a:hover { color:inherit; }
   .portfolio .portfolio-content .portfolio-info .preview-link,
   .portfolio .portfolio-content .portfolio-info .details-link { color:var(--lime); display:inline-block; font-size:1.05rem; left:auto; margin:0 .9rem 0 0; position:static; top:auto; }
   .portfolio .portfolio-content:hover img { opacity:1; transform:none; }
+}
+
+/* Native scrollspy: the nav is the container of fragment-link markers. */
+.header .navmenu { scroll-target-group:auto; }
+
+/* Scroll-driven entry effects (native replacement for the AOS library). */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    @keyframes reveal-up {
+      from { opacity:0; translate:0 24px; }
+    }
+    @keyframes reveal-fade {
+      from { opacity:0; }
+    }
+    [data-reveal="up"] { animation:reveal-up auto linear backwards; animation-timeline:view(); animation-range:entry 0% entry 70%; }
+    [data-reveal="fade"] { animation:reveal-fade auto linear backwards; animation-timeline:view(); animation-range:entry 0% entry 80%; }
+  }
 }

@@ -7,7 +7,7 @@ GitHub Pages at <https://rajatmalik.dev/>.
 ## Structure
 
 ```
-index.html                     Portfolio home (experience, work, libraries, products, writing)
+index.html                     Portfolio home (experience, work, libraries, live sites, writing)
 about.html                     Long-form author and experience page
 contact.html                   Contact channels, form and FAQ
 articles/index.html            Article hub + editorial standards

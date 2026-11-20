@@ -444,7 +444,7 @@
   function renderList(selector, rows, emptyMessage) {
     var list = $(selector);
     if (!list) return;
-    list.innerHTML = '';
+    list.replaceChildren();
 
     /* Keep a row when it has a NAME even if the label is blank: GoatCounter
      * returns `"name": ""` for direct/unattributed traffic, which is a real

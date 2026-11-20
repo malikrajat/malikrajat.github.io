@@ -70,19 +70,6 @@
   document.addEventListener('scroll', toggleScrollTop);
 
   /**
-   * Animation on scroll function and init
-   */
-  function aosInit() {
-    AOS.init({
-      duration: 600,
-      easing: 'ease-in-out',
-      once: true,
-      mirror: false
-    });
-  }
-  window.addEventListener('load', aosInit);
-
-  /**
    * Init typed.js
    */
   const selectTyped = document.querySelector('.typed');
@@ -103,22 +90,6 @@
    */
   new PureCounter();
 
-  /**
-   * Animate the skills items on reveal
-   */
-  let skillsAnimation = document.querySelectorAll('.skills-animation');
-  skillsAnimation.forEach((item) => {
-    new Waypoint({
-      element: item,
-      offset: '80%',
-      handler: function(direction) {
-        let progress = item.querySelectorAll('.progress .progress-bar');
-        progress.forEach(el => {
-          el.style.width = el.getAttribute('aria-valuenow') + '%';
-        });
-      }
-    });
-  });
 
   /**
    * Initiate glightbox
@@ -152,9 +123,6 @@
         initIsotope.arrange({
           filter: this.getAttribute('data-filter')
         });
-        if (typeof aosInit === 'function') {
-          aosInit();
-        }
       }, false);
     });
 
@@ -198,25 +166,56 @@
   });
 
   /**
-   * Navmenu Scrollspy
+   * Navmenu scrollspy.
+   * The stylesheet opts the nav into CSS scroll-target-group + :target-current.
+   * Browsers without support fall back to an IntersectionObserver that mirrors
+   * the state with the .target-current class accepted by the same selectors.
    */
-  let navmenulinks = document.querySelectorAll('.navmenu a');
+  const navmenu = document.querySelector('.navmenu');
+  const navmenulinks = navmenu ? Array.from(navmenu.querySelectorAll('a[href^="#"]')) : [];
+  if (!navmenu) return;
 
-  function navmenuScrollspy() {
+  function setCurrentLink(currentLink) {
     navmenulinks.forEach(navmenulink => {
-      if (!navmenulink.hash) return;
-      let section = document.querySelector(navmenulink.hash);
-      if (!section) return;
-      let position = window.scrollY + 200;
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        document.querySelectorAll('.navmenu a.active').forEach(link => link.classList.remove('active'));
-        navmenulink.classList.add('active');
+      if (navmenulink === currentLink) {
+        navmenulink.setAttribute('aria-current', 'true');
       } else {
-        navmenulink.classList.remove('active');
+        navmenulink.removeAttribute('aria-current');
       }
-    })
+    });
   }
-  window.addEventListener('load', navmenuScrollspy);
-  document.addEventListener('scroll', navmenuScrollspy);
+
+  if (CSS.supports('scroll-target-group: auto')) {
+    const syncNativeCurrent = () => {
+      setCurrentLink(navmenu.querySelector('a:is(:target-current, .target-current)'));
+    };
+    syncNativeCurrent();
+    // :target-current can settle a task after scrollend fires.
+    document.addEventListener('scrollend', () => setTimeout(syncNativeCurrent, 0));
+  } else {
+    const navsections = navmenulinks
+      .map(navmenulink => document.querySelector(navmenulink.hash))
+      .filter(Boolean);
+
+    if (navsections.length) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const hash = '#' + entry.target.id;
+          navmenulinks.forEach(navmenulink => {
+            const isCurrent = navmenulink.hash === hash;
+            navmenulink.classList.toggle('target-current', isCurrent);
+            if (isCurrent) {
+              navmenulink.setAttribute('aria-current', 'true');
+            } else {
+              navmenulink.removeAttribute('aria-current');
+            }
+          });
+        });
+      }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+
+      navsections.forEach(section => observer.observe(section));
+    }
+  }
 
 })();
